@@ -476,6 +476,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      // Tax ID Check
+      let taxIdDisplay = cusInfo.tax_id || "";
+      if (!taxIdDisplay || taxIdDisplay.replace(/\D/g, '').length !== 13) {
+          taxIdDisplay = `<span style="color:red;">${taxIdDisplay || '-'} (กรุณาระบุเลข 13 หลัก)</span>`;
+      }
+
       // Create a printable element HTML
       let tableHTML = `
                 <div style="width: 794px; min-height: 1080px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Prompt', 'Sarabun', sans-serif !important; letter-spacing: 0px !important; color: #000; padding: 20px 30px; background: white; font-size: 13px; line-height: 1.15; margin: 0; text-align: left;">
@@ -484,8 +490,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                         <div style="flex: 1; display: flex; align-items: flex-start;">
                             <!-- Placeholder for Corporate Logo -->
-                            <div style="width: 60px; height: 60px; background: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 10px; font-weight: bold;">
-                                [ LOGO ]
+                            <div style="width: 80px; height: 80px; background: #fff; border: 1px solid #000; display: flex; align-items: center; justify-content: center; color: #000; font-size: 12px; text-align: center;">
+                                พื้นที่โลโก้<br>บริษัท
                             </div>
                         </div>
                         <div style="flex: 2; text-align: center;">
@@ -534,7 +540,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <div style="line-height: 1.2;">เลขประจำตัวผู้เสียภาษี</div>
                                         <div style="font-size:10px; line-height: 1.2;">Tax ID</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;">${cusInfo.tax_id}</td>
+                                    <td style="padding-bottom: 5px;">${taxIdDisplay}</td>
                                     <td style="padding-bottom: 5px; text-align: right;"></td>
                                     <td></td>
                                 </tr>
@@ -596,7 +602,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <!-- Items Table -->
                     <table style="width: 100%; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0;">
                         <thead>
-                            <tr style="background-color: #ff6666;">
+                            <tr style="background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                                 <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; width: 50px; text-align: center;">
                                     <div style="line-height: 1.2;">ลำดับ</div>
                                     <div style="font-size:10px; line-height: 1.2;">No.</div>
@@ -692,6 +698,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div style="flex: 1; border-right: 1px solid #000; padding: 10px; font-size: 11px;">
                             <strong>หมายเหตุ (Remarks):</strong><br>
                             - การเสนอราคานี้ยืนราคา ${cusInfo.credit_days} วัน<br>
+                            - ระยะเวลาส่งมอบสินค้าโดยประมาณหลังยืนยันคำสั่งซื้อ<br>
                             ${cusInfo.remarks ? "- " + cusInfo.remarks + "<br>" : ""}
                             - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจก. โซลโซไซตี้
                         </div>
@@ -712,7 +719,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
 
                     <!-- Bottom: Red Grand Total -->
-                    <div style="display: flex; border: 1px solid #000; border-top: 1px solid #000; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; margin-bottom: 2px; overflow: hidden; background-color: #ff6666; font-weight: bold;">
+                    <div style="display: flex; border: 1px solid #000; border-top: 1px solid #000; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; margin-bottom: 2px; overflow: hidden; background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold;">
                         <div style="flex: 1; border-right: 1px solid #000; padding: 10px; text-align: center; display: flex; align-items: center; justify-content: center;">
                             ${bahtText(gTotal)}
                         </div>
