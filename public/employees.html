@@ -278,22 +278,22 @@
           <div style="display: flex; gap: 1rem;">
             <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
               <label style="font-weight: 500; font-size: 0.95rem">ชื่อ (TH) *</label>
-              <input type="text" id="emp-fname-th" class="input-field" required style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+              <input type="text" id="emp-fname-th" class="input-field" required pattern="^[ก-๙\s]+$" title="กรุณากรอกภาษาไทยเท่านั้น" oninput="this.value = this.value.replace(/[^ก-๙\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
             </div>
             <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
               <label style="font-weight: 500; font-size: 0.95rem">นามสกุล (TH) *</label>
-              <input type="text" id="emp-lname-th" class="input-field" required style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+              <input type="text" id="emp-lname-th" class="input-field" required pattern="^[ก-๙\s]+$" title="กรุณากรอกภาษาไทยเท่านั้น" oninput="this.value = this.value.replace(/[^ก-๙\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
             </div>
           </div>
 
           <div style="display: flex; gap: 1rem;">
             <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
               <label style="font-weight: 500; font-size: 0.95rem">ชื่อ (EN) *</label>
-              <input type="text" id="emp-fname-en" class="input-field" required style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+              <input type="text" id="emp-fname-en" class="input-field" required pattern="^[A-Za-z\s]+$" title="กรุณากรอกภาษาอังกฤษเท่านั้น" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
             </div>
             <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
               <label style="font-weight: 500; font-size: 0.95rem">นามสกุล (EN) *</label>
-              <input type="text" id="emp-lname-en" class="input-field" required style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+              <input type="text" id="emp-lname-en" class="input-field" required pattern="^[A-Za-z\s]+$" title="กรุณากรอกภาษาอังกฤษเท่านั้น" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
             </div>
           </div>
 
@@ -308,6 +308,9 @@
               type="text"
               id="emp-phone"
               class="input-field"
+              pattern="^0[0-9]*$"
+              title="กรุณาขึ้นต้นด้วย 0 และเป็นตัวเลขเท่านั้น"
+              oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.length > 0 && this.value[0] !== '0') this.value = '0' + this.value;"
               style="
                 padding: 0.75rem;
                 border: 1px solid var(--border);
