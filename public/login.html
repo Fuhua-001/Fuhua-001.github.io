@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - AI Enterprise Quotation Maker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        margin: 0;
+        font-family: "Prompt", "Inter", sans-serif;
+      }
+      .login-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        animation: fadeIn 0.5s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .login-logo {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+      .login-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 0.5rem;
+      }
+      .login-subtitle {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+      }
+      .form-group {
+        text-align: left;
+        margin-bottom: 1.5rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-main);
+      }
+      .form-control {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        background: #f8fafc;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        background: #fff;
+      }
+      .btn-login {
+        width: 100%;
+        padding: 0.8rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        margin-top: 1rem;
+      }
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-logo">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+      </div>
+      <h1 class="login-title">QuoteAI Enterprise</h1>
+      <p class="login-subtitle">ลงชื่อเข้าใช้เพื่อจัดการใบเสนอราคา</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="username">ชื่อผู้ใช้งาน (รหัส PIC)</label>
+          <input
+            type="text"
+            id="username"
+            class="form-control"
+            placeholder="เช่น PIC001"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">รหัสผ่าน</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+        <button type="submit" class="btn-login">
+          เข้าสู่ระบบ <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
+        </button>
+      </form>
+    </div>
+
+    <script>
+      document.getElementById("login-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const btn = document.querySelector(".btn-login");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเข้าสู่ระบบ...';
+        btn.disabled = true;
+
+        const username = document.getElementById("username").value;
+
+        // Mock Login (In real app, call API)
+        setTimeout(() => {
+          sessionStorage.setItem("isLoggedIn", "true");
+          sessionStorage.setItem("currentUser", username);
+          window.location.href = "index.html";
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
+

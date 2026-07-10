@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Enterprise Quotation Maker</title>
+    <meta
+      name="description"
+      content="สร้างใบเสนอราคาอัตโนมัติด้วย AI สำหรับองค์กรของคุณ"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const userFromUrl = urlParams.get("user");
+      if (userFromUrl) {
+        sessionStorage.setItem("currentUser", userFromUrl);
+      }
+      if (!sessionStorage.getItem("currentUser")) {
+        window.location.href = "login.html";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <span>QuoteAI</span>
+        </div>
+        <nav class="menu">
+          <a href="dashboard.html" class="menu-item"
+            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
+          >
+          <a href="index.html" class="menu-item active"
+            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
+          >
+          <a href="history.html" class="menu-item"
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
+          >
+          <a href="customers.html" class="menu-item"
+            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
+          >
+          <a href="products.html" class="menu-item"
+            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
+          >
+          <a href="employees.html" class="menu-item"
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
+          >
+          <a
+            href="#"
+            class="menu-item text-danger"
+            onclick="
+              sessionStorage.removeItem('isLoggedIn');
+              window.location.href = 'login.html';
+            "
+            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
+          >
+        </nav>
+        <div class="user-profile">
+          <div class="avatar"><i class="fa-solid fa-user"></i></div>
+          <div class="user-info">
+            <span class="user-name">Sales Team</span>
+            <span class="user-role">Enterprise</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header
+          class="top-header"
+          style="justify-content: space-between; align-items: center"
+        >
+          <h1>สร้างใบเสนอราคา</h1>
+          <div class="header-actions"></div>
+        </header>
+
+        <div class="content-grid">
+          <!-- AI Prompt Section -->
+          <section id="ai-prompt-section" class="card ai-section">
+            <div class="card-header">
+              <h2>
+                <i class="fa-solid fa-wand-magic-sparkles"></i> AI Assistant
+              </h2>
+              <p>พิมพ์คำสั่งให้ AI สร้างใบเสนอราคาให้คุณ</p>
+            </div>
+            <div class="ai-input-group">
+              <textarea
+                id="ai-prompt"
+                placeholder="ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท"
+              ></textarea>
+              <button id="generate-btn" class="btn btn-primary">
+                <span class="btn-text">สร้างด้วย AI</span>
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+            <div id="ai-loader" class="loader hidden">
+              <div class="spinner"></div>
+              <p>กำลังวิเคราะห์และสร้างข้อมูล...</p>
+            </div>
+          </section>
+
+          <!-- Quotation Form Section -->
+          <section
+            class="card form-section"
+            id="quotation-form-section"
+            style="border-top: 5px solid var(--primary-color)"
+          >
+            <div
+              class="card-header"
+              style="
+                text-align: center;
+                border-bottom: 2px dashed #cbd5e1;
+                padding-bottom: 1.5rem;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <h2 style="font-size: 1.8rem; color: #0f172a">
+                <i class="fa-solid fa-file-invoice"></i> แบบฟอร์มใบเสนอราคา
+              </h2>
+              <p style="color: #64748b">(Quotation Entry Form)</p>
+            </div>
+            <form id="quote-form">
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr 1fr;
+                  gap: 1.5rem;
+                  margin-bottom: 1.5rem;
+                  background: #f8fafc;
+                  padding: 1.5rem;
+                  border-radius: 8px;
+                  border: 1px solid #e2e8f0;
+                "
+              >
+                <div class="form-group" style="margin-bottom: 0">
+                  <label
+                    for="customer-name"
+                    style="font-weight: 600; color: #334155"
+                    ><i class="fa-solid fa-building"></i> ชื่อลูกค้า / บริษัท
+                    (Customer Name):</label
+                  >
+                  <select
+                    id="customer-name"
+                    required
+                    style="
+                      border: 1px solid #cbd5e1;
+                      background: #fff;
+                      padding: 0.75rem;
+                      border-radius: 6px;
+                      width: 100%;
+                    "
+                  >
+                    <option value="" disabled selected>
+                      -- เลือกชื่อลูกค้า --
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0">
+                  <label
+                    for="form-sales-rep"
+                    style="font-weight: 600; color: #334155"
+                    ><i class="fa-solid fa-user-tie"></i> พนักงานขาย (Sales
+                    Rep):</label
+                  >
+                  <select
+                    id="form-sales-rep"
+                    required
+                    style="
+                      border: 1px solid #cbd5e1;
+                      background: #fff;
+                      padding: 0.75rem;
+                      border-radius: 6px;
+                      width: 100%;
+                    "
+                  >
+                    <option value="" disabled selected>
+                      -- เลือกพนักงานขาย --
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0">
+                  <label style="font-weight: 600; color: #334155"
+                    ><i class="fa-regular fa-calendar-days"></i> วันที่
+                    (Date):</label
+                  >
+                  <input
+                    type="text"
+                    value="อัตโนมัติ"
+                    disabled
+                    style="
+                      background: #e2e8f0;
+                      color: #64748b;
+                      cursor: not-allowed;
+                      border: 1px solid #cbd5e1;
+                      padding: 0.75rem;
+                      border-radius: 6px;
+                      width: 100%;
+                    "
+                  />
+                </div>
+              </div>
+
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr 1fr;
+                  gap: 1.5rem;
+                  margin-bottom: 2rem;
+                  background: #f8fafc;
+                  padding: 1.5rem;
+                  border-radius: 8px;
+                  border: 1px solid #e2e8f0;
+                "
+              >
+                <div class="form-group" style="margin-bottom: 0">
+                  <label
+                    for="form-credit-days"
+                    style="font-weight: 600; color: #334155"
+                    ><i class="fa-solid fa-calendar-check"></i> เครดิต
+                    (วัน):</label
+                  >
+                  <input
+                    type="number"
+                    id="form-credit-days"
+                    min="0"
+                    value="30"
+                    style="
+                      border: 1px solid #cbd5e1;
+                      background: #fff;
+                      padding: 0.75rem;
+                      border-radius: 6px;
+                      width: 100%;
+                    "
+                  />
+                </div>
+                <div class="form-group" style="margin-bottom: 0">
+                  <label
+                    for="form-payment-terms"
+                    style="font-weight: 600; color: #334155"
+                    ><i class="fa-solid fa-money-bill-transfer"></i>
+                    เงื่อนไขชำระเงิน:</label
+                  >
+                  <input
+                    type="text"
+                    id="form-payment-terms"
+                    value="Cash/Transfer"
+                    style="
+                      border: 1px solid #cbd5e1;
+                      background: #fff;
+                      padding: 0.75rem;
+                      border-radius: 6px;
+                      width: 100%;
+                    "
+                  />
+                </div>
+                <div class="form-group" style="margin-bottom: 0">
+                  <label
+                    for="form-remarks"
+                    style="font-weight: 600; color: #334155"
+                    ><i class="fa-solid fa-comment-dots"></i> หมายเหตุ:</label
+                  >
+                  <input
+                    type="text"
+                    id="form-remarks"
+                    placeholder="ระบุเพิ่มเติม..."
+                    style="
+                      border: 1px solid #cbd5e1;
+                      background: #fff;
+                      padding: 0.75rem;
+                      border-radius: 6px;
+                      width: 100%;
+                    "
+                  />
+                </div>
+              </div>
+
+              <div
+                class="table-container"
+                style="
+                  background: #ffffff;
+                  border: 1px solid #e2e8f0;
+                  border-radius: 8px;
+                  overflow: hidden;
+                  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+                "
+              >
+                <div
+                  style="
+                    background: #f1f5f9;
+                    
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  <h3 style="font-size: 1.1rem; color: #334155; margin: 0">
+                    <i class="fa-solid fa-boxes-stacked"></i> รายการสินค้า
+                    (Items)
+                  </h3>
+                </div>
+                <table class="quote-table" style="margin: 0">
+                  <thead style="background: #f8fafc">
+                    <tr>
+                      <th
+                        style="color: #475569; border-bottom: 2px solid #e2e8f0"
+                      >
+                        รายละเอียดสินค้า
+                      </th>
+                      <th
+                        width="15%"
+                        style="
+                          color: #475569;
+                          border-bottom: 2px solid #e2e8f0;
+                          text-align: center;
+                        "
+                      >
+                        จำนวน
+                      </th>
+                      <th
+                        width="20%"
+                        style="
+                          color: #475569;
+                          border-bottom: 2px solid #e2e8f0;
+                          text-align: right;
+                        "
+                      >
+                        ราคาต่อหน่วย
+                      </th>
+                      <th
+                        width="20%"
+                        style="
+                          color: #475569;
+                          border-bottom: 2px solid #e2e8f0;
+                          text-align: right;
+                        "
+                      >
+                        ราคารวม
+                      </th>
+                      <th
+                        width="5%"
+                        style="border-bottom: 2px solid #e2e8f0"
+                      ></th>
+                    </tr>
+                  </thead>
+                  <tbody id="quote-items">
+                    <!-- Items will be injected here -->
+                  </tbody>
+                </table>
+                <div
+                  style="
+                    
+                    background: #f8fafc;
+                    border-top: 1px solid #e2e8f0;
+                  "
+                >
+                  <button
+                    type="button"
+                    id="add-item-btn"
+                    class="btn btn-outline"
+                    style="
+                      border: 2px dashed #cbd5e1;
+                      background: transparent;
+                      color: #64748b;
+                      width: 100%;
+                      transition: all 0.3s;
+                      padding: 10px;
+                    "
+                  >
+                    <i class="fa-solid fa-plus"></i> เพิ่มรายการสินค้าใหม่ (Add
+                    New Row)
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="summary-section"
+                style="
+                  margin-top: 2rem;
+                  background: #f8fafc;
+                  padding: 1.5rem;
+                  border-radius: 8px;
+                  border: 1px solid #e2e8f0;
+                  text-align: right;
+                "
+              >
+                <div
+                  class="summary-row"
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 0.5rem;
+                  "
+                >
+                  <span style="font-size: 1rem; color: #64748b"
+                    >ยอดรวมก่อนภาษี (Subtotal):</span
+                  >
+                  <span
+                    id="sub-total"
+                    style="font-size: 1.1rem; color: #475569; font-weight: 500"
+                    >฿0.00</span
+                  >
+                </div>
+                <div
+                  class="summary-row"
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 1rem;
+                  "
+                >
+                  <span style="font-size: 1rem; color: #64748b"
+                    >ภาษีมูลค่าเพิ่ม 7% (VAT 7%):</span
+                  >
+                  <span
+                    id="vat-total"
+                    style="font-size: 1.1rem; color: #475569; font-weight: 500"
+                    >฿0.00</span
+                  >
+                </div>
+                <div
+                  class="summary-row total"
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-top: 2px dashed #cbd5e1;
+                    padding-top: 1rem;
+                  "
+                >
+                  <span
+                    style="font-size: 1.2rem; color: #475569; font-weight: 600"
+                    >ยอดรวมสุทธิ (Grand Total):</span
+                  >
+                  <span
+                    id="grand-total"
+                    style="font-size: 2rem; color: var(--primary-color)"
+                    >฿0.00</span
+                  >
+                </div>
+              </div>
+
+              <div style="margin-top: 2rem">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  style="
+                    width: 100%;
+                    justify-content: center;
+                    font-size: 1.2rem;
+                    padding: 1.2rem;
+                    box-shadow: 0 10px 15px -3px rgb(99 102 241 / 0.4);
+                  "
+                >
+                  <i class="fa-solid fa-eye"></i> ตรวจสอบเอกสาร (Preview)
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="preview-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>ตัวอย่างใบเสนอราคา (Preview)</h2>
+          <button class="btn-close" id="close-modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="preview-container-wrapper">
+          <div
+            id="preview-container"
+            style="
+              background: white;
+              padding: 40px;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            "
+          >
+            <!-- Preview PDF content will be injected here -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="cancel-print-btn">
+            ยกเลิก
+          </button>
+          <button type="button" class="btn btn-primary" id="confirm-pdf-btn">
+            <i class="fa-solid fa-file-pdf"></i> พิมพ์ PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+      <i class="fa-solid fa-circle-check"></i>
+      <span id="toast-message">แจ้งเตือน</span>
+    </div>
+
+    <!-- AI Warning Modal -->
+    <div id="ai-warning-modal" class="modal hidden">
+      <div
+        class="modal-content"
+        style="
+          max-width: 500px;
+          text-align: center;
+          border-top: 5px solid #f59e0b;
+        "
+      >
+        <div style="font-size: 3rem; color: #f59e0b; margin-bottom: 1rem">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h2 style="margin-bottom: 1rem; color: #0f172a">
+          แจ้งเตือนการปรับลดสินค้า
+        </h2>
+        <div
+          id="ai-warning-text"
+          style="
+            color: #475569;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            
+            background: #fef3c7;
+            border-radius: 8px;
+          "
+        >
+          <!-- Warning message goes here -->
+        </div>
+        <button
+          class="btn btn-primary"
+          onclick="
+            document.getElementById('ai-warning-modal').classList.add('hidden')
+          "
+          style="
+            width: 100%;
+            justify-content: center;
+            font-size: 1.1rem;
+            
+          "
+        >
+          รับทราบ และดูใบเสนอราคา
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

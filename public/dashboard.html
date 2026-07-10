@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>แดชบอร์ด - AI Enterprise Quotation Maker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      if (!sessionStorage.getItem("currentUser"))
+        window.location.href = "login.html";
+    </script>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <span>QuoteAI</span>
+        </div>
+        <nav class="menu">
+          <a href="dashboard.html" class="menu-item active"
+            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
+          >
+          <a href="index.html" class="menu-item"
+            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
+          >
+          <a href="history.html" class="menu-item"
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
+          >
+          <a href="customers.html" class="menu-item"
+            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
+          >
+          <a href="products.html" class="menu-item"
+            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
+          >
+          <a href="employees.html" class="menu-item"
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
+          >
+          <a
+            href="#"
+            class="menu-item text-danger"
+            onclick="
+              sessionStorage.removeItem('isLoggedIn');
+              window.location.href = 'login.html';
+            "
+            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
+          >
+        </nav>
+        <div class="user-profile">
+          <div class="avatar"><i class="fa-solid fa-user"></i></div>
+          <div class="user-info">
+            <span class="user-name">Sales Team</span>
+            <span class="user-role">Enterprise</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="top-header">
+          <h1>ภาพรวมธุรกิจ (Dashboard) 📊</h1>
+        </header>
+
+        <div class="content-grid" style="display: block">
+          <!-- Stats Cards -->
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 1.5rem;
+              margin-bottom: 2rem;
+            "
+          >
+            <div
+              class="card"
+              style="
+                padding: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                border-left: 4px solid var(--primary);
+              "
+            >
+              <div style="font-size: 2.5rem; color: var(--primary)">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <div>
+                <p
+                  style="
+                    color: var(--text-muted);
+                    font-size: 0.9rem;
+                    margin-bottom: 0.2rem;
+                  "
+                >
+                  ยอดขายรวม (Total Sales)
+                </p>
+                <h3
+                  id="stat-sales"
+                  style="font-size: 1.5rem; color: var(--text-main)"
+                >
+                  ฿0.00
+                </h3>
+              </div>
+            </div>
+
+            <div
+              class="card"
+              style="
+                padding: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                border-left: 4px solid var(--secondary);
+              "
+            >
+              <div style="font-size: 2.5rem; color: var(--secondary)">
+                <i class="fa-solid fa-file-invoice"></i>
+              </div>
+              <div>
+                <p
+                  style="
+                    color: var(--text-muted);
+                    font-size: 0.9rem;
+                    margin-bottom: 0.2rem;
+                  "
+                >
+                  ใบเสนอราคาทั้งหมด (Quotes)
+                </p>
+                <h3
+                  id="stat-quotes"
+                  style="font-size: 1.5rem; color: var(--text-main)"
+                >
+                  0 ใบ
+                </h3>
+              </div>
+            </div>
+
+            <div
+              class="card"
+              style="
+                padding: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                border-left: 4px solid var(--success);
+              "
+            >
+              <div style="font-size: 2.5rem; color: var(--success)">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <div>
+                <p
+                  style="
+                    color: var(--text-muted);
+                    font-size: 0.9rem;
+                    margin-bottom: 0.2rem;
+                  "
+                >
+                  ลูกค้าในระบบ (Customers)
+                </p>
+                <h3
+                  id="stat-customers"
+                  style="font-size: 1.5rem; color: var(--text-main)"
+                >
+                  0 ราย
+                </h3>
+              </div>
+            </div>
+
+            <div
+              class="card"
+              style="
+                padding: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                border-left: 4px solid #f59e0b;
+              "
+            >
+              <div style="font-size: 2.5rem; color: #f59e0b">
+                <i class="fa-solid fa-box"></i>
+              </div>
+              <div>
+                <p
+                  style="
+                    color: var(--text-muted);
+                    font-size: 0.9rem;
+                    margin-bottom: 0.2rem;
+                  "
+                >
+                  สินค้าคงคลัง (Products)
+                </p>
+                <h3
+                  id="stat-products"
+                  style="font-size: 1.5rem; color: var(--text-main)"
+                >
+                  0 รายการ
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart -->
+          <section class="card" style="padding: 2rem">
+            <h3 style="margin-bottom: 1.5rem; color: var(--text-main)">
+              กราฟแสดงแนวโน้มยอดขาย (Sales Trend)
+            </h3>
+            <div style="width: 100%; height: 350px">
+              <canvas id="salesChart"></canvas>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Fetch Dashboard Stats
+        try {
+          const res = await fetch("/api/dashboard-stats");
+          const data = await res.json();
+
+          document.getElementById("stat-sales").textContent =
+            "฿" +
+            parseFloat(data.total_sales).toLocaleString("th-TH", {
+              minimumFractionDigits: 2,
+            });
+          document.getElementById("stat-quotes").textContent =
+            data.total_quotes + " ใบ";
+          document.getElementById("stat-customers").textContent =
+            data.total_customers + " ราย";
+          document.getElementById("stat-products").textContent =
+            data.total_products + " รายการ";
+        } catch (err) {
+          console.error("Failed to load stats", err);
+        }
+
+        // Initialize Chart
+        const ctx = document.getElementById("salesChart").getContext("2d");
+        const textColor = "#64748b";
+        const gridColor = "#e2e8f0";
+
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [
+              "มกราคม",
+              "กุมภาพันธ์",
+              "มีนาคม",
+              "เมษายน",
+              "พฤษภาคม",
+              "มิถุนายน",
+              "กรกฎาคม",
+            ],
+            datasets: [
+              {
+                label: "ยอดขายรายเดือน (THB)",
+                data: [
+                  15000,
+                  22000,
+                  18000,
+                  32000,
+                  28000,
+                  45000,
+                  document
+                    .getElementById("stat-sales")
+                    .textContent.replace(/[^0-9.-]+/g, "") || 50000,
+                ],
+                borderColor: "#6366f1",
+                backgroundColor: "rgba(99, 102, 241, 0.2)",
+                borderWidth: 3,
+                pointBackgroundColor: "#ec4899",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "#ec4899",
+                fill: true,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: { color: gridColor },
+                ticks: { color: textColor },
+              },
+              x: {
+                grid: { display: false },
+                ticks: { color: textColor },
+              },
+            },
+            plugins: {
+              legend: { labels: { color: textColor } },
+            },
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
+

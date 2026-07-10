@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ข้อมูลพนักงาน/เซลส์ (PIC) - AI Enterprise Quotation Maker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      if (!sessionStorage.getItem("currentUser"))
+        window.location.href = "login.html";
+    </script>
+  </head>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <span>QuoteAI</span>
+        </div>
+        <nav class="menu">
+          <a href="dashboard.html" class="menu-item"
+            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
+          >
+          <a href="index.html" class="menu-item"
+            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
+          >
+          <a href="history.html" class="menu-item"
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
+          >
+          <a href="customers.html" class="menu-item"
+            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
+          >
+          <a href="products.html" class="menu-item"
+            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
+          >
+          <a href="employees.html" class="menu-item active"
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
+          >
+          <a
+            href="#"
+            class="menu-item text-danger"
+            onclick="
+              sessionStorage.removeItem('isLoggedIn');
+              window.location.href = 'login.html';
+            "
+            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
+          >
+        </nav>
+        <div class="user-profile">
+          <div class="avatar"><i class="fa-solid fa-user"></i></div>
+          <div class="user-info">
+            <span class="user-name">Sales Team</span>
+            <span class="user-role">Enterprise</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content page-fixed">
+        <header class="top-header">
+          <h1>รายการข้อมูลพนักงาน (PIC) 🧑‍💼</h1>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="openEmpModal()">
+              <i class="fa-solid fa-plus"></i> เพิ่มพนักงานใหม่
+            </button>
+          </div>
+        </header>
+
+        <div class="content-grid">
+          <section class="card form-section">
+            <div class="card-header">
+              <h2>
+                <i class="fa-solid fa-users-gear"></i> พนักงานขาย (Sales / PIC)
+              </h2>
+            </div>
+            <div class="table-container" style="margin-top: 1rem">
+              <table
+                style="width: 100%; text-align: left; border-collapse: collapse"
+              >
+                <thead>
+                  <tr
+                    style="
+                      background: var(--bg-main);
+                      border-bottom: 2px solid var(--border);
+                    "
+                  >
+                    <th style="width: 50px; text-align: center;">
+                      <input type="checkbox" id="selectAllEmployees" onchange="toggleSelectAllEmployees(this)">
+                    </th>
+                    <th style="">รหัส (PIC)</th>
+                    <th style="">ชื่อ-นามสกุล (TH)</th>
+                    <th style="">ชื่อ-นามสกุล (EN)</th>
+                    <th style="">เบอร์ติดต่อ</th>
+                    <th style="">แผนก</th>
+                    <th style="">คีย์เวิร์ด</th>
+                    <th style="" class="sticky-manage">จัดการ</th>
+                  </tr>
+                </thead>
+                <tbody id="employees-tbody">
+                  <tr>
+                    <td colspan="7" style="text-align: center; padding: 2rem">
+                      กำลังโหลดข้อมูล...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%;">
+            <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="prevEmployeesPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
+              <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">หน้า 1</span>
+              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextEmployeesPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <button class="btn btn-secondary" id="btn-bulk-delete-employees" style="background-color: #ef4444 !important; color: white !important; display: none; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onclick="deleteSelectedEmployees()">
+                <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span id="delete-count-employees">0</span>)
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div 
+      id="delete-confirm-modal" 
+      style="
+        display: none; 
+        position: fixed; 
+        top: 0; left: 0; width: 100%; height: 100%; 
+        background: rgba(0,0,0,0.5); 
+        z-index: 10000; 
+        justify-content: center; 
+        align-items: center;
+        animation: fadeIn 0.2s ease-out;
+      "
+    >
+      <div style="
+        background: white; 
+        padding: 2rem; 
+        border-radius: 12px; 
+        width: 90%; 
+        max-width: 400px; 
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      ">
+        <div style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">ยืนยันการลบข้อมูล</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก <span id="delete-confirm-count" style="font-weight: bold; color: #ef4444;">0</span> รายการ? การกระทำนี้ไม่สามารถกู้คืนได้</p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">ยกเลิก</button>
+          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: #ef4444 !important; color: white !important; border: none;">ยืนยันการลบ</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+      <i class="fa-solid fa-circle-check"></i>
+      <span id="toast-message">แจ้งเตือน</span>
+    </div>
+
+    <!-- Employee Modal -->
+    <div
+      id="emp-modal"
+      class="modal-overlay hidden"
+      style="
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(4px);
+        padding: 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        display: none;
+      "
+    >
+      <div
+        class="card"
+        style="
+          width: 100%;
+          max-width: 500px;
+          max-height: 90vh;
+          display: flex;
+          flex-direction: column;
+          background: var(--bg-card);
+        "
+      >
+        <div
+          class="card-header"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+          "
+        >
+          <h2 id="emp-modal-title" style="margin: 0;">
+            <i class="fa-solid fa-user-tie"></i> เพิ่มพนักงานใหม่
+          </h2>
+          <button
+            type="button"
+            class="btn-text"
+            onclick="closeEmpModal()"
+            style="
+              font-size: 1.5rem;
+              background: transparent;
+              border: none;
+              cursor: pointer;
+              color: var(--text-muted);
+            "
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form
+          id="emp-form"
+          style="
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+          "
+        >
+          <div
+            style="
+              padding: 1.5rem;
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+              overflow-y: auto;
+            "
+          >
+          <input type="hidden" id="emp-id" />
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >รหัสพนักงาน (PIC Code) *</label
+            >
+            <input
+              type="text"
+              id="emp-code"
+              class="input-field"
+              required
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >ชื่อ-นามสกุล (TH) *</label
+            >
+            <input
+              type="text"
+              id="emp-name"
+              class="input-field"
+              required
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >เบอร์ติดต่อ</label
+            >
+            <input
+              type="text"
+              id="emp-phone"
+              class="input-field"
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >แผนก (Department)</label
+            >
+            <input
+              type="text"
+              id="emp-dept"
+              class="input-field"
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+          </div> <!-- End of scrollable area -->
+
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              justify-content: flex-end;
+              1.5rem;
+              background: var(--bg-card);
+              border-top: 1px solid var(--border);
+              border-radius: 0 0 12px 12px;
+            "
+          >
+            <button
+              type="button"
+              class="btn"
+              id="btn-delete-employee"
+              style="
+                background-color: transparent !important;
+                color: #ef4444 !important;
+                border: 1px solid #ef4444;
+                margin-right: auto;
+                display: none;
+              "
+              onclick="deleteEmp()"
+            >
+              <i class="fa-solid fa-trash"></i> ลบข้อมูลนี้
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="closeEmpModal()"
+            >
+              ยกเลิก
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-save"></i> บันทึกข้อมูล
+            </button>
+          </div>
+        </form>
+      </div>
+    <script>
+      const showToast = (message, isError = false) => {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toast-message");
+        toastMessage.textContent = message;
+        toast.querySelector("i").className = isError
+          ? "fa-solid fa-circle-xmark"
+          : "fa-solid fa-circle-check";
+        toast.querySelector("i").style.color = isError
+          ? "#ef4444"
+          : "var(--success)";
+        toast.classList.remove("hidden");
+        setTimeout(() => toast.classList.add("hidden"), 3000);
+      };
+
+      let allEmployeesData = [];
+      let currentEmployeesPage = 1;
+      const employeesPerPage = 20;
+
+      const fetchEmployees = async () => {
+        const tbody = document.getElementById("employees-tbody");
+        try {
+          const res = await fetch("/api/employees");
+          allEmployeesData = await res.json();
+          currentEmployeesPage = 1;
+          renderEmployees();
+        } catch (err) {
+          tbody.innerHTML =
+            '<tr><td colspan="8" style="text-align: center; color: red;">โหลดข้อมูลล้มเหลว</td></tr>';
+        }
+      };
+
+      const renderEmployees = () => {
+        const tbody = document.getElementById("employees-tbody");
+        tbody.innerHTML = "";
+        
+        if (allEmployeesData.length === 0) {
+          tbody.innerHTML =
+            '<tr><td colspan="7" style="text-align: center;">ไม่พบข้อมูลพนักงาน</td></tr>';
+          document.getElementById('pagination-info').innerText = 'แสดง 0-0 จาก 0 รายการ';
+          document.getElementById('page-number').innerText = 'หน้า 1';
+          return;
+        }
+
+        const start = (currentEmployeesPage - 1) * employeesPerPage;
+        const end = Math.min(start + employeesPerPage, allEmployeesData.length);
+        const paginatedData = allEmployeesData.slice(start, end);
+
+        paginatedData.forEach((emp) => {
+          tbody.innerHTML += `
+                      <tr>
+                          <td style="text-align: center;">
+                            <input type="checkbox" class="employee-checkbox" value="${emp.id}" onchange="toggleEmployeeDeleteBtn()">
+                          </td>
+                          <td><strong>${emp.pic_code || "-"}</strong></td>
+                          <td>${emp.pic_name || "-"}</td>
+                          <td>${emp.pic_name_eng || "-"}</td>
+                          <td>${emp.contact_number || "-"}</td>
+                          <td>${emp.department || "-"}</td>
+                          <td><span class="badge" style="background: var(--bg-main); color: var(--text-muted); padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">${emp.keywords || "-"}</span></td>
+                          <td style="text-align: center;" class="sticky-manage">
+<button class="btn-text" title='แก้ไข' onclick='editEmp({"id": "${emp.id}", "pic_code": "${emp.pic_code || ""}", "pic_name": "${emp.pic_name || ""}", "contact_number": "${emp.contact_number || ""}", "department": "${emp.department || ""}"})'><i class='fa-solid fa-pen-to-square'></i></button></td>
+                      </tr>
+                  `;
+        });
+        
+        document.getElementById('pagination-info').innerText = `แสดง ${start + 1}-${end} จาก ${allEmployeesData.length} รายการ`;
+        document.getElementById('page-number').innerText = `หน้า ${currentEmployeesPage}`;
+        
+        const selectAll = document.getElementById('selectAllEmployees');
+        if(selectAll) selectAll.checked = false;
+        toggleEmployeeDeleteBtn();
+      };
+
+      window.prevEmployeesPage = () => {
+        if (currentEmployeesPage > 1) {
+          currentEmployeesPage--;
+          renderEmployees();
+        }
+      };
+
+      window.nextEmployeesPage = () => {
+        if (currentEmployeesPage * employeesPerPage < allEmployeesData.length) {
+          currentEmployeesPage++;
+          renderEmployees();
+        }
+      };
+
+      window.toggleSelectAllEmployees = (source) => {
+        const checkboxes = document.querySelectorAll('.employee-checkbox');
+        checkboxes.forEach(cb => cb.checked = source.checked);
+        toggleEmployeeDeleteBtn();
+      };
+
+      window.toggleEmployeeDeleteBtn = () => {
+        const checkboxes = document.querySelectorAll('.employee-checkbox:checked');
+        const btn = document.getElementById('btn-bulk-delete-employees');
+        const countSpan = document.getElementById('delete-count-employees');
+        if(btn) {
+          if (checkboxes.length > 0) {
+            btn.style.display = "inline-flex";
+            if(countSpan) countSpan.innerText = checkboxes.length;
+          } else {
+            btn.style.display = "none";
+          }
+        }
+      };
+
+      window.deleteSelectedEmployees = async () => {
+        const checkboxes = document.querySelectorAll('.employee-checkbox:checked');
+        if (checkboxes.length === 0) return;
+        
+        document.getElementById('delete-confirm-count').innerText = checkboxes.length;
+        document.getElementById('delete-confirm-modal').style.display = 'flex';
+        
+        document.getElementById('btn-confirm-delete-action').onclick = async () => {
+            document.getElementById('delete-confirm-modal').style.display = 'none';
+            let successCount = 0;
+            const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
+            for (const cb of checkboxes) {
+                try {
+                    const res = await fetch("/api/employees/" + cb.value + userQuery, { method: "DELETE" });
+                    if (res.ok) successCount++;
+                } catch(e) {}
+            }
+            if (successCount > 0) {
+                showToast(`ลบข้อมูลสำเร็จ ${successCount} รายการ`, "success");
+            }
+            const selectAll = document.getElementById('selectAllEmployees');
+            if(selectAll) selectAll.checked = false;
+            toggleEmployeeDeleteBtn();
+            fetchEmployees();
+        };
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchEmployees();
+      });
+
+      function openEmpModal() {
+        document.getElementById("emp-modal-title").innerHTML =
+          '<i class="fa-solid fa-user-tie"></i> เพิ่มพนักงานใหม่';
+        document.getElementById("btn-delete-employee").style.display = "none";
+        document.getElementById("emp-form").reset();
+        document.getElementById("emp-id").value = "";
+        document.getElementById("emp-modal").style.display = "flex";
+        document.getElementById("emp-modal").classList.remove("hidden");
+      }
+
+      function closeEmpModal() {
+        document.getElementById("emp-modal").style.display = "none";
+        document.getElementById("emp-modal").classList.add("hidden");
+      }
+
+      window.editEmp = function (emp) {
+        document.getElementById("emp-modal-title").innerHTML =
+          '<i class="fa-solid fa-pen-to-square"></i> แก้ไขพนักงาน';
+        document.getElementById("btn-delete-employee").style.display = "inline-flex";
+        document.getElementById("emp-id").value = emp.id;
+        document.getElementById("emp-code").value = emp.pic_code;
+        document.getElementById("emp-name").value = emp.pic_name;
+        document.getElementById("emp-phone").value = emp.contact_number;
+        document.getElementById("emp-dept").value = emp.department;
+        document.getElementById("emp-modal").style.display = "flex";
+        document.getElementById("emp-modal").classList.remove("hidden");
+      };
+
+      window.deleteEmp = async function () {
+        const id = document.getElementById("emp-id").value;
+        const name = document.getElementById("emp-name").value;
+        
+        document.getElementById('delete-confirm-count').innerHTML = `พนักงาน ("${name}")`;
+        document.getElementById('delete-confirm-modal').style.display = 'flex';
+        
+        document.getElementById('btn-confirm-delete-action').onclick = async () => {
+          document.getElementById('delete-confirm-modal').style.display = 'none';
+          try {
+            const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
+            const res = await fetch(`/api/employees/${id}${userQuery}`, { method: "DELETE" });
+            if (res.ok) {
+              showToast("ลบพนักงานเรียบร้อย");
+              closeEmpModal();
+              fetchEmployees();
+            } else throw new Error("Delete failed");
+          } catch (err) {
+            alert("ไม่สามารถลบข้อมูลได้");
+          }
+        };
+      };
+
+      document
+        .getElementById("emp-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const id = document.getElementById("emp-id").value;
+          const payload = {
+            pic_code: document.getElementById("emp-code").value,
+            pic_name: document.getElementById("emp-name").value,
+            contact_number: document.getElementById("emp-phone").value,
+            department: document.getElementById("emp-dept").value,
+          };
+
+          const method = id ? "PUT" : "POST";
+          const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
+          const url = id ? `/api/employees/${id}${userQuery}` : `/api/employees${userQuery}`;
+
+          try {
+            const res = await fetch(url, {
+              method: method,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            if (res.ok) {
+              closeEmpModal();
+              showToast(
+                id ? "อัปเดตข้อมูลพนักงานเรียบร้อย" : "เพิ่มพนักงานเรียบร้อย",
+              );
+              fetchEmployees();
+            } else {
+              const data = await res.json();
+              let errorMsg = data.error || "Save failed";
+              if (data.details && data.details.includes("Duplicate entry")) {
+                errorMsg = "รหัสพนักงานนี้ซ้ำในระบบ โปรดใช้รหัสอื่น";
+              }
+              alert("ไม่สามารถบันทึกข้อมูลได้: " + errorMsg);
+            }
+          } catch (err) {
+            alert("ไม่สามารถบันทึกข้อมูลได้: เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว");
+          }
+        });
+    </script>
+  </body>
+</html>
+
+

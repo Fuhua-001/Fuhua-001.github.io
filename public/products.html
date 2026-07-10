@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ข้อมูลสินค้า - AI Enterprise Quotation Maker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      if (!sessionStorage.getItem("currentUser"))
+        window.location.href = "login.html";
+    </script>
+  </head>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <span>QuoteAI</span>
+        </div>
+        <nav class="menu">
+          <a href="dashboard.html" class="menu-item"
+            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
+          >
+          <a href="index.html" class="menu-item"
+            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
+          >
+          <a href="history.html" class="menu-item"
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
+          >
+          <a href="customers.html" class="menu-item"
+            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
+          >
+          <a href="products.html" class="menu-item active"
+            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
+          >
+          <a href="employees.html" class="menu-item"
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
+          >
+          <a
+            href="#"
+            class="menu-item text-danger"
+            onclick="
+              sessionStorage.removeItem('isLoggedIn');
+              window.location.href = 'login.html';
+            "
+            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
+          >
+        </nav>
+        <div class="user-profile">
+          <div class="avatar"><i class="fa-solid fa-user"></i></div>
+          <div class="user-info">
+            <span class="user-name">Sales Team</span>
+            <span class="user-role">Enterprise</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content page-fixed">
+        <header class="top-header">
+          <h1>รายการข้อมูลสินค้า 📦</h1>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="openProductModal()">
+              <i class="fa-solid fa-plus"></i> เพิ่มสินค้า
+            </button>
+          </div>
+        </header>
+
+        <div class="content-grid">
+          <section class="card form-section">
+            <div class="card-header">
+              <h2>
+                <i class="fa-solid fa-boxes-stacked"></i>
+                แคตตาล็อกสินค้าและสต๊อก
+              </h2>
+            </div>
+            <div class="table-container" style="margin-top: 1rem">
+              <table
+                style="width: 100%; text-align: left; border-collapse: collapse"
+              >
+                <thead>
+                  <tr
+                    style="
+                      background: var(--bg-main);
+                      border-bottom: 2px solid var(--border);
+                    "
+                  >
+                    <th style="width: 50px; text-align: center;">
+                      <input type="checkbox" id="selectAllProducts" onchange="toggleSelectAllProducts(this)">
+                    </th>
+                    <th style="">รหัสสินค้า</th>
+                    <th style="">ชื่อสินค้า</th>
+                    <th style="">แบรนด์</th>
+                    <th style="">ราคาขาย (THB)</th>
+                    <th style="white-space: nowrap">หน่วย</th>
+                    <th style="">สต๊อกคงเหลือ</th>
+                    <th style="">สถานะ</th>
+                    <th style="" class="sticky-manage">จัดการ</th>
+                  </tr>
+                </thead>
+                <tbody id="products-tbody">
+                  <tr>
+                    <td colspan="9" style="text-align: center; padding: 2rem">
+                      กำลังโหลดข้อมูล...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%;">
+            <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="prevProductsPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
+              <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">หน้า 1</span>
+              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextProductsPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <button class="btn btn-secondary" id="btn-bulk-delete-products" style="background-color: #ef4444 !important; color: white !important; display: none; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onclick="deleteSelectedProducts()">
+                <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span id="delete-count-products">0</span>)
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div 
+      id="delete-confirm-modal" 
+      style="
+        display: none; 
+        position: fixed; 
+        top: 0; left: 0; width: 100%; height: 100%; 
+        background: rgba(0,0,0,0.5); 
+        z-index: 10000; 
+        justify-content: center; 
+        align-items: center;
+        animation: fadeIn 0.2s ease-out;
+      "
+    >
+      <div style="
+        background: white; 
+        padding: 2rem; 
+        border-radius: 12px; 
+        width: 90%; 
+        max-width: 400px; 
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      ">
+        <div style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">ยืนยันการลบข้อมูล</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก <span id="delete-confirm-count" style="font-weight: bold; color: #ef4444;">0</span> รายการ? การกระทำนี้ไม่สามารถกู้คืนได้</p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">ยกเลิก</button>
+          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: #ef4444 !important; color: white !important; border: none;">ยืนยันการลบ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+      <i class="fa-solid fa-circle-check"></i>
+      <span id="toast-message">แจ้งเตือน</span>
+    </div>
+
+    <!-- Product Modal -->
+    <div
+      id="product-modal"
+      class="modal-overlay hidden"
+      style="
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(4px);
+        padding: 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        display: none;
+      "
+    >
+      <div
+        class="card"
+        style="
+          width: 100%;
+          max-width: 500px;
+          max-height: 90vh;
+          display: flex;
+          flex-direction: column;
+          background: var(--bg-card);
+        "
+      >
+        <div
+          class="card-header"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+          "
+        >
+          <h2 id="modal-title" style="margin: 0;">
+            <i class="fa-solid fa-box"></i> เพิ่มสินค้าใหม่
+          </h2>
+          <button
+            type="button"
+            class="btn-text"
+            onclick="closeProductModal()"
+            style="
+              font-size: 1.5rem;
+              background: transparent;
+              border: none;
+              cursor: pointer;
+              color: var(--text-muted);
+            "
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form
+          id="product-form"
+          style="
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+          "
+        >
+          <div
+            style="
+              padding: 1.5rem;
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+              overflow-y: auto;
+            "
+          >
+          <input type="hidden" id="prod-id" />
+          
+          <div class="ai-product-box" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1)); padding: 1rem; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2); margin-bottom: 0.5rem;">
+             <label style="color: var(--primary); font-weight: 600; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI กรอกข้อมูลสินค้า</label>
+             <textarea id="prod-ai-prompt" class="input-field" rows="3" placeholder="พิมพ์สิ่งที่มี เช่น 'ท่อสแตนเลส 304 2 นิ้ว รหัส P001 ราคา 500 บาท มี 10 ชิ้น ต้นทุน 300'"></textarea>
+             <button type="button" id="btn-prod-ai" class="btn btn-primary" onclick="autoFillProductAI()" style="width: 100%; margin-top: 0.5rem; justify-content: center; background: #10b981; border-color: #10b981;"><i class="fa-solid fa-robot"></i> แยกข้อมูลลงฟอร์ม</button>
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >รหัสสินค้า (Code) *</label
+            >
+            <input
+              type="text"
+              id="prod-code"
+              class="input-field"
+              required
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >ชื่อสินค้า (Name) *</label
+            >
+            <input
+              type="text"
+              id="prod-name"
+              class="input-field"
+              required
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >หน่วย (Unit)</label
+            >
+            <input
+              type="text"
+              id="prod-unit"
+              class="input-field"
+              value="ชิ้น"
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >ราคาขาย (Selling Price) *</label
+            >
+            <input
+              type="number"
+              id="prod-price"
+              step="0.01"
+              class="input-field"
+              required
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >ราคาต้นทุน (Purchase Price)</label
+            >
+            <input
+              type="number"
+              id="prod-cost"
+              step="0.01"
+              class="input-field"
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+              "
+            />
+          </div>
+
+          <div
+            class="input-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label style="font-weight: 500; font-size: 0.95rem"
+              >สถานะ (Status)</label
+            >
+            <select
+              id="prod-status"
+              class="input-field"
+              style="
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                width: 100%;
+                font-family: inherit;
+                background: white;
+              "
+            >
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          </div> <!-- End of scrollable area -->
+
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              justify-content: flex-end;
+              1.5rem;
+              background: var(--bg-card);
+              border-top: 1px solid var(--border);
+              border-radius: 0 0 12px 12px;
+            "
+          >
+            <button
+              type="button"
+              class="btn"
+              id="btn-delete-prod"
+              style="
+                background-color: transparent !important;
+                color: #ef4444 !important;
+                border: 1px solid #ef4444;
+                margin-right: auto;
+                display: none;
+              "
+              onclick="deleteProduct()"
+            >
+              <i class="fa-solid fa-trash"></i> ลบข้อมูลนี้
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="closeProductModal()"
+            >
+              ยกเลิก
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-save"></i> บันทึกข้อมูล
+            </button>
+          </div>
+        </form>
+      </div>
+    <script>
+      const showToast = (message, isError = false) => {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toast-message");
+        toastMessage.textContent = message;
+        toast.querySelector("i").className = isError
+          ? "fa-solid fa-circle-xmark"
+          : "fa-solid fa-circle-check";
+        toast.querySelector("i").style.color = isError
+          ? "#ef4444"
+          : "var(--success)";
+        toast.classList.remove("hidden");
+        setTimeout(() => toast.classList.add("hidden"), 3000);
+      };
+
+      let allProductsData = [];
+      let currentProductsPage = 1;
+      const productsPerPage = 20;
+
+      const fetchProducts = async () => {
+        const tbody = document.getElementById("products-tbody");
+        try {
+          const res = await fetch("/api/products");
+          allProductsData = await res.json();
+          currentProductsPage = 1;
+          renderProducts();
+        } catch (err) {
+          tbody.innerHTML =
+            '<tr><td colspan="9" style="text-align: center; color: red;">โหลดข้อมูลล้มเหลว</td></tr>';
+        }
+      };
+
+      const renderProducts = () => {
+  const tbody = document.getElementById("products-tbody");
+  tbody.innerHTML = "";
+  
+  if (allProductsData.length === 0) {
+    tbody.innerHTML =
+      '<tr><td colspan="9" style="text-align: center;">ไม่พบข้อมูลสินค้า</td></tr>';
+    document.getElementById('pagination-info').innerText = 'แสดง 0-0 จาก 0 รายการ';
+    document.getElementById('page-number').innerText = 'หน้า 1';
+    return;
+  }
+
+  const start = (currentProductsPage - 1) * productsPerPage;
+  const end = Math.min(start + productsPerPage, allProductsData.length);
+  const paginatedData = allProductsData.slice(start, end);
+
+  paginatedData.forEach((prod) => {
+    let row = "<tr>";
+    row += "<td style='text-align: center;'><input type='checkbox' class='product-checkbox' value='" + prod.id + "' onchange='toggleProductDeleteBtn()'></td>";
+    row += "<td><strong>" + (prod.code || "-") + "</strong></td>";
+    row += "<td>" + prod.name + "</td>";
+    row += "<td>" + (prod.brand || "-") + "</td>";
+    row += "<td>฿" + parseFloat(prod.selling_price || 0).toLocaleString('th-TH', { minimumFractionDigits: 2 }) + "</td>";
+    row += "<td>" + (prod.unit || "-") + "</td>";
+    row += "<td><strong style='color: " + (prod.stock_qty > 0 ? "var(--primary)" : "var(--danger)") + "'>" + prod.stock_qty + "</strong></td>";
+    row += "<td><span class='badge' style='background: " + (prod.status === 'Active' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)') + "; color: " + (prod.status === 'Active' ? 'var(--success)' : 'var(--danger)') + "; padding: 0.3rem 0.6rem; border-radius: 4px;'><i class='fa-solid fa-" + (prod.status === 'Active' ? 'circle-check' : 'circle-xmark') + "'></i> " + (prod.status || 'Active') + "</span></td>";
+    row += "<td style='text-align: center;' class='sticky-manage'>";
+    row += "<button class='btn-text' title='แก้ไข' onclick='editProduct({\"id\": \"" + prod.id + "\", \"code\": \"" + (prod.code || "") + "\", \"name\": \"" + prod.name.replace(/"/g, '\\"') + "\", \"unit\": \"" + (prod.unit || "ชิ้น") + "\", \"selling_price\": \"" + (prod.selling_price || 0) + "\", \"purchase_price\": \"" + (prod.purchase_price || 0) + "\", \"status\": \"" + (prod.status || "Active") + "\"})'><i class='fa-solid fa-pen-to-square'></i></button></td>";
+    row += "</tr>";
+    tbody.innerHTML += row;
+  });
+  
+  document.getElementById('pagination-info').innerText = 'แสดง ' + (start + 1) + '-' + end + ' จาก ' + allProductsData.length + ' รายการ';
+  document.getElementById('page-number').innerText = 'หน้า ' + currentProductsPage;
+  
+  const selectAll = document.getElementById('selectAllProducts');
+  if(selectAll) selectAll.checked = false;
+  toggleProductDeleteBtn();
+};
+
+      window.prevProductsPage = () => {
+        if (currentProductsPage > 1) {
+          currentProductsPage--;
+          renderProducts();
+        }
+      };
+
+      window.nextProductsPage = () => {
+        if (currentProductsPage * productsPerPage < allProductsData.length) {
+          currentProductsPage++;
+          renderProducts();
+        }
+      };
+
+      window.toggleSelectAllProducts = (source) => {
+        const checkboxes = document.querySelectorAll('.product-checkbox');
+        checkboxes.forEach(cb => cb.checked = source.checked);
+        toggleProductDeleteBtn();
+      };
+
+      window.toggleProductDeleteBtn = () => {
+        const checkboxes = document.querySelectorAll('.product-checkbox:checked');
+        const btn = document.getElementById('btn-bulk-delete-products');
+        const countSpan = document.getElementById('delete-count-products');
+        if(btn) {
+          if (checkboxes.length > 0) {
+            btn.style.display = "inline-flex";
+            if(countSpan) countSpan.innerText = checkboxes.length;
+          } else {
+            btn.style.display = "none";
+          }
+        }
+      };
+
+      window.deleteSelectedProducts = async () => {
+        const checkboxes = document.querySelectorAll('.product-checkbox:checked');
+        if (checkboxes.length === 0) return;
+        
+        document.getElementById('delete-confirm-count').innerText = checkboxes.length;
+        document.getElementById('delete-confirm-modal').style.display = 'flex';
+        
+        document.getElementById('btn-confirm-delete-action').onclick = async () => {
+            document.getElementById('delete-confirm-modal').style.display = 'none';
+            let successCount = 0;
+            const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
+            for (const cb of checkboxes) {
+                try {
+                    const res = await fetch("/api/products/" + cb.value + userQuery, { method: "DELETE" });
+                    if (res.ok) successCount++;
+                } catch(e) {}
+            }
+            if (successCount > 0) {
+                showToast(`ลบข้อมูลสำเร็จ ${successCount} รายการ`, "success");
+            }
+            const selectAll = document.getElementById('selectAllProducts');
+            if(selectAll) selectAll.checked = false;
+            toggleProductDeleteBtn();
+            fetchProducts();
+        };
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchProducts();
+      });
+
+      function openProductModal() {
+        document.getElementById("modal-title").innerHTML =
+          '<i class="fa-solid fa-box"></i> เพิ่มสินค้าใหม่';
+        document.getElementById("btn-delete-prod").style.display = "none";
+        document.getElementById("product-form").reset();
+        document.getElementById("prod-id").value = "";
+        document.getElementById("prod-unit").value = "ชิ้น";
+        document.getElementById("prod-cost").value = "";
+        document.getElementById("product-modal").style.display = "flex";
+        document.getElementById("product-modal").classList.remove("hidden");
+      }
+
+
+      function closeProductModal() {
+        document.getElementById("product-modal").style.display = "none";
+        document.getElementById("product-modal").classList.add("hidden");
+      }
+
+      window.editProduct = function (prod) {
+        document.getElementById("modal-title").innerHTML =
+          '<i class="fa-solid fa-pen-to-square"></i> แก้ไขสินค้า';
+        document.getElementById("btn-delete-prod").style.display = "inline-flex";
+        document.getElementById("prod-id").value = prod.id;
+        document.getElementById("prod-code").value = prod.code;
+        document.getElementById("prod-name").value = prod.name;
+        document.getElementById("prod-price").value = prod.selling_price;
+        document.getElementById("prod-cost").value = prod.purchase_price || "";
+        document.getElementById("prod-unit").value = prod.unit || "ชิ้น";
+        document.getElementById("prod-status").value = prod.status;
+        document.getElementById("product-modal").style.display = "flex";
+        document.getElementById("product-modal").classList.remove("hidden");
+      };
+
+
+      window.deleteProduct = async function () {
+        const id = document.getElementById("prod-id").value;
+        const name = document.getElementById("prod-name").value;
+        
+        document.getElementById('delete-confirm-count').innerHTML = `"${name}"`;
+        document.getElementById('delete-confirm-modal').style.display = 'flex';
+        
+        document.getElementById('btn-confirm-delete-action').onclick = async () => {
+          document.getElementById('delete-confirm-modal').style.display = 'none';
+          try {
+            const userQuery = "null";
+            const res = await fetch(`/api/products/${id}$ {userQuery}`, { method: "DELETE" });
+              if (res.ok) {
+                showToast("ลบสินค้าเรียบร้อย");
+                closeProductModal();
+                fetchProducts();
+              } else {
+                const data = await res.json();
+                showToast("ไม่สามารถลบสินค้าได้: " + (data.error || ""), true);
+              }
+            } catch (err) {
+              showToast("ไม่สามารถลบสินค้าได้: เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว", true);
+            }
+        };
+      };
+
+      document
+        .getElementById("product-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const id = document.getElementById("prod-id").value;
+          const payload = {
+            code: document.getElementById("prod-code").value,
+            name: document.getElementById("prod-name").value,
+            selling_price: document.getElementById("prod-price").value,
+            purchase_price: document.getElementById("prod-cost").value || 0,
+            unit: document.getElementById("prod-unit").value,
+            status: document.getElementById("prod-status").value,
+          };
+
+          const method = id ? "PUT" : "POST";
+          const userQuery = "";
+          const url = id ? `/api/products/${id}` : `/api/products`;
+
+          try {
+            const res = await fetch(url, {
+              method: method,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            if (res.ok) {
+              closeProductModal();
+              showToast(
+                id ? "อัปเดตข้อมูลสินค้าเรียบร้อย" : "เพิ่มสินค้าเรียบร้อย",
+              );
+              fetchProducts();
+            } else {
+              const data = await res.json();
+                let errorMsg = data.error || "Save failed";
+                if (data.details && data.details.includes("Duplicate entry")) {
+                  errorMsg = "รหัสสินค้านี้ซ้ำในระบบ โปรดใช้รหัสอื่น";
+                }
+                showToast("ไม่สามารถบันทึกข้อมูลได้: " + errorMsg, true);
+              }
+            } catch (err) {
+              showToast("ไม่สามารถบันทึกข้อมูลได้: เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว", true);
+            }
+        });
+      async function autoFillProductAI() {
+        const promptInput = document.getElementById('prod-ai-prompt').value.trim();
+        if(!promptInput) return alert('กรุณาพิมพ์ข้อมูลสินค้าที่ต้องการให้ AI ช่วยแยก');
+        
+        const btn = document.getElementById('btn-prod-ai');
+        const oldText = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังแยกข้อมูล...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch('/api/ai-product', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: promptInput })
+          });
+          
+          if(!res.ok) throw new Error('API Error');
+          const data = await res.json();
+          
+          if(data.code) document.getElementById('prod-code').value = data.code;
+          if(data.name) document.getElementById('prod-name').value = data.name;
+          if(data.barcode) document.getElementById('prod-barcode').value = data.barcode;
+          if(data.unit) document.getElementById('prod-unit').value = data.unit;
+          if(data.cost_price) document.getElementById('prod-cost').value = data.cost_price;
+          if(data.selling_price) document.getElementById('prod-price').value = data.selling_price;
+          
+        } catch (err) {
+          alert('เกิดข้อผิดพลาดในการใช้ AI จัดการข้อมูล: ' + err.message);
+        } finally {
+          btn.innerHTML = oldText;
+          btn.disabled = false;
+        }
+      }
+    </script>
+  </body>
+</html>
+
