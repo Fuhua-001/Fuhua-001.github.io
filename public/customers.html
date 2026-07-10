@@ -641,9 +641,13 @@
           customerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
+            const cusName = document.getElementById("cus-name").value.trim();
             const id = document.getElementById("cus-id").value;
+            // Auto-generate code from name if adding new customer
+            const autoCode = "CUS-" + cusName.replace(/[^a-zA-Z0-9ก-๙]/g, "").substring(0, 8).toUpperCase() + "-" + Date.now().toString().slice(-4);
             const payload = {
-              name: document.getElementById("cus-name").value,
+              name: cusName,
+              code: autoCode,
               tax_id: document.getElementById("cus-tax-id").value,
               contact_person: document.getElementById("cus-contact").value,
               email: document.getElementById("cus-email").value,
