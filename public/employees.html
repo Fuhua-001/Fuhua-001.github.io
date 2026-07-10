@@ -94,9 +94,9 @@
                     <th style="width: 50px; text-align: center;">
                       <input type="checkbox" id="selectAllEmployees" onchange="toggleSelectAllEmployees(this)">
                     </th>
-                    <th style="">รหัส (PIC)</th>
-                    <th style="">ชื่อ-นามสกุล (TH)</th>
-                    <th style="">ชื่อ-นามสกุล (EN)</th>
+                    <th style="min-width: 150px;">รหัสพนักงาน (PIC)</th>
+                    <th style="min-width: 250px;">ชื่อพนักงาน (TH)</th>
+                    <th style="min-width: 250px;">ชื่อพนักงาน (EN)</th>
                     <th style="">เบอร์ติดต่อ</th>
                     <th style="">แผนก</th>
                     <th style="">คีย์เวิร์ด</th>
@@ -105,7 +105,7 @@
                 </thead>
                 <tbody id="employees-tbody">
                   <tr>
-                    <td colspan="7" style="text-align: center; padding: 2rem">
+                    <td colspan="8" style="text-align: center; padding: 2rem">
                       กำลังโหลดข้อมูล...
                     </td>
                   </tr>
@@ -275,26 +275,26 @@
             />
           </div>
 
-          <div
-            class="input-group"
-            style="display: flex; flex-direction: column; gap: 0.5rem"
-          >
-            <label style="font-weight: 500; font-size: 0.95rem"
-              >ชื่อ-นามสกุล (TH) *</label
-            >
-            <input
-              type="text"
-              id="emp-name"
-              class="input-field"
-              required
-              style="
-                padding: 0.75rem;
-                border: 1px solid var(--border);
-                border-radius: 8px;
-                width: 100%;
-                font-family: inherit;
-              "
-            />
+          <div style="display: flex; gap: 1rem;">
+            <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+              <label style="font-weight: 500; font-size: 0.95rem">ชื่อ (TH) *</label>
+              <input type="text" id="emp-fname-th" class="input-field" required style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+            </div>
+            <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+              <label style="font-weight: 500; font-size: 0.95rem">นามสกุล (TH) *</label>
+              <input type="text" id="emp-lname-th" class="input-field" required style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem;">
+            <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+              <label style="font-weight: 500; font-size: 0.95rem">ชื่อ (EN) *</label>
+              <input type="text" id="emp-fname-en" class="input-field" required style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+            </div>
+            <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
+              <label style="font-weight: 500; font-size: 0.95rem">นามสกุล (EN) *</label>
+              <input type="text" id="emp-lname-en" class="input-field" required style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+            </div>
           </div>
 
           <div
@@ -440,7 +440,7 @@
                           <td>${emp.department || "-"}</td>
                           <td><span class="badge" style="background: var(--bg-main); color: var(--text-muted); padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">${emp.keywords || "-"}</span></td>
                           <td style="text-align: center;" class="sticky-manage">
-<button class="btn-text" title='แก้ไข' onclick='editEmp({"id": "${emp.id}", "pic_code": "${emp.pic_code || ""}", "pic_name": "${emp.pic_name || ""}", "contact_number": "${emp.contact_number || ""}", "department": "${emp.department || ""}"})'><i class='fa-solid fa-pen-to-square'></i></button></td>
+                            <button class="btn-text" title='แก้ไข' onclick='editEmp({"id": "${emp.id}", "pic_code": "${emp.pic_code || ""}", "pic_name": "${emp.pic_name || ""}", "pic_name_eng": "${emp.pic_name_eng || ""}", "contact_number": "${emp.contact_number || ""}", "department": "${emp.department || ""}"})'><i class='fa-solid fa-pen-to-square'></i></button></td>
                       </tr>
                   `;
         });
@@ -518,12 +518,16 @@
         fetchEmployees();
       });
 
-      function openEmpModal() {
+      window.openEmpModal = () => {
         document.getElementById("emp-modal-title").innerHTML =
           '<i class="fa-solid fa-user-tie"></i> เพิ่มพนักงานใหม่';
         document.getElementById("btn-delete-employee").style.display = "none";
         document.getElementById("emp-form").reset();
         document.getElementById("emp-id").value = "";
+        document.getElementById("emp-fname-th").value = "";
+        document.getElementById("emp-lname-th").value = "";
+        document.getElementById("emp-fname-en").value = "";
+        document.getElementById("emp-lname-en").value = "";
         document.getElementById("emp-modal").style.display = "flex";
         document.getElementById("emp-modal").classList.remove("hidden");
       }
@@ -533,13 +537,33 @@
         document.getElementById("emp-modal").classList.add("hidden");
       }
 
-      window.editEmp = function (emp) {
+      window.editEmp = (emp) => {
         document.getElementById("emp-modal-title").innerHTML =
           '<i class="fa-solid fa-pen-to-square"></i> แก้ไขพนักงาน';
         document.getElementById("btn-delete-employee").style.display = "inline-flex";
         document.getElementById("emp-id").value = emp.id;
         document.getElementById("emp-code").value = emp.pic_code;
-        document.getElementById("emp-name").value = emp.pic_name;
+        
+        let fname_th = emp.pic_name || "";
+        let lname_th = "";
+        if (fname_th.includes(" ")) {
+            const parts = fname_th.split(" ");
+            fname_th = parts[0];
+            lname_th = parts.slice(1).join(" ");
+        }
+        document.getElementById("emp-fname-th").value = fname_th;
+        document.getElementById("emp-lname-th").value = lname_th;
+
+        let fname_en = emp.pic_name_eng || "";
+        let lname_en = "";
+        if (fname_en.includes(" ")) {
+            const parts = fname_en.split(" ");
+            fname_en = parts[0];
+            lname_en = parts.slice(1).join(" ");
+        }
+        document.getElementById("emp-fname-en").value = fname_en;
+        document.getElementById("emp-lname-en").value = lname_en;
+
         document.getElementById("emp-phone").value = emp.contact_number;
         document.getElementById("emp-dept").value = emp.department;
         document.getElementById("emp-modal").style.display = "flex";
@@ -548,7 +572,9 @@
 
       window.deleteEmp = async function () {
         const id = document.getElementById("emp-id").value;
-        const name = document.getElementById("emp-name").value;
+        const fname = document.getElementById("emp-fname-th").value;
+        const lname = document.getElementById("emp-lname-th").value;
+        const name = `${fname} ${lname}`.trim();
         
         document.getElementById('delete-confirm-count').innerHTML = `พนักงาน ("${name}")`;
         document.getElementById('delete-confirm-modal').style.display = 'flex';
@@ -574,9 +600,19 @@
         .addEventListener("submit", async (e) => {
           e.preventDefault();
           const id = document.getElementById("emp-id").value;
+          
+          const fname_th = document.getElementById("emp-fname-th").value.trim();
+          const lname_th = document.getElementById("emp-lname-th").value.trim();
+          const pic_name = `${fname_th} ${lname_th}`.trim();
+          
+          const fname_en = document.getElementById("emp-fname-en").value.trim();
+          const lname_en = document.getElementById("emp-lname-en").value.trim();
+          const pic_name_eng = `${fname_en} ${lname_en}`.trim();
+
           const payload = {
             pic_code: document.getElementById("emp-code").value,
-            pic_name: document.getElementById("emp-name").value,
+            pic_name: pic_name,
+            pic_name_eng: pic_name_eng,
             contact_number: document.getElementById("emp-phone").value,
             department: document.getElementById("emp-dept").value,
           };
