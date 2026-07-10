@@ -481,12 +481,12 @@ document.addEventListener("DOMContentLoaded", () => {
           const canvas = document.createElement('canvas');
           const scale = 3;
           canvas.width = 734 * scale;
-          canvas.height = 145 * scale;
+          canvas.height = 185 * scale;
           const ctx = canvas.getContext('2d');
           ctx.scale(scale, scale);
           
           ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, 734, 145);
+          ctx.fillRect(0, 0, 734, 185);
           
           ctx.strokeStyle = '#000000';
           ctx.lineWidth = 1;
@@ -506,8 +506,8 @@ document.addEventListener("DOMContentLoaded", () => {
               ctx.stroke();
           }
           
-          roundRect(0, 5, 359, 135, 8);
-          roundRect(374, 5, 359, 135, 8);
+          roundRect(0, 5, 359, 175, 8);
+          roundRect(374, 5, 359, 175, 8);
           
           ctx.textAlign = 'center';
           
@@ -516,31 +516,31 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillText('ในนาม ลูกค้า / Customer', 179.5, 35);
           
           ctx.beginPath();
-          ctx.moveTo(79.5, 95);
-          ctx.lineTo(279.5, 95);
+          ctx.moveTo(79.5, 115);
+          ctx.lineTo(279.5, 115);
           ctx.stroke();
           
           ctx.font = '12px "Prompt", "Sarabun", sans-serif';
           ctx.fillStyle = '#666666';
-          ctx.fillText('(............................................................)', 179.5, 110);
+          ctx.fillText('(............................................................)', 179.5, 135);
           ctx.fillStyle = '#000000';
-          ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 125);
-          ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 140);
+          ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 153);
+          ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 170);
           
           ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
           ctx.fillText('ในนาม โซลโซไซตี้ (Soul Society)', 553.5, 35);
           
           ctx.beginPath();
-          ctx.moveTo(453.5, 95);
-          ctx.lineTo(653.5, 95);
+          ctx.moveTo(453.5, 115);
+          ctx.lineTo(653.5, 115);
           ctx.stroke();
           
           ctx.font = '12px "Prompt", "Sarabun", sans-serif';
           ctx.fillStyle = '#0f172a';
-          ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 110);
+          ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 135);
           ctx.fillStyle = '#000000';
-          ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 125);
-          ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 140);
+          ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
+          ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
           
           return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: 734px; margin-top: 5px;" alt="Locked Signatures" />';
       }
