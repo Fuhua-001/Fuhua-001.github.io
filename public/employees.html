@@ -309,9 +309,9 @@
               id="emp-phone"
               class="input-field"
               maxlength="10"
-              minlength="9"
-              pattern="^0[0-9]{8,9}$"
-              title="กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (9-10 หลัก เริ่มต้นด้วย 0)"
+              minlength="10"
+              pattern="^0[0-9]{9}$"
+              title="กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (10 หลัก เริ่มต้นด้วย 0)"
               oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.length > 0 && this.value[0] !== '0') this.value = '0' + this.value;"
               style="
                 padding: 0.75rem;
