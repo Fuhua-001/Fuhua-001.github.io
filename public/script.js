@@ -596,7 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <!-- Items Table -->
                     <table style="width: 100%; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0;">
                         <thead>
-                            <tr style="background-color: #ff6666;">
+                            <tr style="background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                                 <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; width: 50px; text-align: center;">
                                     <div style="line-height: 1.2;">ลำดับ</div>
                                     <div style="font-size:10px; line-height: 1.2;">No.</div>
@@ -712,7 +712,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
 
                     <!-- Bottom: Red Grand Total -->
-                    <div style="display: flex; border: 1px solid #000; border-top: 1px solid #000; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; margin-bottom: 2px; overflow: hidden; background-color: #ff6666; font-weight: bold;">
+                    <div style="display: flex; border: 1px solid #000; border-top: 1px solid #000; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; margin-bottom: 2px; overflow: hidden; background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold;">
                         <div style="flex: 1; border-right: 1px solid #000; padding: 10px; text-align: center; display: flex; align-items: center; justify-content: center;">
                             ${bahtText(gTotal)}
                         </div>
