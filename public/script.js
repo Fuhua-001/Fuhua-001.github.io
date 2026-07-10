@@ -663,7 +663,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
 
                     <!-- Items Table -->
-                    <table style="width: 100%; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0;">
+                    <table style="width: 100%; flex: 1; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0;">
                         <thead>
                             <tr style="background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                                 <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; width: 50px; text-align: center;">
@@ -742,7 +742,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const vat = sumTotal * 0.07;
 
       tableHTML += `
-                            <tr style="page-break-inside: avoid; break-inside: avoid;">
+                            <tr style="page-break-inside: avoid; break-inside: avoid; height: 100%;">
                                 <td style="border-left: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
                                 <td style="border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
                                 <td style="border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
