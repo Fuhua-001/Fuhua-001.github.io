@@ -476,6 +476,75 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      // Generate locked signature image
+      function generateSignatureCanvas(salesperson, docDate) {
+          const canvas = document.createElement('canvas');
+          const scale = 3;
+          canvas.width = 734 * scale;
+          canvas.height = 145 * scale;
+          const ctx = canvas.getContext('2d');
+          ctx.scale(scale, scale);
+          
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, 734, 145);
+          
+          ctx.strokeStyle = '#000000';
+          ctx.lineWidth = 1;
+          
+          function roundRect(x, y, w, h, r) {
+              ctx.beginPath();
+              ctx.moveTo(x + r, y);
+              ctx.lineTo(x + w - r, y);
+              ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+              ctx.lineTo(x + w, y + h - r);
+              ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+              ctx.lineTo(x + r, y + h);
+              ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+              ctx.lineTo(x, y + r);
+              ctx.quadraticCurveTo(x, y, x + r, y);
+              ctx.closePath();
+              ctx.stroke();
+          }
+          
+          roundRect(0, 5, 359, 135, 8);
+          roundRect(374, 5, 359, 135, 8);
+          
+          ctx.textAlign = 'center';
+          
+          ctx.fillStyle = '#000000';
+          ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
+          ctx.fillText('ในนาม ลูกค้า / Customer', 179.5, 35);
+          
+          ctx.beginPath();
+          ctx.moveTo(79.5, 95);
+          ctx.lineTo(279.5, 95);
+          ctx.stroke();
+          
+          ctx.font = '12px "Prompt", "Sarabun", sans-serif';
+          ctx.fillStyle = '#666666';
+          ctx.fillText('(............................................................)', 179.5, 110);
+          ctx.fillStyle = '#000000';
+          ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 125);
+          ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 140);
+          
+          ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
+          ctx.fillText('ในนาม โซลโซไซตี้ (Soul Society)', 553.5, 35);
+          
+          ctx.beginPath();
+          ctx.moveTo(453.5, 95);
+          ctx.lineTo(653.5, 95);
+          ctx.stroke();
+          
+          ctx.font = '12px "Prompt", "Sarabun", sans-serif';
+          ctx.fillStyle = '#0f172a';
+          ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 110);
+          ctx.fillStyle = '#000000';
+          ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 125);
+          ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 140);
+          
+          return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: 734px; margin-top: 5px;" alt="Locked Signatures" />';
+      }
+
       // Create a printable element HTML
       let tableHTML = `
                 <div style="width: 794px; min-height: 1080px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Prompt', 'Sarabun', sans-serif !important; letter-spacing: 0px !important; color: #000; padding: 20px 30px; background: white; font-size: 13px; line-height: 1.15; margin: 0; text-align: left;">
@@ -722,34 +791,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
-                    <!-- Footer Signatures -->
-                    <div style="display: flex; gap: 15px; margin-top: 5px;">
-                        <!-- Customer Signature -->
-                        <div style="flex: 1; border: 1px solid #000; border-radius: 8px; padding: 10px; text-align: center; display: flex; flex-direction: column;">
-                            <div style="text-align: center; margin-bottom: 12px;">
-                                <p style="margin: 0; font-size: 13px; font-weight: bold;">ในนาม ลูกค้า / Customer</p>
-                            </div>
-                            <div>
-                                <div style="border-bottom: 1px solid #000; width: 200px; margin: 0 auto 5px auto;"></div>
-                                <div style="margin-bottom: 2px; font-size: 12px; color: #666;">(............................................................)</div>
-                                <div style="font-size: 12px; margin-bottom: 2px;">ผู้อนุมัติสั่งซื้อ / Accepted By</div>
-                                <div style="font-size: 12px;">วันที่ / Date: ......../......../........</div>
-                            </div>
-                        </div>
-
-                        <!-- Company Signature -->
-                        <div style="flex: 1; border: 1px solid #000; border-radius: 8px; padding: 10px; text-align: center; display: flex; flex-direction: column;">
-                            <div style="text-align: center; margin-bottom: 12px;">
-                                <p style="margin: 0; font-size: 13px; font-weight: bold;">ในนาม โซลโซไซตี้ (Soul Society)</p>
-                            </div>
-                            <div>
-                                <div style="border-bottom: 1px solid #000; width: 200px; margin: 0 auto 5px auto;"></div>
-                                <div style="margin-bottom: 2px; font-size: 12px; color: #0f172a; font-weight: 500;">( ${cusInfo.salesperson || '............................................................'} )</div>
-                                <div style="font-size: 12px; margin-bottom: 2px;">ผู้เสนอราคา / Quoted By</div>
-                                <div style="font-size: 12px;">วันที่ / Date: ${cusInfo.doc_date_str}</div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Footer Signatures (Locked as Image) -->
+                    ${generateSignatureCanvas(cusInfo.salesperson, cusInfo.doc_date_str)}
 
                     </div> <!-- End of page-break-avoid wrapper for Summary and Signature -->
                 </div>
