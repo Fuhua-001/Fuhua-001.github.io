@@ -61,6 +61,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (prodRes.ok) {
         window.productsList = await prodRes.json();
+        let dl = document.getElementById("products-datalist");
+        if (!dl) {
+          dl = document.createElement("datalist");
+          dl.id = "products-datalist";
+          document.body.appendChild(dl);
+        }
+        dl.innerHTML = window.productsList.map(p => `<option value="${p.name.replace(/"/g, '&quot;')}"></option>`).join("");
       }
 
       // Call loadDraft here so that the <option>s exist before setting values
@@ -82,13 +89,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Custom update function for product selection
   window.updateProductSelection = (index, productName) => {
+    items[index].description = productName;
     const product = window.productsList.find((p) => p.name === productName);
     if (product) {
-      items[index].description = product.name;
       items[index].unit_price = parseFloat(product.selling_price) || 0;
-      renderItems();
-      saveDraft();
     }
+    renderItems();
+    saveDraft();
   };
 
   // --- Mode Switching ---
@@ -221,16 +228,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
                 <td>
-                    <select onchange="window.updateProductSelection(${index}, this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
-                        <option value="" disabled ${!item.description ? "selected" : ""}>-- เลือกสินค้า --</option>
-                        ${(window.productsList || []).map((p) => `<option value="${p.name}" ${p.name === item.description ? "selected" : ""}>${p.name}</option>`).join("")}
-                    </select>
+                    <input type="text" list="products-datalist" value="${(item.description || '').replace(/"/g, '&quot;')}" onchange="window.updateProductSelection(${index}, this.value)" placeholder="ค้นหาหรือพิมพ์ชื่อสินค้า..." required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </td>
                 <td>
                     <input type="number" value="${item.quantity}" min="1" onchange="updateItem(${index}, 'quantity', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </td>
                 <td>
-                    <input type="number" value="${item.unit_price}" min="0" step="0.01" onchange="updateItem(${index}, 'unit_price', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;" readonly>
+                    <input type="number" value="${item.unit_price}" min="0" step="0.01" onchange="updateItem(${index}, 'unit_price', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </td>
                 <td class="font-medium">${formatCurrency(itemTotal)}</td>
                 <td>
