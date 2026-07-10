@@ -601,11 +601,6 @@
             const fmt = n => new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(n);
             const bahtText = amount => '( ' + fmt(amount) + ' บาทถ้วน )';
 
-            let taxIdDisplay = cust.tax_id || "";
-            if (!taxIdDisplay || taxIdDisplay.replace(/\D/g, '').length !== 13) {
-                taxIdDisplay = `<span style="color:red;">${taxIdDisplay || '-'} (กรุณาระบุเลข 13 หลัก)</span>`;
-            }
-
             const itemRows = items.map((it, i) => `
               <tr>
                 <td style="padding:10px 5px;border-left:1px solid #000;border-right:1px solid #000;text-align:center;vertical-align:top">${i+1}</td>
@@ -623,12 +618,7 @@
 
                 <!-- Header Section -->
                 <div style="display:flex;justify-content:space-between;margin-bottom:15px;">
-                  <div style="flex:1;display:flex;align-items:flex-start;">
-                    <!-- Placeholder for Corporate Logo -->
-                    <div style="width:80px;height:80px;background:#fff;border:1px solid #000;display:flex;align-items:center;justify-content:center;color:#000;font-size:12px;text-align:center;">
-                      พื้นที่โลโก้<br>บริษัท
-                    </div>
-                  </div>
+                  <div style="flex:1;"></div>
                   <div style="flex:2;text-align:center;">
                     <h2 style="margin:0;font-size:20px;font-weight:bold;">โซลโซไซตี้</h2>
                     <p style="margin:2px 0;">Soul Society</p>
@@ -673,7 +663,7 @@
                           <div style="line-height:1.2;">เลขประจำตัวผู้เสียภาษี</div>
                           <div style="font-size:10px;line-height:1.2;">Tax ID</div>
                         </td>
-                        <td style="padding-bottom:5px;">${taxIdDisplay}</td>
+                        <td style="padding-bottom:5px;">${cust.tax_id || '-'}</td>
                         <td style="padding-bottom:5px;text-align:right;"></td>
                         <td></td>
                       </tr>
@@ -734,7 +724,7 @@
                 <!-- Items Table -->
                 <table style="width:100%;border-collapse:collapse;border:1px solid #000;margin-bottom:0;">
                   <thead>
-                    <tr style="background-color:#ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
+                    <tr style="background-color:#ff6666;">
                       <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:50px;text-align:center;">
                         <div style="line-height:1.2;">ลำดับ</div>
                         <div style="font-size:10px;line-height:1.2;">No.</div>
@@ -774,7 +764,6 @@
                   <div style="flex:1;border-right:1px solid #000;padding:10px;font-size:11px;">
                     <strong>หมายเหตุ (Remarks):</strong><br>
                     - การเสนอราคานี้ยืนราคา ${crDays} วัน<br>
-                    - ระยะเวลาส่งมอบสินค้าโดยประมาณหลังยืนยันคำสั่งซื้อ<br>
                     ${q.remarks ? '- ' + q.remarks + '<br>' : ''}
                     - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจก. โซลโซไซตี้
                   </div>
@@ -793,7 +782,7 @@
                 </div>
 
                 <!-- Red Grand Total Bar -->
-                <div style="display:flex;border:1px solid #000;border-top:1px solid #000;border-bottom-left-radius:8px;border-bottom-right-radius:8px;margin-bottom:10px;overflow:hidden;background-color:#ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight:bold;">
+                <div style="display:flex;border:1px solid #000;border-top:1px solid #000;border-bottom-left-radius:8px;border-bottom-right-radius:8px;margin-bottom:10px;overflow:hidden;background-color:#ff6666;font-weight:bold;">
                   <div style="flex:1;border-right:1px solid #000;padding:10px;text-align:center;display:flex;align-items:center;justify-content:center;">
                     ${bahtText(grandTotal)}
                   </div>
