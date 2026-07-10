@@ -402,7 +402,13 @@ app.get("/api/products", async (req, res) => {
 app.get("/api/employees", async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM employees");
-    res.json(rows);
+    const processedRows = rows.map(row => {
+      if (row.pic_code && row.pic_code.length > 0) {
+        row.keywords = row.pic_code.charAt(0).toUpperCase();
+      }
+      return row;
+    });
+    res.json(processedRows);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch employees" });
   }
