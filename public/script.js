@@ -225,10 +225,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const itemTotal = item.quantity * item.unit_price;
       total += itemTotal;
 
+      const selectId = `product-select-${index}`;
       const tr = document.createElement("tr");
       tr.innerHTML = `
                 <td>
-                    <input type="text" list="products-datalist" value="${(item.description || '').replace(/"/g, '&quot;')}" onchange="window.updateProductSelection(${index}, this.value)" placeholder="ค้นหาหรือพิมพ์ชื่อสินค้า..." required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px; background-color: #fff; color: #0f172a; color-scheme: light;">
+                    <select id="${selectId}" required placeholder="-- ค้นหา/พิมพ์ชื่อสินค้า --">
+                        <option value="">-- ค้นหา/พิมพ์ชื่อสินค้า --</option>
+                        ${(window.productsList || []).map((p) => `<option value="${p.name}" ${p.name === item.description ? "selected" : ""}>${p.name}</option>`).join("")}
+                        ${item.description && !(window.productsList || []).find(p => p.name === item.description) ? `<option value="${item.description.replace(/"/g, '&quot;')}" selected>${item.description}</option>` : ''}
+                    </select>
                 </td>
                 <td>
                     <input type="number" value="${item.quantity}" min="1" onchange="updateItem(${index}, 'quantity', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
@@ -242,6 +247,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 </td>
             `;
       quoteItemsContainer.appendChild(tr);
+
+      // Initialize TomSelect for this row
+      new TomSelect(`#${selectId}`, {
+        create: true,
+        sortField: { field: "text", direction: "asc" },
+        onChange: function(value) {
+          if (value) {
+            window.updateProductSelection(index, value);
+          }
+        }
+      });
     });
 
     const vat = total * 0.07;
