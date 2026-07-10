@@ -330,6 +330,46 @@ Output ONLY valid JSON matching this exact structure (no markdown, no extra text
   }
 });
 
+app.get('/api/dashboard-stats', async (req, res) => {
+  try {
+    const [[salesRes], [quotesRes], [customersRes], [productsRes], monthlyRes] = await Promise.all([
+      db.query('SELECT COALESCE(SUM(amount), 0) as total_sales FROM sub_sales_pr'),
+      db.query('SELECT COUNT(*) as total_quotes FROM sales_pr'),
+      db.query('SELECT COUNT(*) as total_customers FROM customers'),
+      db.query('SELECT COUNT(*) as total_products FROM products'),
+      db.query(`
+        SELECT EXTRACT(MONTH FROM sp.doc_date) as month, SUM(ssp.amount) as total
+        FROM sales_pr sp
+        JOIN sub_sales_pr ssp ON sp.id = ssp.sales_pr_id
+        WHERE EXTRACT(YEAR FROM sp.doc_date) = EXTRACT(YEAR FROM CURRENT_DATE)
+        GROUP BY EXTRACT(MONTH FROM sp.doc_date)
+        ORDER BY month
+      `)
+    ]);
+
+    let monthly_sales = Array(12).fill(0);
+    monthlyRes.rows.forEach(row => {
+      // Postgres EXTRACT returns a string or float, subtract 1 for 0-indexed month array
+      const m = parseInt(row.month, 10) - 1;
+      if(m >= 0 && m < 12) {
+        monthly_sales[m] = parseFloat(row.total);
+      }
+    });
+
+    const stats = {
+      total_sales: salesRes.rows[0].total_sales || 0,
+      total_quotes: quotesRes.rows[0].total_quotes || 0,
+      total_customers: customersRes.rows[0].total_customers || 0,
+      total_products: productsRes.rows[0].total_products || 0,
+      monthly_sales: monthly_sales
+    };
+    res.json(stats);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to load dashboard stats', details: err.message });
+  }
+});
+
 app.get("/api/customers", async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM customers");

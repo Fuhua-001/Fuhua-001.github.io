@@ -242,6 +242,8 @@
             data.total_customers + " ราย";
           document.getElementById("stat-products").textContent =
             data.total_products + " รายการ";
+          
+          window.dashboardMonthlySales = data.monthly_sales;
         } catch (err) {
           console.error("Failed to load stats", err);
         }
@@ -255,28 +257,13 @@
           type: "line",
           data: {
             labels: [
-              "มกราคม",
-              "กุมภาพันธ์",
-              "มีนาคม",
-              "เมษายน",
-              "พฤษภาคม",
-              "มิถุนายน",
-              "กรกฎาคม",
+              "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+              "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
             ],
             datasets: [
               {
                 label: "ยอดขายรายเดือน (THB)",
-                data: [
-                  15000,
-                  22000,
-                  18000,
-                  32000,
-                  28000,
-                  45000,
-                  document
-                    .getElementById("stat-sales")
-                    .textContent.replace(/[^0-9.-]+/g, "") || 50000,
-                ],
+                data: window.dashboardMonthlySales || Array(12).fill(0),
                 borderColor: "#6366f1",
                 backgroundColor: "rgba(99, 102, 241, 0.2)",
                 borderWidth: 3,
