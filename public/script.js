@@ -552,16 +552,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     <!-- Header Section -->
                     <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                         <div style="flex: 1; display: flex; align-items: flex-start;">
-                            <!-- Placeholder for Corporate Logo -->
-                            <div style="width: 60px; height: 60px; background: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 10px; font-weight: bold;">
-                                [ LOGO ]
-                            </div>
+                            <!-- Corporate Logo -->
+                            <img src="logo.svg" alt="Logo" style="width: 80px; height: auto; border-radius: 8px;">
                         </div>
                         <div style="flex: 2; text-align: center;">
                             <h2 style="margin: 0; font-size: 22px; font-weight: bold; color: #0f172a;">บริษัท โซลโซไซตี้ จำกัด</h2>
                             <p style="margin: 2px 0; font-weight: 500; font-size: 14px;">Soul Society Co., Ltd.</p>
                             <p style="margin: 2px 0; font-size: 13px;">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
-                            <p style="margin: 2px 0; font-size: 13px;">Tel: 02-789-5541 | Email: sales@soulsociety.co.th</p>
+                            <p style="margin: 2px 0; font-size: 13px;">Tel: 02-789-5541 | Email: Stainless.Stell@gmail.com</p>
                         </div>
                         <div style="flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: flex-start;">
                             <h2 style="margin: 0; font-size: 20px; font-weight: bold; color: var(--primary-color);">ใบเสนอราคา</h2>

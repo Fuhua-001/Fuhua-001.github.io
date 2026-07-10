@@ -687,12 +687,15 @@
 
                 <!-- Header Section -->
                 <div style="display:flex;justify-content:space-between;margin-bottom:15px;">
-                  <div style="flex:1;"></div>
+                  <div style="flex:1;">
+                    <!-- Corporate Logo -->
+                    <img src="logo.svg" alt="Logo" style="width: 80px; height: auto; border-radius: 8px;">
+                  </div>
                   <div style="flex:2;text-align:center;">
                     <h2 style="margin:0;font-size:20px;font-weight:bold;">โซลโซไซตี้</h2>
                     <p style="margin:2px 0;">Soul Society</p>
-                    <p style="margin:2px 0;">บ้านเลขที่ 15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270 เขตสาทร กรุงเทพมหานคร 10120</p>
-                    <p style="margin:2px 0;">TEL : 027895541 FAX: &nbsp;&nbsp; Email: Stainless.Stell.gmail.com</p>
+                    <p style="margin:2px 0;">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
+                    <p style="margin:2px 0;">TEL : 02-789-5541 FAX: &nbsp;&nbsp; Email: Stainless.Stell@gmail.com</p>
                   </div>
                   <div style="flex:1;text-align:right;display:flex;flex-direction:column;justify-content:center;">
                     <h2 style="margin:0;font-size:18px;font-weight:normal;">ใบเสนอราคา</h2>
@@ -888,7 +891,7 @@
         const content = document.getElementById('pdf-preview-content');
         if (!content) return;
         const win = window.open('', '_blank');
-        win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;font-family:'Sarabun',sans-serif}@media print{body{margin:0}}</style><link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet"></head><body>${content.innerHTML}</body></html>`);
+        win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;font-family:'Prompt','Sarabun',sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact;} @media print { @page { margin: 0; size: A4 portrait; } body { margin: 0; padding: 0; } }</style><link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"></head><body>${content.innerHTML}</body></html>`);
         win.document.close();
         win.focus();
         setTimeout(() => { win.print(); }, 500);
