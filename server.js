@@ -429,7 +429,7 @@ app.put("/api/employees/:id", async (req, res) => {
   try {
     const { pic_code, pic_name, pic_name_eng, contact_number, department } = req.body;
     const keywords = pic_code && pic_code.length > 0 ? pic_code.charAt(0).toUpperCase() : '';
-    await db.query('UPDATE employees SET pic_code=?, pic_name=?, pic_name_eng=?, contact_number=?, department=?, keywords=? WHERE pic_code=?', [pic_code, pic_name, pic_name_eng || null, contact_number, department || null, keywords, req.params.id]);
+    await db.query('UPDATE employees SET pic_code=?, pic_name=?, pic_name_eng=?, contact_number=?, department=?, keywords=? WHERE id=?', [pic_code, pic_name, pic_name_eng || null, contact_number, department || null, keywords, req.params.id]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: 'Failed to update employee', details: err.message });
@@ -438,7 +438,7 @@ app.put("/api/employees/:id", async (req, res) => {
 
 app.delete("/api/employees/:id", async (req, res) => {
   try {
-    await db.query('DELETE FROM employees WHERE pic_code=?', [req.params.id]);
+    await db.query('DELETE FROM employees WHERE id=?', [req.params.id]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete employee', details: err.message });
