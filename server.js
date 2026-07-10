@@ -6,7 +6,6 @@ const db = require("./db");
 const path = require("path");
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -362,12 +361,43 @@ app.get('/api/dashboard-stats', async (req, res) => {
     });
     }
 
+    // Top customers by total amount
+    let top_customers = [];
+    try {
+      const [topRes] = await db.query(`
+        SELECT sp.contact_person as customer_name, SUM(ssp.amount) as total
+        FROM sales_pr sp
+        JOIN sub_sales_pr ssp ON sp.id = ssp.sales_pr_id
+        GROUP BY sp.contact_person
+        ORDER BY total DESC
+        LIMIT 5
+      `);
+      top_customers = topRes || [];
+    } catch(e) { top_customers = []; }
+
+    // Recent quotes
+    let recent_quotes = [];
+    try {
+      const [recentRes] = await db.query(`
+        SELECT sp.doc_no, sp.contact_person as customer_name, sp.doc_date,
+               COALESCE(SUM(ssp.total_amount), 0) as total_amount
+        FROM sales_pr sp
+        LEFT JOIN sub_sales_pr ssp ON sp.id = ssp.sales_pr_id
+        GROUP BY sp.id, sp.doc_no, sp.contact_person, sp.doc_date
+        ORDER BY sp.created_at DESC
+        LIMIT 5
+      `);
+      recent_quotes = recentRes || [];
+    } catch(e) { recent_quotes = []; }
+
     const stats = {
       total_sales: salesRows[0]?.total_sales || 0,
       total_quotes: quotesRows[0]?.total_quotes || 0,
       total_customers: customersRows[0]?.total_customers || 0,
       total_products: productsRows[0]?.total_products || 0,
-      monthly_sales: monthly_sales
+      monthly_sales: monthly_sales,
+      top_customers: top_customers,
+      recent_quotes: recent_quotes
     };
     res.json(stats);
   } catch (err) {
@@ -378,7 +408,7 @@ app.get('/api/dashboard-stats', async (req, res) => {
 
 app.get("/api/customers", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM customers");
+    const [rows] = await db.query("SELECT * FROM customers ORDER BY id DESC LIMIT 200");
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch customers", details: err.message });
@@ -524,11 +554,11 @@ app.get("/api/quote/:id", async (req, res) => {
 
 app.get("/api/audit_logs", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM audit_logs ORDER BY created_at DESC");
+    const [rows] = await db.query("SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT 100");
     res.json(rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to fetch audits" });
+    // Table may not exist in all environments—return empty array gracefully
+    res.json([]);
   }
 });
 
