@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
               opt.textContent = c.name;
               custSelect.appendChild(opt);
             });
+          if (custSelect.value) {
+            window.updateCustomerContactFields(custSelect.value);
+          }
         }
       }
 
@@ -159,6 +162,21 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (aiPrompt) aiPrompt.addEventListener("input", saveDraft);
+  window.updateCustomerContactFields = (customerName) => {
+    const fPhone = document.getElementById("customer-phone");
+    const fEmail = document.getElementById("customer-email");
+    if (fPhone) fPhone.value = "";
+    if (fEmail) fEmail.value = "";
+    
+    if (window.customersList && customerName) {
+      const matched = window.customersList.find(c => c.name === customerName);
+      if (matched) {
+        if (fPhone) fPhone.value = matched.phone || "-";
+        if (fEmail) fEmail.value = matched.email || "-";
+      }
+    }
+  };
+
   if (customerNameInput) {
     customerNameInput.addEventListener("change", (e) => {
       if (window.customersList) {
@@ -174,6 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (fSalesRep && matched.pic_code) fSalesRep.value = matched.pic_code;
         }
       }
+      window.updateCustomerContactFields(e.target.value);
       saveDraft();
     });
     customerNameInput.addEventListener("input", saveDraft);
@@ -969,8 +988,12 @@ window.loadQuoteData = (viewId, editId) => {
 
         // Set customer name
         const customerNameInput = document.getElementById("customer-name");
-        if (customerNameInput) customerNameInput.value = data.quote.customer_name || "";
-        
+        if (customerNameInput) {
+          customerNameInput.value = data.quote.customer_name || "";
+          if (window.updateCustomerContactFields) {
+            window.updateCustomerContactFields(customerNameInput.value);
+          }
+        }
         // Set credit days and payment terms
         const fCredit = document.getElementById("form-credit-days");
         const fPayment = document.getElementById("form-payment-terms");
