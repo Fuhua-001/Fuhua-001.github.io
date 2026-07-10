@@ -409,7 +409,8 @@
         try {
           const res = await fetch("/api/customers");
           allCustomers = await res.json();
-          currentCustomersPage = 1;
+          const maxPage = Math.ceil(allCustomers.length / customersPerPage) || 1;
+          if (currentCustomersPage > maxPage) currentCustomersPage = maxPage;
           renderCustomers();
         } catch (err) {
           tbody.innerHTML =

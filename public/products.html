@@ -458,7 +458,8 @@
         try {
           const res = await fetch("/api/products");
           allProductsData = await res.json();
-          currentProductsPage = 1;
+          const maxPage = Math.ceil(allProductsData.length / productsPerPage) || 1;
+          if (currentProductsPage > maxPage) currentProductsPage = maxPage;
           renderProducts();
         } catch (err) {
           tbody.innerHTML =

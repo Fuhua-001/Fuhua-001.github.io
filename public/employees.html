@@ -408,7 +408,8 @@
         try {
           const res = await fetch("/api/employees");
           allEmployeesData = await res.json();
-          currentEmployeesPage = 1;
+          const maxPage = Math.ceil(allEmployeesData.length / employeesPerPage) || 1;
+          if (currentEmployeesPage > maxPage) currentEmployeesPage = maxPage;
           renderEmployees();
         } catch (err) {
           tbody.innerHTML =
