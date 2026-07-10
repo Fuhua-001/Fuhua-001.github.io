@@ -416,8 +416,9 @@ app.get("/api/employees", async (req, res) => {
 
 app.post("/api/employees", async (req, res) => {
   try {
-    const { pic_code, pic_name, contact_number, active_status } = req.body;
-    await db.query('INSERT INTO employees (pic_code, pic_name, contact_number, active_status) VALUES (?, ?, ?, ?)', [pic_code, pic_name, contact_number, active_status || 'Active']);
+    const { pic_code, pic_name, contact_number, department } = req.body;
+    const keywords = pic_code && pic_code.length > 0 ? pic_code.charAt(0).toUpperCase() : '';
+    await db.query('INSERT INTO employees (pic_code, pic_name, contact_number, department, keywords) VALUES (?, ?, ?, ?, ?)', [pic_code, pic_name, contact_number, department || null, keywords]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: 'Failed to add employee', details: err.message });
@@ -426,8 +427,9 @@ app.post("/api/employees", async (req, res) => {
 
 app.put("/api/employees/:id", async (req, res) => {
   try {
-    const { pic_code, pic_name, contact_number, active_status } = req.body;
-    await db.query('UPDATE employees SET pic_code=?, pic_name=?, contact_number=?, active_status=? WHERE pic_code=?', [pic_code, pic_name, contact_number, active_status || 'Active', req.params.id]);
+    const { pic_code, pic_name, contact_number, department } = req.body;
+    const keywords = pic_code && pic_code.length > 0 ? pic_code.charAt(0).toUpperCase() : '';
+    await db.query('UPDATE employees SET pic_code=?, pic_name=?, contact_number=?, department=?, keywords=? WHERE pic_code=?', [pic_code, pic_name, contact_number, department || null, keywords, req.params.id]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: 'Failed to update employee', details: err.message });
