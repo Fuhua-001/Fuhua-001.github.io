@@ -615,8 +615,8 @@
         document.getElementById('btn-confirm-delete-action').onclick = async () => {
           document.getElementById('delete-confirm-modal').style.display = 'none';
           try {
-            const userQuery = "null";
-            const res = await fetch(`/api/products/${id}$ {userQuery}`, { method: "DELETE" });
+            const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
+            const res = await fetch(`/api/products/${id}${userQuery}`, { method: "DELETE" });
               if (res.ok) {
                 showToast("ลบสินค้าเรียบร้อย");
                 closeProductModal();
