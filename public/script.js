@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
                 <td>
-                    <input type="text" list="products-datalist" value="${(item.description || '').replace(/"/g, '&quot;')}" onchange="window.updateProductSelection(${index}, this.value)" placeholder="ค้นหาหรือพิมพ์ชื่อสินค้า..." required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <input type="text" list="products-datalist" value="${(item.description || '').replace(/"/g, '&quot;')}" onchange="window.updateProductSelection(${index}, this.value)" placeholder="ค้นหาหรือพิมพ์ชื่อสินค้า..." required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px; color-scheme: light; background-color: #fff; color: #0f172a; outline: none;">
                 </td>
                 <td>
                     <input type="number" value="${item.quantity}" min="1" onchange="updateItem(${index}, 'quantity', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
