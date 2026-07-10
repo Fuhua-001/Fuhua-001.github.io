@@ -754,7 +754,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </table>
 
                     <!-- Summary Section -->
-                    <div style="page-break-inside: avoid; break-inside: avoid; margin-top: 5px;">
+                    <div style="page-break-inside: avoid; break-inside: avoid; margin-top: auto;">
                     <!-- Top: Remarks and Subtotals -->
                     <div style="display: flex; border: 1px solid #000; border-top: none; overflow: hidden;">
                         <!-- Left Remarks -->

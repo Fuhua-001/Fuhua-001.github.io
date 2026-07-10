@@ -683,7 +683,7 @@
             window._currentPdfData = { q, cust, items, docDateStr, crDays, validDate, subtotal, vat, grandTotal, fmt, itemRows };
 
             pdfContent.innerHTML = `
-              <div style="width:794px;box-sizing:border-box;display:flex;flex-direction:column;font-family:'Prompt','Sarabun',sans-serif;letter-spacing:0px;color:#000;padding:40px;background:white;font-size:13px;line-height:1.4;margin:0;text-align:left;">
+              <div style="width:794px;min-height:1080px;box-sizing:border-box;display:flex;flex-direction:column;font-family:'Prompt','Sarabun',sans-serif;letter-spacing:0px;color:#000;padding:40px;background:white;font-size:13px;line-height:1.4;margin:0;text-align:left;">
 
                 <!-- Header Section -->
                 <div style="display:flex;justify-content:space-between;margin-bottom:15px;">
@@ -829,6 +829,7 @@
                 </table>
 
                 <!-- Summary Section -->
+                <div style="margin-top: auto; page-break-inside: avoid; break-inside: avoid;">
                 <div style="display:flex;border:1px solid #000;border-top:none;overflow:hidden;">
                   <div style="flex:1;border-right:1px solid #000;padding:10px;font-size:11px;">
                     <strong>หมายเหตุ (Remarks):</strong><br>
@@ -863,6 +864,7 @@
 
                 <!-- Footer Signatures (Locked as Image) -->
                 ${generateSignatureCanvas(q.pic_name, docDateStr)}
+                </div>
 
               </div>`;
           } catch(err) {
