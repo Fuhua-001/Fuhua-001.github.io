@@ -599,7 +599,32 @@
             const vat = subtotal * 0.07;
             const grandTotal = subtotal + vat;
             const fmt = n => new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(n);
-            const bahtText = amount => '( ' + fmt(amount) + ' บาทถ้วน )';
+            const bahtText = (amount) => {
+                const number = Math.round(amount * 100) / 100;
+                const numberStr = number.toFixed(2);
+                const parts = numberStr.split('.');
+                const integerPart = parts[0];
+                const fractionalPart = parts[1];
+                const text = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
+                const unit = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'];
+                const convert = (numStr) => {
+                    let result = '';
+                    for (let i = 0; i < numStr.length; i++) {
+                        const n = parseInt(numStr[i]);
+                        const pos = numStr.length - 1 - i;
+                        if (n !== 0) {
+                            if (pos === 1 && n === 1) result += 'สิบ';
+                            else if (pos === 1 && n === 2) result += 'ยี่สิบ';
+                            else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เอ็ด';
+                            else result += text[n] + unit[pos % 6];
+                        }
+                    }
+                    return result || 'ศูนย์';
+                };
+                let baht = convert(integerPart) + 'บาท';
+                let satang = parseInt(fractionalPart) === 0 ? 'ถ้วน' : convert(fractionalPart) + 'สตางค์';
+                return '( ' + baht + satang + ' )';
+            };
 
             // Generate locked signature image
             function generateSignatureCanvas(salesperson, docDate, sigW = '734px') {
@@ -670,14 +695,33 @@
                 return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
             }
 
-            const itemRows = items.map((it, i) => `
-              <tr>
-                <td style="padding:10px 5px;border-left:1px solid #000;border-right:1px solid #000;text-align:center;vertical-align:top">${i+1}</td>
-                <td style="padding:10px 5px;border-right:1px solid #000;vertical-align:top">${it.description}</td>
-                <td style="padding:10px 5px;border-right:1px solid #000;text-align:center;vertical-align:top">${parseFloat(it.quantity).toFixed(2)} ชิ้น</td>
-                <td style="padding:10px 5px;border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(it.unit_price)}</td>
-                <td style="padding:10px 5px;border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(parseFloat(it.quantity)*parseFloat(it.unit_price))}</td>
-              </tr>`).join('');
+            let itemRowsHtml = '';
+            items.forEach((it, i) => {
+              itemRowsHtml += `
+              <tr style="page-break-inside: avoid; break-inside: avoid;">
+                <td style="padding:${pCell};border-left:1px solid #000;border-right:1px solid #000;text-align:center;vertical-align:top">${i+1}</td>
+                <td style="padding:${pCell};border-right:1px solid #000;vertical-align:top;word-wrap:break-word;overflow-wrap:break-word;">${it.description}</td>
+                <td style="padding:${pCell};border-right:1px solid #000;text-align:center;vertical-align:top">${parseFloat(it.quantity).toLocaleString()}</td>
+                <td style="padding:${pCell};border-right:1px solid #000;text-align:center;vertical-align:top">${it.unit || 'ชิ้น'}</td>
+                <td style="padding:${pCell};border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(it.unit_price)}</td>
+                <td style="padding:${pCell};border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(parseFloat(it.quantity)*parseFloat(it.unit_price))}</td>
+              </tr>`;
+            });
+            const minRows = 5;
+            if (items.length < minRows) {
+              for (let i = items.length; i < minRows; i++) {
+                itemRowsHtml += `
+                <tr style="page-break-inside: avoid; break-inside: avoid;">
+                  <td style="padding:${pCell};border-left:1px solid #000;border-right:1px solid #000;height:32px;"></td>
+                  <td style="padding:${pCell};border-right:1px solid #000;"></td>
+                  <td style="padding:${pCell};border-right:1px solid #000;"></td>
+                  <td style="padding:${pCell};border-right:1px solid #000;"></td>
+                  <td style="padding:${pCell};border-right:1px solid #000;"></td>
+                  <td style="padding:${pCell};border-right:1px solid #000;"></td>
+                </tr>`;
+              }
+            }
+            const itemRows = itemRowsHtml;
 
             // Store for PDF download
             window._currentPdfData = { q, cust, items, docDateStr, crDays, validDate, subtotal, vat, grandTotal, fmt, itemRows };
@@ -686,10 +730,9 @@
               <div style="width:794px;min-height: auto; box-sizing: border-box; display: block;font-family:'Prompt','Sarabun',sans-serif;letter-spacing:0px;color:#000;padding:${padCont};background:white;font-size:${fBase};line-height:${lh};margin:0;text-align:left;">
 
                 <!-- Header Section -->
-                <div style="display:flex;justify-content:space-between;margin-bottom:15px;">
-                  <div style="flex:1;">
-                    <!-- Corporate Logo -->
-                    <img src="logo.svg" alt="Logo" style="width: 80px; height: auto; border-radius: 8px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                  <div style="flex:1;display:flex;align-items:flex-start;">
+                    <img src="logo.svg" alt="Company Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                   </div>
                   <div style="flex:2;text-align:center;">
                     <h2 style="margin:0;font-size:${fH2};font-weight:bold;">โซลโซไซตี้</h2>
@@ -797,23 +840,27 @@
                 <table style="width:100%; flex: 1; border-collapse:collapse;border:1px solid #000;margin-bottom:0;">
                   <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                     <tr style="background-color:#ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
-                      <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:50px;text-align:center;">
+                      <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:5%;text-align:center;">
                         <div style="line-height:1.2;">ลำดับ</div>
                         <div style="font-size:${fSmall};line-height:1.2;">No.</div>
                       </th>
-                      <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;text-align:center;">
+                      <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:40%;text-align:center;">
                         <div style="line-height:1.2;">รหัสสินค้า / รายละเอียด</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Code / Descriptions</div>
                       </th>
-                      <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:80px;text-align:center;">
+                      <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:10%;text-align:center;">
                         <div style="line-height:1.2;">จำนวน</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Quantity</div>
                       </th>
-                      <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:100px;text-align:center;">
+                      <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:10%;text-align:center;">
+                        <div style="line-height:1.2;">หน่วย</div>
+                        <div style="font-size:${fSmall};line-height:1.2;">Unit</div>
+                      </th>
+                      <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:15%;text-align:center;">
                         <div style="line-height:1.2;">หน่วยละ</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Unit Price</div>
                       </th>
-                      <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:120px;text-align:center;">
+                      <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:20%;text-align:center;">
                         <div style="line-height:1.2;">จำนวนเงิน</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Amount</div>
                       </th>
@@ -828,7 +875,7 @@
                 <!-- Summary Section -->
                 <div style="margin-top: 20px; page-break-inside: auto; break-inside: auto;">
                 <div style="display:flex;border:1px solid #000;border-top:none;overflow:hidden;">
-                  <div style="flex:1;border-right:1px solid #000;padding:10px;font-size:11px;">
+                  <div style="flex:1;border-right:1px solid #000;padding:10px;font-size:11px;white-space:normal;word-wrap:break-word;overflow-wrap:break-word;">
                     <strong>หมายเหตุ (Remarks):</strong><br>
                     - การเสนอราคานี้ยืนราคา ${crDays} วัน<br>
                     ${q.remarks ? '- ' + q.remarks + '<br>' : ''}
