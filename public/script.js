@@ -516,7 +516,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Generate locked signature image
-      function generateSignatureCanvas(salesperson, docDate) {
+      function generateSignatureCanvas(salesperson, docDate, sigW = '734px') {
           const canvas = document.createElement('canvas');
           const scale = 3;
           canvas.width = 734 * scale;
@@ -581,32 +581,48 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
           ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
           
-          return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: 734px; margin-top: 5px;" alt="Locked Signatures" />';
+          return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
       }
 
       // Create a printable element HTML
+      let fBase = '13px', fSmall = '10px', pCell = '6px 8px', lh = '1.25', fH2 = '22px', fH2s = '20px', sigW = '734px', padCont = '20px 30px', pBox = '10px 15px', pTotal = '8px 12px';
+      
+      const isMany = items.length >= 15;
+      const fBase = isMany ? '10px' : '12px';
+      const fSmall = isMany ? '8px' : '9px';
+      const pCell = isMany ? '1px 2px' : '2px 4px';
+      
+      const isMany = items.length >= 15;
+      const fBase = isMany ? '10px' : '12px';
+      const fSmall = isMany ? '8px' : '9px';
+      const pCell = isMany ? '1px 2px' : '2px 4px';
+      
       let tableHTML = `
-                <div style="width: 794px; min-height: 1080px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Prompt', 'Sarabun', sans-serif !important; letter-spacing: 0px !important; color: #000; padding: 20px 30px; background: white; font-size: 13px; line-height: 1.15; margin: 0; text-align: left;">
+                <style>
+                    .pdf-container, .pdf-container * { box-sizing: border-box; }
+                    @page { size: A4; margin: 10mm; }
+                </style>
+                <div class="pdf-container" style="width: 100%; max-width: 794px; min-height: auto; box-sizing: border-box; display: block; font-family: 'Prompt', 'Sarabun', sans-serif !important; letter-spacing: 0px !important; color: #000; padding: ${padCont}; background: white; font-size: ${fBase}; line-height: ${lh}; margin: 0 auto; text-align: left;">
                     
                     <!-- Header Section -->
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                         <div style="flex: 1; display: flex; align-items: flex-start;">
                             <!-- Corporate Logo -->
-                            <img src="logo.svg" alt="Logo" style="width: 80px; height: auto; border-radius: 8px;">
+                            <img src="logo.svg" alt="Logo" style="width: 70px; height: auto; border-radius: 8px;">
                         </div>
                         <div style="flex: 2; text-align: center;">
-                            <h2 style="margin: 0; font-size: 22px; font-weight: bold; color: #0f172a;">บริษัท โซลโซไซตี้ จำกัด</h2>
-                            <p style="margin: 2px 0; font-weight: 500; font-size: 14px;">Soul Society Co., Ltd.</p>
-                            <p style="margin: 2px 0; font-size: 13px;">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
-                            <p style="margin: 2px 0; font-size: 13px;">Tel: 02-789-5541 | Email: Stainless.Stell@gmail.com</p>
+                            <h2 style="margin: 0; font-size: ${fH2}; font-weight: bold; color: #0f172a;">บริษัท โซลโซไซตี้ จำกัด</h2>
+                            <p style="margin: 0; font-weight: 500; font-size: 13px;">Soul Society Co., Ltd.</p>
+                            <p style="margin: 0; font-size: ${fBase};">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
+                            <p style="margin: 0; font-size: ${fBase};">Tel: 02-789-5541 | Email: Stainless.Stell@gmail.com</p>
                         </div>
                         <div style="flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: flex-start;">
-                            <h2 style="margin: 0; font-size: 20px; font-weight: bold; color: var(--primary-color);">ใบเสนอราคา</h2>
-                            <p style="margin: 2px 0; font-size: 14px; font-weight: 500;">Quotation</p>
+                            <h2 style="margin: 0; font-size: ${fH2s}; font-weight: bold; color: var(--primary-color);">ใบเสนอราคา</h2>
+                            <p style="margin: 0; font-size: 13px; font-weight: 500;">Quotation</p>
                         </div>
                     </div>
                     
-                    <div style="text-align: left; margin-bottom: 10px;">
+                    <div style="text-align: left; margin-bottom: 5px;">
                         <p style="margin: 0;">เลขประจำตัวผู้เสียภาษี / Tax ID 6611611200003 สำนักงานใหญ่</p>
                     </div>
 
@@ -614,85 +630,85 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="display: flex; border: 1px solid #000; border-radius: 8px; margin-bottom: 2px; overflow: hidden;">
                         
                         <!-- Left Box -->
-                        <div style="flex: 1; padding: 10px; border-right: 1px solid #000;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <div style="flex: 1; padding: ${pBox}; border-right: 1px solid #000;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="width: 140px; padding-bottom: 5px;">
-                                        <div style="line-height: 1.2;">ลูกค้า</div>
-                                        <div style="font-size:10px; line-height: 1.2;">Customer</div>
+                                    <td style="width: 140px; padding-bottom: 2px;">
+                                        <div style="line-height: 1.1;">ลูกค้า</div>
+                                        <div style="font-size:9px; line-height: 1.1;">Customer</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;" colspan="3">${cusInfo.code}<br><span style="color: transparent;">-</span></td>
+                                    <td style="padding-bottom: 2px;" colspan="3">${cusInfo.code}<br><span style="color: transparent;">-</span></td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td colspan="4" style="padding-bottom: 5px;">
-                                        <div style="font-weight:bold; margin-bottom: 2px;">${customerNameInput.value || "ลูกค้าทั่วไป"}</div>
-                                        <div style="margin-bottom: 2px;">${cusInfo.address_1 || "-"}</div>
-                                        <div style="margin-bottom: 2px;">${cusInfo.district ? 'อ.'+cusInfo.district : ''} ${cusInfo.province ? 'จ.'+cusInfo.province : ''}</div>
-                                        ${cusInfo.level_group ? "<div style='margin-bottom: 2px;'>กลุ่มลูกค้าระดับ: " + cusInfo.level_group + "</div>" : ""}
+                                    <td colspan="4" style="padding-bottom: 2px;">
+                                        <div style="font-weight:bold; margin-bottom: 1px;">${customerNameInput.value || "ลูกค้าทั่วไป"}</div>
+                                        <div style="margin-bottom: 1px;">${cusInfo.address_1 || "-"}</div>
+                                        <div style="margin-bottom: 1px;">${cusInfo.district ? 'อ.'+cusInfo.district : ''} ${cusInfo.province ? 'จ.'+cusInfo.province : ''}</div>
+                                        ${cusInfo.level_group ? "<div style='margin-bottom: 1px;'>กลุ่มลูกค้าระดับ: " + cusInfo.level_group + "</div>" : ""}
                                     </td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 5px;">โทร.</td>
-                                    <td style="padding-bottom: 5px;" colspan="3">${cusInfo.phone}</td>
+                                    <td style="padding-bottom: 2px;">โทร.</td>
+                                    <td style="padding-bottom: 2px;" colspan="3">${cusInfo.phone}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 5px;">
-                                        <div style="line-height: 1.2;">เลขประจำตัวผู้เสียภาษี</div>
-                                        <div style="font-size:10px; line-height: 1.2;">Tax ID</div>
+                                    <td style="padding-bottom: 0;">
+                                        <div style="line-height: 1.1;">เลขประจำตัวผู้เสียภาษี</div>
+                                        <div style="font-size:9px; line-height: 1.1;">Tax ID</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;">${cusInfo.tax_id}</td>
-                                    <td style="padding-bottom: 5px; text-align: right;"></td>
+                                    <td style="padding-bottom: 0;">${cusInfo.tax_id}</td>
+                                    <td style="padding-bottom: 0; text-align: right;"></td>
                                     <td></td>
                                 </tr>
                             </table>
                         </div>
 
                         <!-- Right Box -->
-                        <div style="flex: 1; padding: 10px;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <div style="flex: 1; padding: ${pBox};">
+                            <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="width: 120px; padding-bottom: 5px;">
-                                        <div style="line-height: 1.2;">เลขที่ใบเสนอราคา</div>
-                                        <div style="font-size:10px; line-height: 1.2;">Quotation No.</div>
+                                    <td style="width: 120px; padding-bottom: 2px;">
+                                        <div style="line-height: 1.1;">เลขที่ใบเสนอราคา</div>
+                                        <div style="font-size:9px; line-height: 1.1;">Quotation No.</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;"><span id="pdf-doc-no">${cusInfo.doc_no}</span></td>
+                                    <td style="padding-bottom: 2px;"><span id="pdf-doc-no">${cusInfo.doc_no}</span></td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 5px;">
-                                        <div style="line-height: 1.2;">วันที่</div>
-                                        <div style="font-size:10px; line-height: 1.2;">Date</div>
+                                    <td style="padding-bottom: 2px;">
+                                        <div style="line-height: 1.1;">วันที่</div>
+                                        <div style="font-size:9px; line-height: 1.1;">Date</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;">${cusInfo.doc_date_str}</td>
+                                    <td style="padding-bottom: 2px;">${cusInfo.doc_date_str}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 5px;">
-                                        <div style="line-height: 1.2;">เครดิต</div>
-                                        <div style="font-size:10px; line-height: 1.2;">Credit Terms</div>
+                                    <td style="padding-bottom: 2px;">
+                                        <div style="line-height: 1.1;">เครดิต</div>
+                                        <div style="font-size:9px; line-height: 1.1;">Credit Terms</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;">${cusInfo.credit_days} วัน <span style="font-size:10px">Days</span></td>
+                                    <td style="padding-bottom: 2px;">${cusInfo.credit_days} วัน <span style="font-size:9px">Days</span></td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 5px;">
-                                        <div style="line-height: 1.2;">วันยืนราคา</div>
-                                        <div style="font-size:10px; line-height: 1.2;">Valid Until</div>
+                                    <td style="padding-bottom: 2px;">
+                                        <div style="line-height: 1.1;">วันยืนราคา</div>
+                                        <div style="font-size:9px; line-height: 1.1;">Valid Until</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;">${cusInfo.due_date_str}</td>
+                                    <td style="padding-bottom: 2px;">${cusInfo.due_date_str}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 5px;">
-                                        <div style="line-height: 1.2;">เงื่อนไขชำระเงิน</div>
-                                        <div style="font-size:10px; line-height: 1.2;">Payment Terms</div>
+                                    <td style="padding-bottom: 2px;">
+                                        <div style="line-height: 1.1;">เงื่อนไขชำระเงิน</div>
+                                        <div style="font-size:9px; line-height: 1.1;">Payment Terms</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;">${cusInfo.payment_terms}</td>
+                                    <td style="padding-bottom: 2px;">${cusInfo.payment_terms}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 5px;">
-                                        <div style="line-height: 1.2;">พนักงานขาย</div>
-                                        <div style="font-size:10px; line-height: 1.2;">Salesman</div>
+                                    <td style="padding-bottom: 0;">
+                                        <div style="line-height: 1.1;">พนักงานขาย</div>
+                                        <div style="font-size:9px; line-height: 1.1;">Salesman</div>
                                     </td>
-                                    <td style="padding-bottom: 5px;">
+                                    <td style="padding-bottom: 0;">
                                         ${cusInfo.pic_name}<br>
-                                        <span style="font-size:11px">Tel: ${cusInfo.pic_phone || "-"}</span>
+                                        <span style="font-size:10px">Tel: ${cusInfo.pic_phone || "-"}</span>
                                     </td>
                                 </tr>
                             </table>
@@ -700,36 +716,36 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
 
                     <!-- Items Table -->
-                    <table style="width: 100%; flex: 1; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0;">
-                        <thead>
+                    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0;">
+                        <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                             <tr style="background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
-                                <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; width: 50px; text-align: center;">
-                                    <div style="line-height: 1.2;">ลำดับ</div>
-                                    <div style="font-size:10px; line-height: 1.2;">No.</div>
+                                <th style="width: 5%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
+                                    <div style="line-height: 1.1;">ลำดับ</div>
+                                    <div style="font-size:9px; line-height: 1.1;">No.</div>
                                 </th>
-                                <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; text-align: center;">
-                                    <div style="line-height: 1.2;">รหัสสินค้า / รายละเอียด</div>
-                                    <div style="font-size:10px; line-height: 1.2;">Code / Descriptions</div>
+                                <th style="width: 40%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
+                                    <div style="line-height: 1.1;">รหัสสินค้า / รายละเอียด</div>
+                                    <div style="font-size:9px; line-height: 1.1;">Code / Descriptions</div>
                                 </th>
-                                <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; width: 60px; text-align: center;">
-                                    <div style="line-height: 1.2;">จำนวน</div>
-                                    <div style="font-size:10px; line-height: 1.2;">Quantity</div>
+                                <th style="width: 10%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
+                                    <div style="line-height: 1.1;">จำนวน</div>
+                                    <div style="font-size:9px; line-height: 1.1;">Quantity</div>
                                 </th>
-                                <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; width: 60px; text-align: center;">
-                                    <div style="line-height: 1.2;">หน่วย</div>
-                                    <div style="font-size:10px; line-height: 1.2;">Unit</div>
+                                <th style="width: 10%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
+                                    <div style="line-height: 1.1;">หน่วย</div>
+                                    <div style="font-size:9px; line-height: 1.1;">Unit</div>
                                 </th>
-                                <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; width: 100px; text-align: center;">
-                                    <div style="line-height: 1.2;">หน่วยละ</div>
-                                    <div style="font-size:10px; line-height: 1.2;">Unit Price</div>
+                                <th style="width: 15%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
+                                    <div style="line-height: 1.1;">หน่วยละ</div>
+                                    <div style="font-size:9px; line-height: 1.1;">Unit Price</div>
                                 </th>
-                                <th style="letter-spacing: 0px !important; text-transform: none !important; padding: 5px; border: 1px solid #000; width: 120px; text-align: center;">
-                                    <div style="line-height: 1.2;">จำนวนเงิน</div>
-                                    <div style="font-size:10px; line-height: 1.2;">Amount</div>
+                                <th style="width: 20%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
+                                    <div style="line-height: 1.1;">จำนวนเงิน</div>
+                                    <div style="font-size:9px; line-height: 1.1;">Amount</div>
                                 </th>
                             </tr>
                         </thead>
-                        <tbody style="min-height: 150px; display: table-row-group;">
+                        <tbody style="display: table-row-group;">
             `;
 
       let sumTotal = 0;
@@ -738,12 +754,12 @@ document.addEventListener("DOMContentLoaded", () => {
         sumTotal += rowTotal;
         tableHTML += `
                             <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                <td style="padding: 4px 5px; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; vertical-align: top;">${index + 1}</td>
-                                <td style="padding: 4px 5px; border-right: 1px solid #000; vertical-align: top;">${item.description}</td>
-                                <td style="padding: 4px 5px; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.quantity.toLocaleString()}</td>
-                                <td style="padding: 4px 5px; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.unit || 'ชิ้น'}</td>
-                                <td style="padding: 4px 5px; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(item.unit_price)}</td>
-                                <td style="padding: 4px 5px; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(rowTotal)}</td>
+                                <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; vertical-align: top;">${index + 1}</td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">${item.description}</td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.quantity.toLocaleString()}</td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.unit || 'ชิ้น'}</td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(item.unit_price)}</td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(rowTotal)}</td>
                             </tr>
                 `;
       });
@@ -779,23 +795,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const vat = sumTotal * 0.07;
 
       tableHTML += `
-                            <tr style="page-break-inside: avoid; break-inside: avoid; height: 100%;">
-                                <td style="border-left: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
-                                <td style="border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
-                                <td style="border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
-                                <td style="border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
-                                <td style="border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
-                                <td style="border-right: 1px solid #000; border-bottom: 1px solid #000;"></td>
-                            </tr>
+                            
                         </tbody>
                     </table>
 
                     <!-- Summary Section -->
-                    <div style="page-break-inside: avoid; break-inside: avoid; margin-top: auto;">
+                    <div style="margin-top: 20px; page-break-inside: auto; break-inside: auto;">
                     <!-- Top: Remarks and Subtotals -->
                     <div style="display: flex; border: 1px solid #000; border-top: none; overflow: hidden;">
                         <!-- Left Remarks -->
-                        <div style="flex: 1; border-right: 1px solid #000; padding: 10px; font-size: 11px;">
+                        <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; font-size: 11px;">
                             <strong>หมายเหตุ (Remarks):</strong><br>
                             - การเสนอราคานี้ยืนราคา ${cusInfo.credit_days} วัน<br>
                             ${cusInfo.remarks ? "- " + cusInfo.remarks + "<br>" : ""}
@@ -803,14 +812,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                         
                         <!-- Right Totals -->
-                        <div style="width: 260px; background: white; display: flex; flex-direction: column; justify-content: center;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <div style="width: 35%; max-width: 260px; background: white; display: flex; flex-direction: column; justify-content: center;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding: 2px 10px;">รวมเป็นเงิน <span style="font-size:10px">(Gross Amount)</span></td>
+                                    <td style="padding: 2px 10px;">รวมเป็นเงิน <span style="font-size:9px">(Gross Amount)</span></td>
                                     <td style="padding: 2px 10px; text-align: right;">${formatCurrency(sumTotal)}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding: 2px 10px;">ภาษีมูลค่าเพิ่ม 7% <span style="font-size:10px">(VAT)</span></td>
+                                    <td style="padding: 2px 10px;">ภาษีมูลค่าเพิ่ม 7% <span style="font-size:9px">(VAT)</span></td>
                                     <td style="padding: 2px 10px; text-align: right;">${formatCurrency(vat)}</td>
                                 </tr>
                             </table>
@@ -819,17 +828,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <!-- Bottom: Red Grand Total -->
                     <div style="display: flex; border: 1px solid #000; border-top: 1px solid #000; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; margin-bottom: 2px; overflow: hidden; background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold;">
-                        <div style="flex: 1; border-right: 1px solid #000; padding: 10px; text-align: center; display: flex; align-items: center; justify-content: center;">
+                        <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; text-align: center; display: flex; align-items: center; justify-content: center;">
                             ${bahtText(gTotal)}
                         </div>
-                        <div style="width: 260px; padding: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; box-sizing: border-box;">
-                            <span>ยอดรวมทั้งสิ้น <span style="font-size:10px">(Grand Total)</span></span>
+                        <div style="width: 35%; max-width: 260px; padding: ${pBox}; display: flex; align-items: center; justify-content: space-between; font-size: ${fBase}; box-sizing: border-box;">
+                            <span>ยอดรวมทั้งสิ้น <span style="font-size:9px">(Grand Total)</span></span>
                             <span>${formatCurrency(gTotal)}</span>
                         </div>
                     </div>
 
                     <!-- Footer Signatures (Locked as Image) -->
-                    ${generateSignatureCanvas(cusInfo.salesperson, cusInfo.doc_date_str)}
+                    ${generateSignatureCanvas(cusInfo.salesperson, cusInfo.doc_date_str, sigW)}
 
                     </div> <!-- End of page-break-avoid wrapper for Summary and Signature -->
                 </div>

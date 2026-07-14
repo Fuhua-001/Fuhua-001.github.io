@@ -120,7 +120,7 @@
 
               <div class="table-container" style="flex: 1; overflow: auto; margin-top: 0;">
                 <table style="width: 100%; text-align: left; border-collapse: collapse;">
-                  <thead>
+                  <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                     <tr>
                       <th class="sticky-th" style="width: 12%; min-width: 120px;">วันที่/เวลา</th>
                       <th class="sticky-th" style="width: 15%; min-width: 120px;">เลขที่เอกสาร</th>
@@ -190,7 +190,7 @@
               
               <div class="table-container" style="margin-top: 1rem; flex: 1; overflow: auto;">
                 <table style="width: 100%; text-align: left; border-collapse: collapse;">
-                  <thead>
+                  <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                     <tr>
                       <th class="sticky-th" style="width: 12%; min-width: 120px;">วันที่/เวลา</th>
                       <th class="sticky-th" style="width: 10%; min-width: 100px;">การกระทำ</th>
@@ -602,7 +602,7 @@
             const bahtText = amount => '( ' + fmt(amount) + ' บาทถ้วน )';
 
             // Generate locked signature image
-            function generateSignatureCanvas(salesperson, docDate) {
+            function generateSignatureCanvas(salesperson, docDate, sigW = '734px') {
                 const canvas = document.createElement('canvas');
                 const scale = 3;
                 canvas.width = 734 * scale;
@@ -667,7 +667,7 @@
                 ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
                 ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
                 
-                return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: 734px; margin-top: 5px;" alt="Locked Signatures" />';
+                return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
             }
 
             const itemRows = items.map((it, i) => `
@@ -683,7 +683,7 @@
             window._currentPdfData = { q, cust, items, docDateStr, crDays, validDate, subtotal, vat, grandTotal, fmt, itemRows };
 
             pdfContent.innerHTML = `
-              <div style="width:794px;min-height:1080px;box-sizing:border-box;display:flex;flex-direction:column;font-family:'Prompt','Sarabun',sans-serif;letter-spacing:0px;color:#000;padding:40px;background:white;font-size:13px;line-height:1.4;margin:0;text-align:left;">
+              <div style="width:794px;min-height: auto; box-sizing: border-box; display: block;font-family:'Prompt','Sarabun',sans-serif;letter-spacing:0px;color:#000;padding:${padCont};background:white;font-size:${fBase};line-height:${lh};margin:0;text-align:left;">
 
                 <!-- Header Section -->
                 <div style="display:flex;justify-content:space-between;margin-bottom:15px;">
@@ -692,13 +692,13 @@
                     <img src="logo.svg" alt="Logo" style="width: 80px; height: auto; border-radius: 8px;">
                   </div>
                   <div style="flex:2;text-align:center;">
-                    <h2 style="margin:0;font-size:20px;font-weight:bold;">โซลโซไซตี้</h2>
+                    <h2 style="margin:0;font-size:${fH2};font-weight:bold;">โซลโซไซตี้</h2>
                     <p style="margin:2px 0;">Soul Society</p>
                     <p style="margin:2px 0;">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
                     <p style="margin:2px 0;">TEL : 02-789-5541 FAX: &nbsp;&nbsp; Email: Stainless.Stell@gmail.com</p>
                   </div>
                   <div style="flex:1;text-align:right;display:flex;flex-direction:column;justify-content:center;">
-                    <h2 style="margin:0;font-size:18px;font-weight:normal;">ใบเสนอราคา</h2>
+                    <h2 style="margin:0;font-size:${fH2s};font-weight:normal;">ใบเสนอราคา</h2>
                     <p style="margin:2px 0;">Quotation</p>
                   </div>
                 </div>
@@ -710,12 +710,12 @@
                 <!-- Info Box Section -->
                 <div style="display:flex;border:1px solid #000;border-radius:8px;margin-bottom:10px;overflow:hidden;">
                   <!-- Left Box -->
-                  <div style="flex:1;padding:10px;border-right:1px solid #000;">
-                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                  <div style="flex:1;padding:${pBox};border-right:1px solid #000;">
+                    <table style="width:100%;border-collapse:collapse;font-size:${fBase};">
                       <tr>
                         <td style="width:140px;padding-bottom:5px;">
                           <div style="line-height:1.2;">ลูกค้า</div>
-                          <div style="font-size:10px;line-height:1.2;">Customer</div>
+                          <div style="font-size:${fSmall};line-height:1.2;">Customer</div>
                         </td>
                         <td style="padding-bottom:5px;" colspan="3">${q.customer_code || cust.code || ''}<br><span style="color:transparent;">-</span></td>
                       </tr>
@@ -733,7 +733,7 @@
                       <tr>
                         <td style="padding-bottom:5px;">
                           <div style="line-height:1.2;">เลขประจำตัวผู้เสียภาษี</div>
-                          <div style="font-size:10px;line-height:1.2;">Tax ID</div>
+                          <div style="font-size:${fSmall};line-height:1.2;">Tax ID</div>
                         </td>
                         <td style="padding-bottom:5px;">${cust.tax_id || '-'}</td>
                         <td style="padding-bottom:5px;text-align:right;"></td>
@@ -743,46 +743,46 @@
                   </div>
                   <!-- Right Box -->
                   <div style="flex:1;padding:10px;">
-                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                    <table style="width:100%;border-collapse:collapse;font-size:${fBase};">
                       <tr>
                         <td style="width:120px;padding-bottom:5px;">
                           <div style="line-height:1.2;">เลขที่ใบเสนอราคา</div>
-                          <div style="font-size:10px;line-height:1.2;">Quotation No.</div>
+                          <div style="font-size:${fSmall};line-height:1.2;">Quotation No.</div>
                         </td>
                         <td style="padding-bottom:5px;">${q.doc_no || '(ออกอัตโนมัติ)'}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
                           <div style="line-height:1.2;">วันที่</div>
-                          <div style="font-size:10px;line-height:1.2;">Date</div>
+                          <div style="font-size:${fSmall};line-height:1.2;">Date</div>
                         </td>
                         <td style="padding-bottom:5px;">${docDateStr}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
                           <div style="line-height:1.2;">เครดิต</div>
-                          <div style="font-size:10px;line-height:1.2;">Credit Terms</div>
+                          <div style="font-size:${fSmall};line-height:1.2;">Credit Terms</div>
                         </td>
-                        <td style="padding-bottom:5px;">${crDays} วัน <span style="font-size:10px;">Days</span></td>
+                        <td style="padding-bottom:5px;">${crDays} วัน <span style="font-size:${fSmall};">Days</span></td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
                           <div style="line-height:1.2;">วันยืนราคา</div>
-                          <div style="font-size:10px;line-height:1.2;">Valid Until</div>
+                          <div style="font-size:${fSmall};line-height:1.2;">Valid Until</div>
                         </td>
                         <td style="padding-bottom:5px;">${validDate}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
                           <div style="line-height:1.2;">เงื่อนไขชำระเงิน</div>
-                          <div style="font-size:10px;line-height:1.2;">Payment Terms</div>
+                          <div style="font-size:${fSmall};line-height:1.2;">Payment Terms</div>
                         </td>
                         <td style="padding-bottom:5px;">${q.payment_terms || 'Cash/Transfer'}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
                           <div style="line-height:1.2;">พนักงานขาย</div>
-                          <div style="font-size:10px;line-height:1.2;">Salesman</div>
+                          <div style="font-size:${fSmall};line-height:1.2;">Salesman</div>
                         </td>
                         <td style="padding-bottom:5px;">
                           ${q.pic_name || ''}<br>
@@ -795,44 +795,38 @@
 
                 <!-- Items Table -->
                 <table style="width:100%; flex: 1; border-collapse:collapse;border:1px solid #000;margin-bottom:0;">
-                  <thead>
+                  <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                     <tr style="background-color:#ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                       <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:50px;text-align:center;">
                         <div style="line-height:1.2;">ลำดับ</div>
-                        <div style="font-size:10px;line-height:1.2;">No.</div>
+                        <div style="font-size:${fSmall};line-height:1.2;">No.</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;text-align:center;">
                         <div style="line-height:1.2;">รหัสสินค้า / รายละเอียด</div>
-                        <div style="font-size:10px;line-height:1.2;">Code / Descriptions</div>
+                        <div style="font-size:${fSmall};line-height:1.2;">Code / Descriptions</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:80px;text-align:center;">
                         <div style="line-height:1.2;">จำนวน</div>
-                        <div style="font-size:10px;line-height:1.2;">Quantity</div>
+                        <div style="font-size:${fSmall};line-height:1.2;">Quantity</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:100px;text-align:center;">
                         <div style="line-height:1.2;">หน่วยละ</div>
-                        <div style="font-size:10px;line-height:1.2;">Unit Price</div>
+                        <div style="font-size:${fSmall};line-height:1.2;">Unit Price</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:5px;border:1px solid #000;width:120px;text-align:center;">
                         <div style="line-height:1.2;">จำนวนเงิน</div>
-                        <div style="font-size:10px;line-height:1.2;">Amount</div>
+                        <div style="font-size:${fSmall};line-height:1.2;">Amount</div>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     ${itemRows}
-                    <tr style="height: 100%;">
-                      <td style="border-left:1px solid #000;border-right:1px solid #000;padding:6px;"></td>
-                      <td style="border-right:1px solid #000;"></td>
-                      <td style="border-right:1px solid #000;"></td>
-                      <td style="border-right:1px solid #000;"></td>
-                      <td style="border-right:1px solid #000;"></td>
-                    </tr>
+                    
                   </tbody>
                 </table>
 
                 <!-- Summary Section -->
-                <div style="margin-top: auto; page-break-inside: avoid; break-inside: avoid;">
+                <div style="margin-top: 20px; page-break-inside: auto; break-inside: auto;">
                 <div style="display:flex;border:1px solid #000;border-top:none;overflow:hidden;">
                   <div style="flex:1;border-right:1px solid #000;padding:10px;font-size:11px;">
                     <strong>หมายเหตุ (Remarks):</strong><br>
@@ -841,13 +835,13 @@
                     - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจก. โซลโซไซตี้
                   </div>
                   <div style="width:260px;background:white;display:flex;flex-direction:column;justify-content:center;">
-                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                    <table style="width:100%;border-collapse:collapse;font-size:${fBase};">
                       <tr>
-                        <td style="padding:5px 10px;">รวมเป็นเงิน <span style="font-size:10px;">(Gross Amount)</span></td>
+                        <td style="padding:5px 10px;">รวมเป็นเงิน <span style="font-size:${fSmall};">(Gross Amount)</span></td>
                         <td style="padding:5px 10px;text-align:right;">${fmt(subtotal)}</td>
                       </tr>
                       <tr>
-                        <td style="padding:5px 10px;">ภาษีมูลค่าเพิ่ม 7% <span style="font-size:10px;">(VAT)</span></td>
+                        <td style="padding:5px 10px;">ภาษีมูลค่าเพิ่ม 7% <span style="font-size:${fSmall};">(VAT)</span></td>
                         <td style="padding:5px 10px;text-align:right;">${fmt(vat)}</td>
                       </tr>
                     </table>
@@ -859,14 +853,14 @@
                   <div style="flex:1;border-right:1px solid #000;padding:10px;text-align:center;display:flex;align-items:center;justify-content:center;">
                     ${bahtText(grandTotal)}
                   </div>
-                  <div style="width:260px;padding:10px;display:flex;align-items:center;justify-content:space-between;font-size:13px;box-sizing:border-box;">
-                    <span>ยอดรวมทั้งสิ้น <span style="font-size:10px;">(Grand Total)</span></span>
+                  <div style="width:260px;padding:10px;display:flex;align-items:center;justify-content:space-between;font-size:${fBase};box-sizing:border-box;">
+                    <span>ยอดรวมทั้งสิ้น <span style="font-size:${fSmall};">(Grand Total)</span></span>
                     <span>${fmt(grandTotal)}</span>
                   </div>
                 </div>
 
                 <!-- Footer Signatures (Locked as Image) -->
-                ${generateSignatureCanvas(q.pic_name, docDateStr)}
+                ${generateSignatureCanvas(q.pic_name, docDateStr, sigW)}
                 </div>
 
               </div>`;

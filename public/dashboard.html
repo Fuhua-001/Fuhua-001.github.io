@@ -19,10 +19,32 @@
         window.location.href = "login.html";
     </script>
     <style>
-      .stat-card { padding: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+      .stat-card { 
+        padding: 2rem 1.5rem 1.5rem 1.5rem; 
+        display: flex; 
+        flex-direction: column; 
+        position: relative;
+        overflow: hidden;
+      }
+      .icon-wrapper {
+        width: 80px; height: 80px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        margin-bottom: 1.5rem;
+      }
       .stat-icon { font-size: 2.5rem; }
-      .stat-label { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem; }
-      .stat-value { font-size: 1.5rem; color: var(--text-main); font-weight: 700; }
+      .stat-label { color: var(--text-main); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem; }
+      .stat-value { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; margin-bottom: 1.5rem; }
+      .stat-number { font-size: 1.5rem; color: var(--text-main); font-weight: 800; margin-bottom: 1.5rem; display: block; }
+      .card-arrow {
+        position: absolute; bottom: 1.5rem; right: 1.5rem;
+        width: 32px; height: 32px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        color: white; transition: transform 0.2s; cursor: pointer;
+      }
+      .stat-card:hover .card-arrow { transform: translateX(3px); }
+      .card-bottom-line {
+        position: absolute; bottom: 1.5rem; left: 1.5rem; height: 4px; border-radius: 2px; width: 60px;
+      }
       .quick-btn {
         display: inline-flex; align-items: center; gap: 0.5rem;
         padding: 0.6rem 1.2rem; border-radius: 8px; border: none;
@@ -87,35 +109,52 @@
 
         <div class="content-grid" style="display: block">
           <!-- Stats Cards -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-            <div class="card stat-card" style="border-left: 4px solid var(--primary);">
-              <div class="stat-icon" style="color: var(--primary)"><i class="fa-solid fa-coins"></i></div>
-              <div>
-                <p class="stat-label">ยอดขายรวม (Total Sales)</p>
-                <h3 class="stat-value" id="stat-sales"><span class="loading-dots">โหลด</span></h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            
+            <div class="card stat-card" style="border: none;">
+              <div class="icon-wrapper" style="background-color: #fee2e2;">
+                <div class="stat-icon" style="color: #ef4444;"><i class="fa-solid fa-coins"></i></div>
               </div>
+              <h3 class="stat-label">ยอดขายรวม</h3>
+              <p class="stat-value">Total Sales (THB)</p>
+              <span class="stat-number" id="stat-sales"><span class="loading-dots">โหลด</span></span>
+              <div class="card-bottom-line" style="background-color: #ef4444;"></div>
+              <div class="card-arrow" style="background-color: #ef4444;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
-            <div class="card stat-card" style="border-left: 4px solid var(--secondary);">
-              <div class="stat-icon" style="color: var(--secondary)"><i class="fa-solid fa-file-invoice"></i></div>
-              <div>
-                <p class="stat-label">ใบเสนอราคาทั้งหมด (Quotes)</p>
-                <h3 class="stat-value" id="stat-quotes"><span class="loading-dots">โหลด</span></h3>
+
+            <div class="card stat-card" style="border: none;">
+              <div class="icon-wrapper" style="background-color: #e0e7ff;">
+                <div class="stat-icon" style="color: #4f46e5;"><i class="fa-solid fa-file-invoice"></i></div>
               </div>
+              <h3 class="stat-label">ใบเสนอราคา</h3>
+              <p class="stat-value">Quotations Generated</p>
+              <span class="stat-number" id="stat-quotes"><span class="loading-dots">โหลด</span></span>
+              <div class="card-bottom-line" style="background-color: #4f46e5;"></div>
+              <div class="card-arrow" style="background-color: #4f46e5;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
-            <div class="card stat-card" style="border-left: 4px solid var(--success);">
-              <div class="stat-icon" style="color: var(--success)"><i class="fa-solid fa-users"></i></div>
-              <div>
-                <p class="stat-label">ลูกค้าในระบบ (Customers)</p>
-                <h3 class="stat-value" id="stat-customers"><span class="loading-dots">โหลด</span></h3>
+
+            <div class="card stat-card" style="border: none;">
+              <div class="icon-wrapper" style="background-color: #f3e8ff;">
+                <div class="stat-icon" style="color: #9333ea;"><i class="fa-solid fa-users"></i></div>
               </div>
+              <h3 class="stat-label">ลูกค้าทั้งหมด</h3>
+              <p class="stat-value">Total Customers</p>
+              <span class="stat-number" id="stat-customers"><span class="loading-dots">โหลด</span></span>
+              <div class="card-bottom-line" style="background-color: #9333ea;"></div>
+              <div class="card-arrow" style="background-color: #9333ea;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
-            <div class="card stat-card" style="border-left: 4px solid #f59e0b;">
-              <div class="stat-icon" style="color: #f59e0b"><i class="fa-solid fa-box"></i></div>
-              <div>
-                <p class="stat-label">สินค้าคงคลัง (Products)</p>
-                <h3 class="stat-value" id="stat-products"><span class="loading-dots">โหลด</span></h3>
+
+            <div class="card stat-card" style="border: none;">
+              <div class="icon-wrapper" style="background-color: #dcfce7;">
+                <div class="stat-icon" style="color: #10b981;"><i class="fa-solid fa-box-open"></i></div>
               </div>
+              <h3 class="stat-label">สินค้าคงคลัง</h3>
+              <p class="stat-value">Products in Stock</p>
+              <span class="stat-number" id="stat-products"><span class="loading-dots">โหลด</span></span>
+              <div class="card-bottom-line" style="background-color: #10b981;"></div>
+              <div class="card-arrow" style="background-color: #10b981;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
+
           </div>
 
           <!-- Chart + Top Customers -->

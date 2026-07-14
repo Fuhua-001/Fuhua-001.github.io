@@ -89,23 +89,32 @@
 
         <div class="content-grid">
           <!-- AI Prompt Section -->
-          <section id="ai-prompt-section" class="card ai-section">
-            <div class="card-header">
-              <h2>
-                <i class="fa-solid fa-wand-magic-sparkles"></i> AI Assistant
-              </h2>
-              <p>พิมพ์คำสั่งให้ AI สร้างใบเสนอราคาให้คุณ</p>
+          <section id="ai-prompt-section" class="card ai-section" style="border: none; position: relative; overflow: hidden; padding-top: 2rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="icon-wrapper" style="background-color: #e0e7ff; margin-bottom: 0;">
+                <div class="stat-icon" style="color: #4f46e5; font-size: 2rem;"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+              </div>
+              <div>
+                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0;">AI Assistant</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem;">พิมพ์คำสั่งให้ AI สร้างใบเสนอราคาให้คุณ</p>
+              </div>
             </div>
-            <div class="ai-input-group">
+            
+            <div class="ai-input-group" style="position: relative;">
               <textarea
                 id="ai-prompt"
                 placeholder="ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท"
+                style="padding-bottom: 4rem; border-radius: 12px; background: #f8fafc;"
               ></textarea>
-              <button id="generate-btn" class="btn btn-primary">
-                <span class="btn-text">สร้างด้วย AI</span>
+              
+              <!-- Circular action button replacing standard button -->
+              <button id="generate-btn" class="card-arrow" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); width: 45px; height: 45px; border: none; font-size: 1.2rem; bottom: 1rem; right: 1rem; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);">
                 <i class="fa-solid fa-paper-plane"></i>
               </button>
             </div>
+            
+            <div class="card-bottom-line" style="background-color: #4f46e5;"></div>
+            
             <div id="ai-loader" class="loader hidden">
               <div class="spinner"></div>
               <p>กำลังวิเคราะห์และสร้างข้อมูล...</p>
@@ -116,22 +125,20 @@
           <section
             class="card form-section"
             id="quotation-form-section"
-            style="border-top: 5px solid var(--primary-color)"
+            style="border: none; position: relative; overflow: hidden; padding-top: 2rem;"
           >
-            <div
-              class="card-header"
-              style="
-                text-align: center;
-                border-bottom: 2px dashed #cbd5e1;
-                padding-bottom: 1.5rem;
-                margin-bottom: 1.5rem;
-              "
-            >
-              <h2 style="font-size: 1.8rem; color: #0f172a">
-                <i class="fa-solid fa-file-invoice"></i> แบบฟอร์มใบเสนอราคา
-              </h2>
-              <p style="color: #64748b">(Quotation Entry Form)</p>
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px dashed #e2e8f0; padding-bottom: 1.5rem;">
+              <div class="icon-wrapper" style="background-color: #f3e8ff; margin-bottom: 0;">
+                <div class="stat-icon" style="color: #9333ea; font-size: 2rem;"><i class="fa-solid fa-file-invoice"></i></div>
+              </div>
+              <div>
+                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0;">แบบฟอร์มใบเสนอราคา</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem;">Quotation Entry Form</p>
+              </div>
             </div>
+            
+            <div class="card-bottom-line" style="background-color: #9333ea; bottom: 0; left: 0; width: 100%; height: 6px; border-radius: 0;"></div>
+            
             <form id="quote-form">
               <div
                 style="
@@ -471,19 +478,22 @@
                 </div>
               </div>
 
-              <div style="margin-top: 2rem">
+              <div style="margin-top: 3rem; display: flex; justify-content: flex-end;">
                 <button
                   type="submit"
                   class="btn btn-primary"
                   style="
-                    width: 100%;
+                    width: auto;
+                    min-width: 250px;
                     justify-content: center;
-                    font-size: 1.2rem;
-                    padding: 1.2rem;
-                    box-shadow: 0 10px 15px -3px rgb(99 102 241 / 0.4);
+                    font-size: 1.1rem;
+                    padding: 1rem 2rem;
+                    border-radius: 30px;
+                    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+                    box-shadow: 0 10px 25px -5px rgba(147, 51, 234, 0.4);
                   "
                 >
-                  <i class="fa-solid fa-eye"></i> ตรวจสอบเอกสาร (Preview)
+                  <i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i> ตรวจสอบเอกสาร (Preview)
                 </button>
               </div>
             </form>
