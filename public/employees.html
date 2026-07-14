@@ -1,9 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ข้อมูลพนักงาน/เซลส์ (PIC) - AI Enterprise Quotation Maker</title>
+    <title>เธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ/เน€เธเธฅเธชเน (PIC) - AI Enterprise Quotation Maker</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -27,22 +27,22 @@
         </div>
         <nav class="menu">
           <a href="dashboard.html" class="menu-item"
-            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
+            ><i class="fa-solid fa-chart-pie"></i> เนเธ”เธเธเธญเธฃเนเธ”</a
           >
-          <a href="index.html" class="menu-item"
-            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
+          <a href="index.html?v=6" class="menu-item"
+            ><i class="fa-solid fa-plus"></i> เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</a
           >
           <a href="history.html" class="menu-item"
-            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
+            ><i class="fa-solid fa-list"></i> เธเธฃเธฐเธงเธฑเธ•เธดเน€เธญเธเธชเธฒเธฃ</a
           >
           <a href="customers.html" class="menu-item"
-            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
+            ><i class="fa-solid fa-users"></i> เธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ</a
           >
           <a href="products.html" class="menu-item"
-            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
+            ><i class="fa-solid fa-box"></i> เธเนเธญเธกเธนเธฅเธชเธดเธเธเนเธฒ & เธชเธ•เนเธญเธ</a
           >
           <a href="employees.html" class="menu-item active"
-            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
+            ><i class="fa-solid fa-user-tie"></i> เธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ (PIC)</a
           >
           <a
             href="#"
@@ -51,7 +51,7 @@
               sessionStorage.removeItem('isLoggedIn');
               window.location.href = 'login.html';
             "
-            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
+            ><i class="fa-solid fa-right-from-bracket"></i> เธญเธญเธเธเธฒเธเธฃเธฐเธเธ</a
           >
         </nav>
         <div class="user-profile">
@@ -65,10 +65,10 @@
 
       <main class="main-content page-fixed">
         <header class="top-header">
-          <h1>รายการข้อมูลพนักงาน (PIC) 🧑‍💼</h1>
+          <h1>เธฃเธฒเธขเธเธฒเธฃเธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ (PIC) ๐ง‘โ€๐’ผ</h1>
           <div class="header-actions">
             <button class="btn btn-primary" onclick="openEmpModal()">
-              <i class="fa-solid fa-plus"></i> เพิ่มพนักงานใหม่
+              <i class="fa-solid fa-plus"></i> เน€เธเธดเนเธกเธเธเธฑเธเธเธฒเธเนเธซเธกเน
             </button>
           </div>
         </header>
@@ -77,7 +77,7 @@
           <section class="card form-section">
             <div class="card-header">
               <h2>
-                <i class="fa-solid fa-users-gear"></i> พนักงานขาย (Sales / PIC)
+                <i class="fa-solid fa-users-gear"></i> เธเธเธฑเธเธเธฒเธเธเธฒเธข (Sales / PIC)
               </h2>
             </div>
             <div class="table-container" style="margin-top: 1rem">
@@ -94,19 +94,19 @@
                     <th style="width: 50px; text-align: center;">
                       <input type="checkbox" id="selectAllEmployees" onchange="toggleSelectAllEmployees(this)">
                     </th>
-                    <th style="min-width: 150px;">รหัสพนักงาน (PIC)</th>
-                    <th style="min-width: 250px;">ชื่อพนักงาน (TH)</th>
-                    <th style="min-width: 250px;">ชื่อพนักงาน (EN)</th>
-                    <th style="">เบอร์ติดต่อ</th>
-                    <th style="">แผนก</th>
-                    <th style="">คีย์เวิร์ด</th>
-                    <th style="" class="sticky-manage">จัดการ</th>
+                    <th style="min-width: 150px;">เธฃเธซเธฑเธชเธเธเธฑเธเธเธฒเธ (PIC)</th>
+                    <th style="min-width: 250px;">เธเธทเนเธญเธเธเธฑเธเธเธฒเธ (TH)</th>
+                    <th style="min-width: 250px;">เธเธทเนเธญเธเธเธฑเธเธเธฒเธ (EN)</th>
+                    <th style="">เน€เธเธญเธฃเนเธ•เธดเธ”เธ•เนเธญ</th>
+                    <th style="">เนเธเธเธ</th>
+                    <th style="">เธเธตเธขเนเน€เธงเธดเธฃเนเธ”</th>
+                    <th style="" class="sticky-manage">เธเธฑเธ”เธเธฒเธฃ</th>
                   </tr>
                 </thead>
                 <tbody id="employees-tbody">
                   <tr>
                     <td colspan="8" style="text-align: center; padding: 2rem">
-                      กำลังโหลดข้อมูล...
+                      เธเธณเธฅเธฑเธเนเธซเธฅเธ”เธเนเธญเธกเธนเธฅ...
                     </td>
                   </tr>
                 </tbody>
@@ -115,14 +115,14 @@
           </section>
 
           <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%;">
-            <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
+            <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">เนเธชเธ”เธ 0-0 เธเธฒเธ 0 เธฃเธฒเธขเธเธฒเธฃ</div>
             <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="prevEmployeesPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
-              <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">หน้า 1</span>
-              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextEmployeesPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
+              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="prevEmployeesPage()"><i class="fa-solid fa-chevron-left"></i> เธเนเธญเธเธซเธเนเธฒ</button>
+              <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">เธซเธเนเธฒ 1</span>
+              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextEmployeesPage()">เธ–เธฑเธ”เนเธ <i class="fa-solid fa-chevron-right"></i></button>
             </div>
             <button class="btn btn-secondary" id="btn-bulk-delete-employees" style="background-color: #ef4444 !important; color: white !important; display: none; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onclick="deleteSelectedEmployees()">
-                <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span id="delete-count-employees">0</span>)
+                <i class="fa-solid fa-trash"></i> เธฅเธเธเนเธญเธกเธนเธฅเธ—เธตเนเน€เธฅเธทเธญเธ (<span id="delete-count-employees">0</span>)
             </button>
           </div>
 
@@ -157,11 +157,11 @@
         <div style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;">
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
-        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">ยืนยันการลบข้อมูล</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก <span id="delete-confirm-count" style="font-weight: bold; color: #ef4444;">0</span> รายการ? การกระทำนี้ไม่สามารถกู้คืนได้</p>
+        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">เธขเธทเธเธขเธฑเธเธเธฒเธฃเธฅเธเธเนเธญเธกเธนเธฅ</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">เธเธธเธ“เนเธเนเนเธเธซเธฃเธทเธญเนเธกเนเธงเนเธฒเธ•เนเธญเธเธเธฒเธฃเธฅเธเธเนเธญเธกเธนเธฅเธ—เธตเนเน€เธฅเธทเธญเธ <span id="delete-confirm-count" style="font-weight: bold; color: #ef4444;">0</span> เธฃเธฒเธขเธเธฒเธฃ? เธเธฒเธฃเธเธฃเธฐเธ—เธณเธเธตเนเนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธนเนเธเธทเธเนเธ”เน</p>
         <div style="display: flex; gap: 1rem; justify-content: center;">
-          <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">ยกเลิก</button>
-          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: #ef4444 !important; color: white !important; border: none;">ยืนยันการลบ</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">เธขเธเน€เธฅเธดเธ</button>
+          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: #ef4444 !important; color: white !important; border: none;">เธขเธทเธเธขเธฑเธเธเธฒเธฃเธฅเธ</button>
         </div>
       </div>
     </div>
@@ -171,7 +171,7 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
       <i class="fa-solid fa-circle-check"></i>
-      <span id="toast-message">แจ้งเตือน</span>
+      <span id="toast-message">เนเธเนเธเน€เธ•เธทเธญเธ</span>
     </div>
 
     <!-- Employee Modal -->
@@ -215,7 +215,7 @@
           "
         >
           <h2 id="emp-modal-title" style="margin: 0;">
-            <i class="fa-solid fa-user-tie"></i> เพิ่มพนักงานใหม่
+            <i class="fa-solid fa-user-tie"></i> เน€เธเธดเนเธกเธเธเธฑเธเธเธฒเธเนเธซเธกเน
           </h2>
           <button
             type="button"
@@ -258,7 +258,7 @@
             style="display: flex; flex-direction: column; gap: 0.5rem"
           >
             <label style="font-weight: 500; font-size: 0.95rem"
-              >รหัสพนักงาน (PIC Code) *</label
+              >เธฃเธซเธฑเธชเธเธเธฑเธเธเธฒเธ (PIC Code) *</label
             >
             <input
               type="text"
@@ -277,23 +277,23 @@
 
           <div style="display: flex; gap: 1rem;">
             <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-              <label style="font-weight: 500; font-size: 0.95rem">ชื่อ (TH) *</label>
-              <input type="text" id="emp-fname-th" class="input-field" required pattern="^[ก-๙\s]+$" title="กรุณากรอกภาษาไทยเท่านั้น" oninput="this.value = this.value.replace(/[^ก-๙\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+              <label style="font-weight: 500; font-size: 0.95rem">เธเธทเนเธญ (TH) *</label>
+              <input type="text" id="emp-fname-th" class="input-field" required pattern="^[เธ-เน\s]+$" title="เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธ เธฒเธฉเธฒเนเธ—เธขเน€เธ—เนเธฒเธเธฑเนเธ" oninput="this.value = this.value.replace(/[^เธ-เน\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
             </div>
             <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-              <label style="font-weight: 500; font-size: 0.95rem">นามสกุล (TH) *</label>
-              <input type="text" id="emp-lname-th" class="input-field" required pattern="^[ก-๙\s]+$" title="กรุณากรอกภาษาไทยเท่านั้น" oninput="this.value = this.value.replace(/[^ก-๙\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+              <label style="font-weight: 500; font-size: 0.95rem">เธเธฒเธกเธชเธเธธเธฅ (TH) *</label>
+              <input type="text" id="emp-lname-th" class="input-field" required pattern="^[เธ-เน\s]+$" title="เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธ เธฒเธฉเธฒเนเธ—เธขเน€เธ—เนเธฒเธเธฑเนเธ" oninput="this.value = this.value.replace(/[^เธ-เน\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
             </div>
           </div>
 
           <div style="display: flex; gap: 1rem;">
             <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-              <label style="font-weight: 500; font-size: 0.95rem">ชื่อ (EN) *</label>
-              <input type="text" id="emp-fname-en" class="input-field" required pattern="^[A-Za-z\s]+$" title="กรุณากรอกภาษาอังกฤษเท่านั้น" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+              <label style="font-weight: 500; font-size: 0.95rem">เธเธทเนเธญ (EN) *</label>
+              <input type="text" id="emp-fname-en" class="input-field" required pattern="^[A-Za-z\s]+$" title="เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธ เธฒเธฉเธฒเธญเธฑเธเธเธคเธฉเน€เธ—เนเธฒเธเธฑเนเธ" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
             </div>
             <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-              <label style="font-weight: 500; font-size: 0.95rem">นามสกุล (EN) *</label>
-              <input type="text" id="emp-lname-en" class="input-field" required pattern="^[A-Za-z\s]+$" title="กรุณากรอกภาษาอังกฤษเท่านั้น" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+              <label style="font-weight: 500; font-size: 0.95rem">เธเธฒเธกเธชเธเธธเธฅ (EN) *</label>
+              <input type="text" id="emp-lname-en" class="input-field" required pattern="^[A-Za-z\s]+$" title="เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธ เธฒเธฉเธฒเธญเธฑเธเธเธคเธฉเน€เธ—เนเธฒเธเธฑเนเธ" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
             </div>
           </div>
 
@@ -302,7 +302,7 @@
             style="display: flex; flex-direction: column; gap: 0.5rem"
           >
             <label style="font-weight: 500; font-size: 0.95rem"
-              >เบอร์ติดต่อ</label
+              >เน€เธเธญเธฃเนเธ•เธดเธ”เธ•เนเธญ</label
             >
             <input
               type="text"
@@ -311,7 +311,7 @@
               maxlength="10"
               minlength="10"
               pattern="^0[0-9]{9}$"
-              title="กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (10 หลัก เริ่มต้นด้วย 0)"
+              title="เธเธฃเธธเธ“เธฒเธเธฃเธญเธเน€เธเธญเธฃเนเนเธ—เธฃเธจเธฑเธเธ—เนเนเธซเนเธ–เธนเธเธ•เนเธญเธ (10 เธซเธฅเธฑเธ เน€เธฃเธดเนเธกเธ•เนเธเธ”เนเธงเธข 0)"
               oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.length > 0 && this.value[0] !== '0') this.value = '0' + this.value;"
               style="
                 padding: 0.75rem;
@@ -328,7 +328,7 @@
             style="display: flex; flex-direction: column; gap: 0.5rem"
           >
             <label style="font-weight: 500; font-size: 0.95rem"
-              >แผนก (Department)</label
+              >เนเธเธเธ (Department)</label
             >
             <input
               type="text"
@@ -369,17 +369,17 @@
               "
               onclick="deleteEmp()"
             >
-              <i class="fa-solid fa-trash"></i> ลบข้อมูลนี้
+              <i class="fa-solid fa-trash"></i> เธฅเธเธเนเธญเธกเธนเธฅเธเธตเน
             </button>
             <button
               type="button"
               class="btn btn-secondary"
               onclick="closeEmpModal()"
             >
-              ยกเลิก
+              เธขเธเน€เธฅเธดเธ
             </button>
             <button type="submit" class="btn btn-primary">
-              <i class="fa-solid fa-save"></i> บันทึกข้อมูล
+              <i class="fa-solid fa-save"></i> เธเธฑเธเธ—เธถเธเธเนเธญเธกเธนเธฅ
             </button>
           </div>
         </form>
@@ -413,7 +413,7 @@
           renderEmployees();
         } catch (err) {
           tbody.innerHTML =
-            '<tr><td colspan="8" style="text-align: center; color: red;">โหลดข้อมูลล้มเหลว</td></tr>';
+            '<tr><td colspan="8" style="text-align: center; color: red;">เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธฅเนเธกเน€เธซเธฅเธง</td></tr>';
         }
       };
 
@@ -423,9 +423,9 @@
         
         if (allEmployeesData.length === 0) {
           tbody.innerHTML =
-            '<tr><td colspan="7" style="text-align: center;">ไม่พบข้อมูลพนักงาน</td></tr>';
-          document.getElementById('pagination-info').innerText = 'แสดง 0-0 จาก 0 รายการ';
-          document.getElementById('page-number').innerText = 'หน้า 1';
+            '<tr><td colspan="7" style="text-align: center;">เนเธกเนเธเธเธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ</td></tr>';
+          document.getElementById('pagination-info').innerText = 'เนเธชเธ”เธ 0-0 เธเธฒเธ 0 เธฃเธฒเธขเธเธฒเธฃ';
+          document.getElementById('page-number').innerText = 'เธซเธเนเธฒ 1';
           return;
         }
 
@@ -446,13 +446,13 @@
                           <td>${emp.department || "-"}</td>
                           <td><span class="badge" style="background: var(--bg-main); color: var(--text-muted); padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">${emp.keywords || "-"}</span></td>
                           <td style="text-align: center;" class="sticky-manage">
-                            <button class="btn-text" title='แก้ไข' onclick='editEmp({"id": "${emp.id}", "pic_code": "${emp.pic_code || ""}", "pic_name": "${emp.pic_name || ""}", "pic_name_eng": "${emp.pic_name_eng || ""}", "contact_number": "${emp.contact_number || ""}", "department": "${emp.department || ""}"})'><i class='fa-solid fa-pen-to-square'></i></button></td>
+                            <button class="btn-text" title='เนเธเนเนเธ' onclick='editEmp({"id": "${emp.id}", "pic_code": "${emp.pic_code || ""}", "pic_name": "${emp.pic_name || ""}", "pic_name_eng": "${emp.pic_name_eng || ""}", "contact_number": "${emp.contact_number || ""}", "department": "${emp.department || ""}"})'><i class='fa-solid fa-pen-to-square'></i></button></td>
                       </tr>
                   `;
         });
         
-        document.getElementById('pagination-info').innerText = `แสดง ${start + 1}-${end} จาก ${allEmployeesData.length} รายการ`;
-        document.getElementById('page-number').innerText = `หน้า ${currentEmployeesPage}`;
+        document.getElementById('pagination-info').innerText = `เนเธชเธ”เธ ${start + 1}-${end} เธเธฒเธ ${allEmployeesData.length} เธฃเธฒเธขเธเธฒเธฃ`;
+        document.getElementById('page-number').innerText = `เธซเธเนเธฒ ${currentEmployeesPage}`;
         
         const selectAll = document.getElementById('selectAllEmployees');
         if(selectAll) selectAll.checked = false;
@@ -511,7 +511,7 @@
                 } catch(e) {}
             }
             if (successCount > 0) {
-                showToast(`ลบข้อมูลสำเร็จ ${successCount} รายการ`, "success");
+                showToast(`เธฅเธเธเนเธญเธกเธนเธฅเธชเธณเน€เธฃเนเธ ${successCount} เธฃเธฒเธขเธเธฒเธฃ`, "success");
             }
             const selectAll = document.getElementById('selectAllEmployees');
             if(selectAll) selectAll.checked = false;
@@ -526,7 +526,7 @@
 
       window.openEmpModal = () => {
         document.getElementById("emp-modal-title").innerHTML =
-          '<i class="fa-solid fa-user-tie"></i> เพิ่มพนักงานใหม่';
+          '<i class="fa-solid fa-user-tie"></i> เน€เธเธดเนเธกเธเธเธฑเธเธเธฒเธเนเธซเธกเน';
         document.getElementById("btn-delete-employee").style.display = "none";
         document.getElementById("emp-form").reset();
         document.getElementById("emp-id").value = "";
@@ -545,7 +545,7 @@
 
       window.editEmp = (emp) => {
         document.getElementById("emp-modal-title").innerHTML =
-          '<i class="fa-solid fa-pen-to-square"></i> แก้ไขพนักงาน';
+          '<i class="fa-solid fa-pen-to-square"></i> เนเธเนเนเธเธเธเธฑเธเธเธฒเธ';
         document.getElementById("btn-delete-employee").style.display = "inline-flex";
         document.getElementById("emp-id").value = emp.id;
         document.getElementById("emp-code").value = emp.pic_code;
@@ -582,7 +582,7 @@
         const lname = document.getElementById("emp-lname-th").value;
         const name = `${fname} ${lname}`.trim();
         
-        document.getElementById('delete-confirm-count').innerHTML = `พนักงาน ("${name}")`;
+        document.getElementById('delete-confirm-count').innerHTML = `เธเธเธฑเธเธเธฒเธ ("${name}")`;
         document.getElementById('delete-confirm-modal').style.display = 'flex';
         
         document.getElementById('btn-confirm-delete-action').onclick = async () => {
@@ -591,12 +591,12 @@
             const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
             const res = await fetch(`/api/employees/${id}${userQuery}`, { method: "DELETE" });
             if (res.ok) {
-              showToast("ลบพนักงานเรียบร้อย");
+              showToast("เธฅเธเธเธเธฑเธเธเธฒเธเน€เธฃเธตเธขเธเธฃเนเธญเธข");
               closeEmpModal();
               fetchEmployees();
             } else throw new Error("Delete failed");
           } catch (err) {
-            alert("ไม่สามารถลบข้อมูลได้");
+            alert("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธฅเธเธเนเธญเธกเธนเธฅเนเธ”เน");
           }
         };
       };
@@ -636,23 +636,24 @@
             if (res.ok) {
               closeEmpModal();
               showToast(
-                id ? "อัปเดตข้อมูลพนักงานเรียบร้อย" : "เพิ่มพนักงานเรียบร้อย",
+                id ? "เธญเธฑเธเน€เธ”เธ•เธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธเน€เธฃเธตเธขเธเธฃเนเธญเธข" : "เน€เธเธดเนเธกเธเธเธฑเธเธเธฒเธเน€เธฃเธตเธขเธเธฃเนเธญเธข",
               );
               fetchEmployees();
             } else {
               const data = await res.json();
               let errorMsg = data.error || "Save failed";
               if (data.details && data.details.includes("Duplicate entry")) {
-                errorMsg = "รหัสพนักงานนี้ซ้ำในระบบ โปรดใช้รหัสอื่น";
+                errorMsg = "เธฃเธซเธฑเธชเธเธเธฑเธเธเธฒเธเธเธตเนเธเนเธณเนเธเธฃเธฐเธเธ เนเธเธฃเธ”เนเธเนเธฃเธซเธฑเธชเธญเธทเนเธ";
               }
-              alert("ไม่สามารถบันทึกข้อมูลได้: " + errorMsg);
+              alert("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธเธเนเธญเธกเธนเธฅเนเธ”เน: " + errorMsg);
             }
           } catch (err) {
-            alert("ไม่สามารถบันทึกข้อมูลได้: เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว");
+            alert("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธเธเนเธญเธกเธนเธฅเนเธ”เน: เน€เธเธทเนเธญเธกเธ•เนเธญเน€เธเธดเธฃเนเธเน€เธงเธญเธฃเนเธฅเนเธกเน€เธซเธฅเธง");
           }
         });
     </script>
   </body>
 </html>
+
 
 

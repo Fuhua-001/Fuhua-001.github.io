@@ -1,9 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>แดชบอร์ด - AI Enterprise Quotation Maker</title>
+    <title>เนเธ”เธเธเธญเธฃเนเธ” - AI Enterprise Quotation Maker</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -72,22 +72,22 @@
         </div>
         <nav class="menu">
           <a href="dashboard.html" class="menu-item active"
-            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a>
-          <a href="index.html" class="menu-item"
-            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a>
+            ><i class="fa-solid fa-chart-pie"></i> เนเธ”เธเธเธญเธฃเนเธ”</a>
+          <a href="index.html?v=6" class="menu-item"
+            ><i class="fa-solid fa-plus"></i> เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</a>
           <a href="history.html?v=5" class="menu-item"
-            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a>
+            ><i class="fa-solid fa-list"></i> เธเธฃเธฐเธงเธฑเธ•เธดเน€เธญเธเธชเธฒเธฃ</a>
           <a href="customers.html" class="menu-item"
-            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a>
+            ><i class="fa-solid fa-users"></i> เธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ</a>
           <a href="products.html" class="menu-item"
-            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a>
+            ><i class="fa-solid fa-box"></i> เธเนเธญเธกเธนเธฅเธชเธดเธเธเนเธฒ & เธชเธ•เนเธญเธ</a>
           <a href="employees.html" class="menu-item"
-            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a>
+            ><i class="fa-solid fa-user-tie"></i> เธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ (PIC)</a>
           <a
             href="#"
             class="menu-item text-danger"
             onclick="sessionStorage.removeItem('isLoggedIn'); window.location.href = 'login.html';"
-            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a>
+            ><i class="fa-solid fa-right-from-bracket"></i> เธญเธญเธเธเธฒเธเธฃเธฐเธเธ</a>
         </nav>
         <div class="user-profile">
           <div class="avatar"><i class="fa-solid fa-user"></i></div>
@@ -101,9 +101,9 @@
       <!-- Main Content -->
       <main class="main-content">
         <header class="top-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-          <h1>ภาพรวมธุรกิจ (Dashboard) 📊</h1>
-          <a href="index.html" class="quick-btn">
-            <i class="fa-solid fa-plus"></i> สร้างใบเสนอราคาใหม่
+          <h1>เธ เธฒเธเธฃเธงเธกเธเธธเธฃเธเธดเธ (Dashboard) ๐“</h1>
+          <a href="index.html?v=6" class="quick-btn">
+            <i class="fa-solid fa-plus"></i> เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒเนเธซเธกเน
           </a>
         </header>
 
@@ -115,9 +115,9 @@
               <div class="icon-wrapper" style="background-color: #fee2e2;">
                 <div class="stat-icon" style="color: #ef4444;"><i class="fa-solid fa-coins"></i></div>
               </div>
-              <h3 class="stat-label">ยอดขายรวม</h3>
+              <h3 class="stat-label">เธขเธญเธ”เธเธฒเธขเธฃเธงเธก</h3>
               <p class="stat-value">Total Sales (THB)</p>
-              <span class="stat-number" id="stat-sales"><span class="loading-dots">โหลด</span></span>
+              <span class="stat-number" id="stat-sales"><span class="loading-dots">เนเธซเธฅเธ”</span></span>
               <div class="card-bottom-line" style="background-color: #ef4444;"></div>
               <div class="card-arrow" style="background-color: #ef4444;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
@@ -126,9 +126,9 @@
               <div class="icon-wrapper" style="background-color: #e0e7ff;">
                 <div class="stat-icon" style="color: #4f46e5;"><i class="fa-solid fa-file-invoice"></i></div>
               </div>
-              <h3 class="stat-label">ใบเสนอราคา</h3>
+              <h3 class="stat-label">เนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</h3>
               <p class="stat-value">Quotations Generated</p>
-              <span class="stat-number" id="stat-quotes"><span class="loading-dots">โหลด</span></span>
+              <span class="stat-number" id="stat-quotes"><span class="loading-dots">เนเธซเธฅเธ”</span></span>
               <div class="card-bottom-line" style="background-color: #4f46e5;"></div>
               <div class="card-arrow" style="background-color: #4f46e5;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
@@ -137,9 +137,9 @@
               <div class="icon-wrapper" style="background-color: #f3e8ff;">
                 <div class="stat-icon" style="color: #9333ea;"><i class="fa-solid fa-users"></i></div>
               </div>
-              <h3 class="stat-label">ลูกค้าทั้งหมด</h3>
+              <h3 class="stat-label">เธฅเธนเธเธเนเธฒเธ—เธฑเนเธเธซเธกเธ”</h3>
               <p class="stat-value">Total Customers</p>
-              <span class="stat-number" id="stat-customers"><span class="loading-dots">โหลด</span></span>
+              <span class="stat-number" id="stat-customers"><span class="loading-dots">เนเธซเธฅเธ”</span></span>
               <div class="card-bottom-line" style="background-color: #9333ea;"></div>
               <div class="card-arrow" style="background-color: #9333ea;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
@@ -148,9 +148,9 @@
               <div class="icon-wrapper" style="background-color: #dcfce7;">
                 <div class="stat-icon" style="color: #10b981;"><i class="fa-solid fa-box-open"></i></div>
               </div>
-              <h3 class="stat-label">สินค้าคงคลัง</h3>
+              <h3 class="stat-label">เธชเธดเธเธเนเธฒเธเธเธเธฅเธฑเธ</h3>
               <p class="stat-value">Products in Stock</p>
-              <span class="stat-number" id="stat-products"><span class="loading-dots">โหลด</span></span>
+              <span class="stat-number" id="stat-products"><span class="loading-dots">เนเธซเธฅเธ”</span></span>
               <div class="card-bottom-line" style="background-color: #10b981;"></div>
               <div class="card-arrow" style="background-color: #10b981;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
@@ -162,7 +162,7 @@
             <section class="card" style="padding: 2rem">
               <h3 style="margin-bottom: 1.5rem; color: var(--text-main)">
                 <i class="fa-solid fa-chart-line" style="color:var(--primary); margin-right:0.5rem;"></i>
-                กราฟแสดงแนวโน้มยอดขาย (Sales Trend)
+                เธเธฃเธฒเธเนเธชเธ”เธเนเธเธงเนเธเนเธกเธขเธญเธ”เธเธฒเธข (Sales Trend)
               </h3>
               <div style="width: 100%; height: 300px">
                 <canvas id="salesChart"></canvas>
@@ -172,14 +172,14 @@
             <section class="card" style="padding: 2rem">
               <h3 style="margin-bottom: 1.25rem; color: var(--text-main)">
                 <i class="fa-solid fa-trophy" style="color:#f59e0b; margin-right:0.5rem;"></i>
-                ลูกค้าที่มียอดสูงสุด
+                เธฅเธนเธเธเนเธฒเธ—เธตเนเธกเธตเธขเธญเธ”เธชเธนเธเธชเธธเธ”
               </h3>
               <table class="top-table">
                 <thead>
-                  <tr><th>#</th><th>ลูกค้า</th><th style="text-align:right">ยอด (฿)</th></tr>
+                  <tr><th>#</th><th>เธฅเธนเธเธเนเธฒ</th><th style="text-align:right">เธขเธญเธ” (เธฟ)</th></tr>
                 </thead>
                 <tbody id="top-customers-tbody">
-                  <tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:1rem;">กำลังโหลด...</td></tr>
+                  <tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:1rem;">เธเธณเธฅเธฑเธเนเธซเธฅเธ”...</td></tr>
                 </tbody>
               </table>
             </section>
@@ -190,16 +190,16 @@
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem;">
               <h3 style="color: var(--text-main)">
                 <i class="fa-solid fa-clock-rotate-left" style="color:var(--secondary); margin-right:0.5rem;"></i>
-                ใบเสนอราคาล่าสุด
+                เนเธเน€เธชเธเธญเธฃเธฒเธเธฒเธฅเนเธฒเธชเธธเธ”
               </h3>
-              <a href="history.html?v=5" style="font-size:0.85rem; color:var(--primary); text-decoration:none;">ดูทั้งหมด →</a>
+              <a href="history.html?v=5" style="font-size:0.85rem; color:var(--primary); text-decoration:none;">เธ”เธนเธ—เธฑเนเธเธซเธกเธ” โ’</a>
             </div>
             <table class="top-table">
               <thead>
-                <tr><th>เลขที่</th><th>ลูกค้า</th><th>วันที่</th><th style="text-align:right">มูลค่า (฿)</th></tr>
+                <tr><th>เน€เธฅเธเธ—เธตเน</th><th>เธฅเธนเธเธเนเธฒ</th><th>เธงเธฑเธเธ—เธตเน</th><th style="text-align:right">เธกเธนเธฅเธเนเธฒ (เธฟ)</th></tr>
               </thead>
               <tbody id="recent-quotes-tbody">
-                <tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1rem;">กำลังโหลด...</td></tr>
+                <tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1rem;">เธเธณเธฅเธฑเธเนเธซเธฅเธ”...</td></tr>
               </tbody>
             </table>
           </section>
@@ -223,9 +223,9 @@
         const salesChart = new Chart(ctx, {
           type: "line",
           data: {
-            labels: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."],
+            labels: ["เธก.เธ.", "เธ.เธ.", "เธกเธต.เธ.", "เน€เธก.เธข.", "เธ.เธ.", "เธกเธด.เธข.", "เธ.เธ.", "เธช.เธ.", "เธ.เธข.", "เธ•.เธ.", "เธ.เธข.", "เธ.เธ."],
             datasets: [{
-              label: "ยอดขายรายเดือน (THB)",
+              label: "เธขเธญเธ”เธเธฒเธขเธฃเธฒเธขเน€เธ”เธทเธญเธ (THB)",
               data: Array(12).fill(0),
               borderColor: "#6366f1",
               backgroundColor: "rgba(99, 102, 241, 0.15)",
@@ -248,7 +248,7 @@
                 grid: { color: gridColor },
                 ticks: {
                   color: textColor,
-                  callback: (v) => "฿" + v.toLocaleString("th-TH")
+                  callback: (v) => "เธฟ" + v.toLocaleString("th-TH")
                 },
               },
               x: { grid: { display: false }, ticks: { color: textColor } },
@@ -257,7 +257,7 @@
               legend: { labels: { color: textColor } },
               tooltip: {
                 callbacks: {
-                  label: (ctx) => "฿" + ctx.parsed.y.toLocaleString("th-TH", { minimumFractionDigits: 2 })
+                  label: (ctx) => "เธฟ" + ctx.parsed.y.toLocaleString("th-TH", { minimumFractionDigits: 2 })
                 }
               }
             },
@@ -270,10 +270,10 @@
           const data = await res.json();
 
           document.getElementById("stat-sales").textContent =
-            "฿" + parseFloat(data.total_sales).toLocaleString("th-TH", { minimumFractionDigits: 2 });
-          document.getElementById("stat-quotes").textContent = data.total_quotes + " ใบ";
-          document.getElementById("stat-customers").textContent = data.total_customers + " ราย";
-          document.getElementById("stat-products").textContent = data.total_products + " รายการ";
+            "เธฟ" + parseFloat(data.total_sales).toLocaleString("th-TH", { minimumFractionDigits: 2 });
+          document.getElementById("stat-quotes").textContent = data.total_quotes + " เนเธ";
+          document.getElementById("stat-customers").textContent = data.total_customers + " เธฃเธฒเธข";
+          document.getElementById("stat-products").textContent = data.total_products + " เธฃเธฒเธขเธเธฒเธฃ";
 
           // Update chart with real data AFTER API response
           if (data.monthly_sales && Array.isArray(data.monthly_sales)) {
@@ -287,10 +287,10 @@
               <tr>
                 <td><span class="rank-badge">${i + 1}</span></td>
                 <td style="max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${c.customer_name}">${c.customer_name || '-'}</td>
-                <td style="text-align:right; font-weight:600; color:var(--primary)">฿${parseFloat(c.total).toLocaleString("th-TH", {minimumFractionDigits:0})}</td>
+                <td style="text-align:right; font-weight:600; color:var(--primary)">เธฟ${parseFloat(c.total).toLocaleString("th-TH", {minimumFractionDigits:0})}</td>
               </tr>`).join('');
           } else {
-            document.getElementById("top-customers-tbody").innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:1rem;">ยังไม่มีข้อมูล</td></tr>';
+            document.getElementById("top-customers-tbody").innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:1rem;">เธขเธฑเธเนเธกเนเธกเธตเธเนเธญเธกเธนเธฅ</td></tr>';
           }
 
           // Render recent quotes
@@ -300,15 +300,15 @@
                 <td><strong>${q.doc_no || '-'}</strong></td>
                 <td>${q.customer_name || '-'}</td>
                 <td style="color:var(--text-muted)">${q.doc_date ? new Date(q.doc_date).toLocaleDateString('th-TH') : '-'}</td>
-                <td style="text-align:right; font-weight:600">฿${parseFloat(q.total_amount || 0).toLocaleString("th-TH", {minimumFractionDigits:2})}</td>
+                <td style="text-align:right; font-weight:600">เธฟ${parseFloat(q.total_amount || 0).toLocaleString("th-TH", {minimumFractionDigits:2})}</td>
               </tr>`).join('');
           } else {
-            document.getElementById("recent-quotes-tbody").innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1rem;">ยังไม่มีข้อมูล</td></tr>';
+            document.getElementById("recent-quotes-tbody").innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1rem;">เธขเธฑเธเนเธกเนเธกเธตเธเนเธญเธกเธนเธฅ</td></tr>';
           }
 
         } catch (err) {
           console.error("Failed to load stats", err);
-          document.getElementById("stat-sales").textContent = "โหลดไม่ได้";
+          document.getElementById("stat-sales").textContent = "เนเธซเธฅเธ”เนเธกเนเนเธ”เน";
           document.getElementById("stat-quotes").textContent = "-";
           document.getElementById("stat-customers").textContent = "-";
           document.getElementById("stat-products").textContent = "-";
@@ -317,3 +317,4 @@
     </script>
   </body>
 </html>
+
