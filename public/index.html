@@ -43,6 +43,7 @@
           <a href="dashboard.html" class="menu-item"
             ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
           >
+          <a href="ai-assistant.html" class="menu-item"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a>
           <a href="index.html" class="menu-item active"
             ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
           >
@@ -89,41 +90,7 @@
 
         <div class="content-grid">
           <!-- AI Prompt Section -->
-          <section id="ai-prompt-section" class="card ai-section" style="border: none; position: relative; overflow: hidden; padding-top: 2rem;">
-            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-              <div class="icon-wrapper" style="background-color: #e0e7ff; margin-bottom: 0;">
-                <div class="stat-icon" style="color: #4f46e5; font-size: 2rem;"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-              </div>
-              <div>
-                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0;">ผู้ช่วย AI (AI Assistant)</h2>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem;">พิมพ์คำสั่งให้ AI สร้างใบเสนอราคาให้คุณ</p>
-              </div>
-            </div>
-            
-            <div class="ai-input-group" style="position: relative;">
-              <select id="ai-mode-select" class="input-field" style="margin-bottom: 0.5rem; font-weight: 600; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0.5rem 1rem; color: #334155;">
-                <option value="quote">🤖 AI สร้างใบเสนอราคา</option>
-                <option value="employee">👤 AI เพิ่มข้อมูลพนักงาน/เซลส์</option>
-              </select>
-              <textarea
-                id="ai-prompt"
-                placeholder="ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท"
-                style="padding-bottom: 4rem; border-radius: 12px; background: #f8fafc;"
-              ></textarea>
-              
-              <!-- Circular action button replacing standard button -->
-              <button id="generate-btn" class="card-arrow" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); width: 45px; height: 45px; border: none; font-size: 1.2rem; bottom: 1rem; right: 1rem; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);">
-                <i class="fa-solid fa-paper-plane"></i>
-              </button>
-            </div>
-            
-            <div class="card-bottom-line" style="background-color: #4f46e5;"></div>
-            
-            <div id="ai-loader" class="loader hidden">
-              <div class="spinner"></div>
-              <p>กำลังวิเคราะห์และสร้างข้อมูล...</p>
-            </div>
-          </section>
+          
 
           <!-- Quotation Form Section -->
           <section

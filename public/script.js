@@ -83,11 +83,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Call loadDraft here so that the <option>s exist before setting values
       const urlParamsInit = new URLSearchParams(window.location.search);
-      const viewIdInit = urlParamsInit.get("view");
-      const editIdInit = urlParamsInit.get("edit");
-      if (viewIdInit || editIdInit) {
-        // Load from DB instead of draft
-        window.loadQuoteData(viewIdInit, editIdInit);
+      const viewId = urlParamsInit.get("view");
+      const editId = urlParamsInit.get("edit");
+      
+      // Fetch customers and products first
+      await fetchDropdownData();
+
+      // Check if there is AI data from ai-assistant.html
+      const aiDataRaw = sessionStorage.getItem("aiQuotationData");
+      if (aiDataRaw) {
+        try {
+          const aiData = JSON.parse(aiDataRaw);
+          sessionStorage.removeItem("aiQuotationData"); // Clear it so it only loads once
+
+          if (aiData.customer_name && aiData.customer_name !== "Unknown") {
+            if (customerNameInput) {
+              customerNameInput.value = aiData.customer_name;
+              customerNameInput.dispatchEvent(new Event("change"));
+            }
+          }
+
+          if (aiData.items && Array.isArray(aiData.items)) {
+            items = aiData.items;
+            if (typeof renderItems === 'function') renderItems();
+          }
+
+          showToast("AI สร้างใบเสนอราคาสำเร็จ!");
+        } catch (e) {
+          console.error("Failed to parse AI data", e);
+        }
+      }
+
+      // If we are viewing an old quote or editing a draft, load data
+      if (viewId || editId) {
+        window.loadQuoteData(viewId, editId);
       } else {
         loadDraft();
       }
@@ -354,6 +383,13 @@ document.addEventListener("DOMContentLoaded", () => {
           aiPrompt.value = "";
           generateBtn.disabled = false;
           aiLoader.classList.add("hidden");
+          return;
+        }
+
+        if (!customerNameInput) {
+          // If we are on the ai-assistant page, customerNameInput doesn't exist
+          sessionStorage.setItem("aiQuotationData", JSON.stringify(data));
+          window.location.href = "index.html";
           return;
         }
 
