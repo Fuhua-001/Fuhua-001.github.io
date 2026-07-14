@@ -811,9 +811,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     </table>
 
                     <!-- Summary Section -->
-                    <div style="margin-top: 20px; page-break-inside: auto; break-inside: auto;">
+                    <div style="margin-top: 0; page-break-inside: auto; break-inside: auto;">
                     <!-- Top: Remarks and Subtotals -->
-                    <div style="display: flex; border: 1px solid #000; border-top: none; overflow: hidden;">
+                    <div style="display: flex; border: 1px solid #000; overflow: hidden;">
                         <!-- Left Remarks -->
                         <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; font-size: 11px; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
                             <strong>หมายเหตุ (Remarks):</strong><br>
