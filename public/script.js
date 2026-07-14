@@ -1,8 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const aiPrompt = document.getElementById("ai-prompt");
-  const generateBtn = document.getElementById("generate-btn");
-  const aiLoader = document.getElementById("ai-loader");
-
   const quoteForm = document.getElementById("quote-form");
   const customerNameInput = document.getElementById("customer-name");
   const quoteItemsContainer = document.getElementById("quote-items");
@@ -158,9 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Draft persistence
   const saveDraft = () => {
-    if (!aiPrompt || !customerNameInput) return;
+    if (!customerNameInput) return;
     const draft = {
-      prompt: aiPrompt.value,
       customerName: customerNameInput.value,
       items: items,
       isFormVisible: !document
@@ -174,12 +169,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const loadDraft = () => {
-    if (!aiPrompt || !customerNameInput) return;
+    if (!customerNameInput) return;
     const draftStr = sessionStorage.getItem("quotationDraft");
     if (draftStr) {
       try {
         const draft = JSON.parse(draftStr);
-        aiPrompt.value = draft.prompt || "";
         customerNameInput.value = draft.customerName || "";
         if (draft.salesRep) {
           const fSalesRep = document.getElementById("form-sales-rep");
@@ -199,7 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  if (aiPrompt) aiPrompt.addEventListener("input", saveDraft);
   window.updateCustomerContactFields = (customerName) => {
     const fPhone = document.getElementById("customer-phone");
     const fEmail = document.getElementById("customer-email");
