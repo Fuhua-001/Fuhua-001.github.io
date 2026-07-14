@@ -581,6 +581,13 @@
                 if(document.getElementById('prod-price')) document.getElementById('prod-price').value = data.selling_price || "0";
                 if(document.getElementById('prod-cost')) document.getElementById('prod-cost').value = data.cost_price || "0";
                 
+                
+                // Auto-save after a short delay for visual feedback
+                setTimeout(() => {
+                    const form = document.getElementById('product-form');
+                    if(form) form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }, 800);
+
                 document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-plus"></i> เพิ่มข้อมูลสินค้า (จาก AI)';
                 document.getElementById('product-modal').classList.remove('hidden');
             } catch(e) { console.error(e); }

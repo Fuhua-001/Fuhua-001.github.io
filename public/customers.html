@@ -553,6 +553,13 @@
                 if(document.getElementById('cus-address')) document.getElementById('cus-address').value = data.address || "";
                 if(document.getElementById('cus-pic')) document.getElementById('cus-pic').value = data.pic_code || "";
                 
+                
+                // Auto-save after a short delay for visual feedback
+                setTimeout(() => {
+                    const form = document.getElementById('customer-form');
+                    if(form) form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }, 800);
+
                 document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-user-plus"></i> เพิ่มข้อมูลลูกค้า (จาก AI)';
                 document.getElementById('customer-modal').classList.remove('hidden');
             } catch(e) { console.error(e); }
