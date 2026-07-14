@@ -329,6 +329,53 @@ Output ONLY valid JSON matching this exact structure (no markdown, no extra text
   }
 });
 
+app.post("/api/ai-employee", async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    if (!prompt) return res.status(400).json({ error: "Prompt is required" });
+
+    const systemPrompt = `You are an Employee Data Extraction AI.
+Extract the employee/sales details from the user's text into a JSON object.
+Use these rules:
+1. pic_code: Employee code or Sales code (e.g., EMP-001, S-001). Leave blank if not found.
+2. pic_name: Employee name in Thai or primary language.
+3. pic_name_eng: Employee name in English. Leave blank if not found.
+4. contact_number: Phone number or extension.
+5. department: Department or branch name.
+
+Output ONLY valid JSON matching this exact structure (no markdown, no extra text):
+{
+  "pic_code": "",
+  "pic_name": "",
+  "pic_name_eng": "",
+  "contact_number": "",
+  "department": ""
+}`;
+
+    let aiParsed;
+    try {
+      if (!ai || !process.env.GEMINI_API_KEY) throw new Error("No API Key");
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: systemPrompt + "\n\nUser Input: " + prompt,
+      });
+      let text = response.text.trim();
+      let jsonMatch = text.match(/\{.*\}/s);
+      aiParsed = JSON.parse(jsonMatch ? jsonMatch[0] : text);
+    } catch (e) {
+      console.warn("AI Extraction error:", e.message);
+      aiParsed = {
+        pic_name: prompt.split(" ")[0] || "",
+        contact_number: prompt.match(/0\d{1,2}-\d{3}-\d{4}|0\d{9}/) ? prompt.match(/0\d{1,2}-\d{3}-\d{4}|0\d{9}/)[0] : "",
+        pic_code: ""
+      };
+    }
+    res.json(aiParsed);
+  } catch (err) {
+    res.status(500).json({ error: "Failed" });
+  }
+});
+
 app.get('/api/dashboard-stats', async (req, res) => {
   try {
     const salesResRaw = await db.query('SELECT COALESCE(SUM(amount), 0) as total_sales FROM sub_sales_pr');
