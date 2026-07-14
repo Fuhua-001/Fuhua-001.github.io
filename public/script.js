@@ -2,17 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const aiPrompt = document.getElementById("ai-prompt");
   const generateBtn = document.getElementById("generate-btn");
   const aiLoader = document.getElementById("ai-loader");
-  const aiModeSelect = document.getElementById("ai-mode-select");
-
-  if (aiModeSelect && aiPrompt) {
-    aiModeSelect.addEventListener("change", (e) => {
-      if (e.target.value === "employee") {
-        aiPrompt.placeholder = "ตัวอย่าง: เซลส์ชื่อ สมชาย ใจดี รหัสพนักงาน EMP-001 เบอร์โทร 081-111-2222 อยู่แผนกขาย";
-      } else {
-        aiPrompt.placeholder = "ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท";
-      }
-    });
-  }
 
   const quoteForm = document.getElementById("quote-form");
   const customerNameInput = document.getElementById("customer-name");
@@ -22,6 +11,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const toast = document.getElementById("toast");
   const toastMessage = document.getElementById("toast-message");
+
+  const aiModeSelect = document.getElementById("ai-mode-select");
+  if (aiModeSelect) {
+    aiModeSelect.addEventListener("change", (e) => {
+      if (e.target.value === "employee") {
+        aiPrompt.placeholder = "ตัวอย่าง: เซลส์ชื่อ สมชาย ใจดี รหัสพนักงาน EMP-001 เบอร์โทร 081-111-2222 อยู่แผนกขาย";
+      } else {
+        aiPrompt.placeholder = "ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท";
+      }
+    });
+  }
 
   let items = [];
   window.productsList = [];
@@ -240,8 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
                 <td>
-                    <select id="${selectId}" required placeholder="-- เธเนเธเธซเธฒ/เธเธดเธกเธเนเธเธทเนเธญเธชเธดเธเธเนเธฒ --">
-                        <option value="">-- เธเนเธเธซเธฒ/เธเธดเธกเธเนเธเธทเนเธญเธชเธดเธเธเนเธฒ --</option>
+                    <select id="${selectId}" required placeholder="-- ค้นหา/พิมพ์ชื่อสินค้า --">
+                        <option value="">-- ค้นหา/พิมพ์ชื่อสินค้า --</option>
                         ${(window.productsList || []).map((p) => `<option value="${p.name}" ${p.name === item.description ? "selected" : ""}>${p.name}</option>`).join("")}
                         ${item.description && !(window.productsList || []).find(p => p.name === item.description) ? `<option value="${item.description.replace(/"/g, '&quot;')}" selected>${item.description}</option>` : ''}
                     </select>
@@ -326,47 +326,21 @@ document.addEventListener("DOMContentLoaded", () => {
   generateBtn.addEventListener("click", async () => {
     const prompt = aiPrompt.value.trim();
     if (!prompt) {
-      showToast("เธเธฃเธธเธ“เธฒเธเธดเธกเธเนเธเธณเธชเธฑเนเธเธเนเธญเธเนเธซเน AI เธชเธฃเนเธฒเธ", true);
+      showToast("กรุณาพิมพ์คำสั่งก่อนให้ AI สร้าง", true);
       return;
     }
 
     generateBtn.disabled = true;
     aiLoader.classList.remove("hidden");
 
-    const aiModeSelect = document.getElementById("ai-mode-select");
-    const mode = aiModeSelect ? aiModeSelect.value : "quote";
-
     try {
-      if (mode === "employee") {
-        const response = await fetch("/api/ai-employee", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt }),
-        });
-        const aiData = await response.json();
-        
-        if (response.ok && aiData.pic_name) {
-          const saveRes = await fetch("/api/employees", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(aiData),
-          });
-          if (saveRes.ok) {
-            showToast("เพิ่มข้อมูลพนักงาน/เซลส์: " + aiData.pic_name + " สำเร็จ!");
-            aiPrompt.value = "";
-            fetch("/api/employees")
-              .then(res => res.json())
-              .then(data => { allEmployees = data; })
-              .catch(() => {});
-          } else {
-            const errData = await saveRes.json();
-            throw new Error(errData.details && errData.details.includes("Duplicate entry") ? "รหัสพนักงานนี้มีในระบบแล้ว" : "ไม่สามารถบันทึกข้อมูลได้");
-          }
-        } else {
-           throw new Error(aiData.error || "ไม่พบข้อมูลพนักงานในข้อความ");
-        }
-      } else {
-      const response = await fetch("/api/generate-quote", {
+      let apiEndpoint = "/api/generate-quote";
+      const aiModeSelect = document.getElementById("ai-mode-select");
+      if (aiModeSelect && aiModeSelect.value === "employee") {
+        apiEndpoint = "/api/ai-employee";
+      }
+
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
@@ -375,6 +349,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (response.ok) {
+        if (apiEndpoint === "/api/ai-employee") {
+          showToast("เพิ่มข้อมูลพนักงานลงระบบสำเร็จ!");
+          aiPrompt.value = "";
+          generateBtn.disabled = false;
+          aiLoader.classList.add("hidden");
+          return;
+        }
+
         if (data.customer_name && data.customer_name !== "Unknown") {
           customerNameInput.value = data.customer_name;
           customerNameInput.dispatchEvent(new Event("change"));
@@ -401,14 +383,13 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             alert("⚠️ แจ้งเตือนจาก AI:\n\n" + data.warnings.join("\n"));
           }
-          showToast("AI สร้างเสร็จ แต่มีการปรับจำนวนสินค้าตามสต็อก", true);
+          showToast("AI สร้างเสร็จ แต่มีการปรับจำนวนสินค้าตามสต๊อก", true);
         } else {
           showToast("AI สร้างใบเสนอราคาสำเร็จ");
         }
       } else {
         throw new Error(data.error || "Failed to generate");
       }
-      } // End of else mode === "quote"
     } catch (error) {
       const warningModal = document.getElementById("ai-warning-modal");
       const warningText = document.getElementById("ai-warning-text");
@@ -417,8 +398,8 @@ document.addEventListener("DOMContentLoaded", () => {
         warningModal.classList.remove("hidden");
       } else {
         alert(
-          "โ ๏ธ เธฃเธฐเธเธเนเธเนเธเน€เธ•เธทเธญเธ:\n\nเนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒเนเธ”เน\nเธชเธฒเน€เธซเธ•เธธ: " +
-            (error.message || "เธเนเธญเธกเธนเธฅเธเธดเธ”เธเธฅเธฒเธ” เธซเธฃเธทเธญเธฃเธฐเธเธ AI เธเธฑเธ”เธเนเธญเธ"),
+          "⚠️ ระบบแจ้งเตือน:\n\nไม่สามารถสร้างใบเสนอราคาได้\nสาเหตุ: " +
+            (error.message || "ข้อมูลผิดพลาด หรือระบบ AI ขัดข้อง"),
         );
       }
     } finally {
@@ -454,7 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       if (items.length === 0) {
         alert(
-          "โ ๏ธ เนเธเนเธเน€เธ•เธทเธญเธ:\n\nเธเธธเธ“เธขเธฑเธเนเธกเนเนเธ”เนเน€เธเธดเนเธกเธชเธดเธเธเนเธฒเนเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒเธเธฃเธฑเธ เธเธฃเธธเธ“เธฒเน€เธเธดเนเธกเธชเธดเธเธเนเธฒเธญเธขเนเธฒเธเธเนเธญเธข 1 เธฃเธฒเธขเธเธฒเธฃเธเนเธญเธเน€เธเธทเนเธญเธ•เธฃเธงเธเธชเธญเธเน€เธญเธเธชเธฒเธฃ",
+          "⚠️ แจ้งเตือน:\n\nคุณยังไม่ได้เพิ่มสินค้าในใบเสนอราคาครับ กรุณาเพิ่มสินค้าอย่างน้อย 1 รายการก่อนเพื่อตรวจสอบเอกสาร",
         );
         return;
       }
@@ -482,7 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pic_name: "Sales Team",
         pic_phone: "",
         credit_days: crDays,
-        doc_no: "(เธเธณเธฅเธฑเธเธญเธญเธเน€เธฅเธ...)",
+        doc_no: "(กำลังออกเลข...)",
         doc_date_str: new Date().toLocaleDateString("en-GB"),
         due_date_str: new Date(
           Date.now() + crDays * 86400000,
@@ -506,7 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cusInfo.pic_code = window.loadedQuoteData.pic_code || "";
         cusInfo.pic_name = window.loadedQuoteData.pic_name || "Sales Team";
         cusInfo.pic_phone = window.loadedQuoteData.pic_phone || "";
-        cusInfo.doc_no = window.loadedQuoteData.doc_no || "(เธเธณเธฅเธฑเธเธญเธญเธเน€เธฅเธ...)";
+        cusInfo.doc_no = window.loadedQuoteData.doc_no || "(กำลังออกเลข...)";
         cusInfo.doc_date_str = dDate.toLocaleDateString("en-GB");
         cusInfo.due_date_str = new Date(
           dDate.getTime() + crDays * 86400000,
@@ -596,7 +577,7 @@ document.addEventListener("DOMContentLoaded", () => {
           
           ctx.fillStyle = '#000000';
           ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-          ctx.fillText('เนเธเธเธฒเธก เธฅเธนเธเธเนเธฒ / Customer', 179.5, 35);
+          ctx.fillText('ในนาม ลูกค้า / Customer', 179.5, 35);
           
           ctx.beginPath();
           ctx.moveTo(79.5, 115);
@@ -607,11 +588,11 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillStyle = '#666666';
           ctx.fillText('(............................................................)', 179.5, 135);
           ctx.fillStyle = '#000000';
-          ctx.fillText('เธเธนเนเธญเธเธธเธกเธฑเธ•เธดเธชเธฑเนเธเธเธทเนเธญ / Accepted By', 179.5, 153);
-          ctx.fillText('เธงเธฑเธเธ—เธตเน / Date: ......../......../........', 179.5, 170);
+          ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 153);
+          ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 170);
           
           ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-          ctx.fillText('เนเธเธเธฒเธก เนเธเธฅเนเธเนเธเธ•เธตเน (Soul Society)', 553.5, 35);
+          ctx.fillText('ในนาม โซลโซไซตี้ (Soul Society)', 553.5, 35);
           
           ctx.beginPath();
           ctx.moveTo(453.5, 115);
@@ -622,8 +603,8 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillStyle = '#0f172a';
           ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 135);
           ctx.fillStyle = '#000000';
-          ctx.fillText('เธเธนเนเน€เธชเธเธญเธฃเธฒเธเธฒ / Quoted By', 553.5, 153);
-          ctx.fillText('เธงเธฑเธเธ—เธตเน / Date: ' + (docDate || '......../......../........'), 553.5, 170);
+          ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
+          ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
           
           return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
       }
@@ -649,19 +630,19 @@ document.addEventListener("DOMContentLoaded", () => {
                             <img src="logo.svg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                         </div>
                         <div style="flex: 2; text-align: center;">
-                            <h2 style="margin: 0; font-size: ${fH2}; font-weight: bold; color: #0f172a;">เธเธฃเธดเธฉเธฑเธ— เนเธเธฅเนเธเนเธเธ•เธตเน เธเธณเธเธฑเธ”</h2>
+                            <h2 style="margin: 0; font-size: ${fH2}; font-weight: bold; color: #0f172a;">บริษัท โซลโซไซตี้ จำกัด</h2>
                             <p style="margin: 0; font-weight: 500; font-size: 13px;">Soul Society Co., Ltd.</p>
-                            <p style="margin: 0; font-size: ${fBase};">15/5 เธ–เธเธเธเธธเธ—เธเธฃเธฑเธเธฉเธฒ เธ•.เธเธฒเธเน€เธกเธทเธญเธ เธญ.เน€เธกเธทเธญเธ เธ.เธชเธกเธธเธ—เธฃเธเธฃเธฒเธเธฒเธฃ 10270</p>
+                            <p style="margin: 0; font-size: ${fBase};">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
                             <p style="margin: 0; font-size: ${fBase};">Tel: 02-789-5541 | Email: Stainless.Stell@gmail.com</p>
                         </div>
-                        <div style="flex: 1; text-align: right;">
-                            <h2 style="margin: 0; font-size: ${fH2s}; font-weight: bold; color: var(--primary-color);">เนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</h2>
+                        <div style="flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: flex-start;">
+                            <h2 style="margin: 0; font-size: ${fH2s}; font-weight: bold; color: var(--primary-color);">ใบเสนอราคา</h2>
                             <p style="margin: 0; font-size: 13px; font-weight: 500;">Quotation</p>
                         </div>
                     </div>
                     
                     <div style="text-align: left; margin-bottom: 5px;">
-                        <p style="margin: 0;">เน€เธฅเธเธเธฃเธฐเธเธณเธ•เธฑเธงเธเธนเนเน€เธชเธตเธขเธ เธฒเธฉเธต / Tax ID 6611611200003 เธชเธณเธเธฑเธเธเธฒเธเนเธซเธเน</p>
+                        <p style="margin: 0;">เลขประจำตัวผู้เสียภาษี / Tax ID 6611611200003 สำนักงานใหญ่</p>
                     </div>
 
                     <!-- Info Box Section -->
@@ -672,26 +653,26 @@ document.addEventListener("DOMContentLoaded", () => {
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="width: 140px; padding-bottom: 2px;">
-                                        <div style="line-height: 1.1;">เธฅเธนเธเธเนเธฒ</div>
+                                        <div style="line-height: 1.1;">ลูกค้า</div>
                                         <div style="font-size:9px; line-height: 1.1;">Customer</div>
                                     </td>
                                     <td style="padding-bottom: 2px;" colspan="3">${cusInfo.code}<br><span style="color: transparent;">-</span></td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td colspan="4" style="padding-bottom: 2px;">
-                                        <div style="font-weight:bold; margin-bottom: 1px;">${customerNameInput.value || "เธฅเธนเธเธเนเธฒเธ—เธฑเนเธงเนเธ"}</div>
+                                        <div style="font-weight:bold; margin-bottom: 1px;">${customerNameInput.value || "ลูกค้าทั่วไป"}</div>
                                         <div style="margin-bottom: 1px;">${cusInfo.address_1 || "-"}</div>
-                                        <div style="margin-bottom: 1px;">${cusInfo.district ? 'เธญ.'+cusInfo.district : ''} ${cusInfo.province ? 'เธ.'+cusInfo.province : ''}</div>
-                                        ${cusInfo.level_group ? "<div style='margin-bottom: 1px;'>เธเธฅเธธเนเธกเธฅเธนเธเธเนเธฒเธฃเธฐเธ”เธฑเธ: " + cusInfo.level_group + "</div>" : ""}
+                                        <div style="margin-bottom: 1px;">${cusInfo.district ? 'อ.'+cusInfo.district : ''} ${cusInfo.province ? 'จ.'+cusInfo.province : ''}</div>
+                                        ${cusInfo.level_group ? "<div style='margin-bottom: 1px;'>กลุ่มลูกค้าระดับ: " + cusInfo.level_group + "</div>" : ""}
                                     </td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 2px;">เนเธ—เธฃ.</td>
+                                    <td style="padding-bottom: 2px;">โทร.</td>
                                     <td style="padding-bottom: 2px;" colspan="3">${cusInfo.phone}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="padding-bottom: 0;">
-                                        <div style="line-height: 1.1;">เน€เธฅเธเธเธฃเธฐเธเธณเธ•เธฑเธงเธเธนเนเน€เธชเธตเธขเธ เธฒเธฉเธต</div>
+                                        <div style="line-height: 1.1;">เลขประจำตัวผู้เสียภาษี</div>
                                         <div style="font-size:9px; line-height: 1.1;">Tax ID</div>
                                     </td>
                                     <td style="padding-bottom: 0;">${cusInfo.tax_id}</td>
@@ -706,42 +687,42 @@ document.addEventListener("DOMContentLoaded", () => {
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="width: 120px; padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
-                                        <div style="line-height: 1.1;">เน€เธฅเธเธ—เธตเนเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</div>
+                                        <div style="line-height: 1.1;">เลขที่ใบเสนอราคา</div>
                                         <div style="font-size:9px; line-height: 1.1; color:#64748b;">Quotation No.</div>
                                     </td>
                                     <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1; font-weight: bold;"><span id="pdf-doc-no">${cusInfo.doc_no}</span></td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
-                                        <div style="line-height: 1.1;">เธงเธฑเธเธ—เธตเน</div>
+                                        <div style="line-height: 1.1;">วันที่</div>
                                         <div style="font-size:9px; line-height: 1.1; color:#64748b;">Date</div>
                                     </td>
                                     <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.doc_date_str}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
-                                        <div style="line-height: 1.1;">เน€เธเธฃเธ”เธดเธ•</div>
+                                        <div style="line-height: 1.1;">เครดิต</div>
                                         <div style="font-size:9px; line-height: 1.1; color:#64748b;">Credit Terms</div>
                                     </td>
-                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.credit_days} เธงเธฑเธ <span style="font-size:9px">Days</span></td>
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.credit_days} วัน <span style="font-size:9px">Days</span></td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
-                                        <div style="line-height: 1.1;">เธงเธฑเธเธขเธทเธเธฃเธฒเธเธฒ</div>
+                                        <div style="line-height: 1.1;">วันยืนราคา</div>
                                         <div style="font-size:9px; line-height: 1.1; color:#64748b;">Valid Until</div>
                                     </td>
                                     <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.due_date_str}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
-                                        <div style="line-height: 1.1;">เน€เธเธทเนเธญเธเนเธเธเธณเธฃเธฐเน€เธเธดเธ</div>
+                                        <div style="line-height: 1.1;">เงื่อนไขชำระเงิน</div>
                                         <div style="font-size:9px; line-height: 1.1; color:#64748b;">Payment Terms</div>
                                     </td>
                                     <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.payment_terms}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="padding: 4px 0;">
-                                        <div style="line-height: 1.1;">เธเธเธฑเธเธเธฒเธเธเธฒเธข</div>
+                                        <div style="line-height: 1.1;">พนักงานขาย</div>
                                         <div style="font-size:9px; line-height: 1.1; color:#64748b;">Salesman</div>
                                     </td>
                                     <td style="padding: 4px 0;">
@@ -758,27 +739,27 @@ document.addEventListener("DOMContentLoaded", () => {
                         <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                             <tr style="background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                                 <th style="width: 5%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
-                                    <div style="line-height: 1.1;">เธฅเธณเธ”เธฑเธ</div>
+                                    <div style="line-height: 1.1;">ลำดับ</div>
                                     <div style="font-size:9px; line-height: 1.1;">No.</div>
                                 </th>
                                 <th style="width: 40%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
-                                    <div style="line-height: 1.1;">เธฃเธซเธฑเธชเธชเธดเธเธเนเธฒ / เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”</div>
+                                    <div style="line-height: 1.1;">รหัสสินค้า / รายละเอียด</div>
                                     <div style="font-size:9px; line-height: 1.1;">Code / Descriptions</div>
                                 </th>
                                 <th style="width: 10%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
-                                    <div style="line-height: 1.1;">เธเธณเธเธงเธ</div>
+                                    <div style="line-height: 1.1;">จำนวน</div>
                                     <div style="font-size:9px; line-height: 1.1;">Quantity</div>
                                 </th>
                                 <th style="width: 10%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
-                                    <div style="line-height: 1.1;">เธซเธเนเธงเธข</div>
+                                    <div style="line-height: 1.1;">หน่วย</div>
                                     <div style="font-size:9px; line-height: 1.1;">Unit</div>
                                 </th>
                                 <th style="width: 15%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
-                                    <div style="line-height: 1.1;">เธซเธเนเธงเธขเธฅเธฐ</div>
+                                    <div style="line-height: 1.1;">หน่วยละ</div>
                                     <div style="font-size:9px; line-height: 1.1;">Unit Price</div>
                                 </th>
                                 <th style="width: 20%; letter-spacing: 0px !important; text-transform: none !important; padding: ${pCell}; border: 1px solid #000; text-align: center;">
-                                    <div style="line-height: 1.1;">เธเธณเธเธงเธเน€เธเธดเธ</div>
+                                    <div style="line-height: 1.1;">จำนวนเงิน</div>
                                     <div style="font-size:9px; line-height: 1.1;">Amount</div>
                                 </th>
                             </tr>
@@ -795,7 +776,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; vertical-align: top;">${index + 1}</td>
                                 <td style="padding: ${pCell}; border-right: 1px solid #000; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">${item.description}</td>
                                 <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.quantity.toLocaleString()}</td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.unit || 'เธเธดเนเธ'}</td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.unit || 'ชิ้น'}</td>
                                 <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(item.unit_price)}</td>
                                 <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(rowTotal)}</td>
                             </tr>
@@ -825,24 +806,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const parts = numberStr.split('.');
         const integerPart = parts[0];
         const fractionalPart = parts[1];
-        const text = ['เธจเธนเธเธขเน', 'เธซเธเธถเนเธ', 'เธชเธญเธ', 'เธชเธฒเธก', 'เธชเธตเน', 'เธซเนเธฒ', 'เธซเธ', 'เน€เธเนเธ”', 'เนเธเธ”', 'เน€เธเนเธฒ'];
-        const unit = ['', 'เธชเธดเธ', 'เธฃเนเธญเธข', 'เธเธฑเธ', 'เธซเธกเธทเนเธ', 'เนเธชเธ', 'เธฅเนเธฒเธ'];
+        const text = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
+        const unit = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'];
         const convert = (numStr) => {
             let result = '';
             for (let i = 0; i < numStr.length; i++) {
                 const n = parseInt(numStr[i]);
                 const pos = numStr.length - 1 - i;
                 if (n !== 0) {
-                    if (pos === 1 && n === 1) result += 'เธชเธดเธ';
-                    else if (pos === 1 && n === 2) result += 'เธขเธตเนเธชเธดเธ';
-                    else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เน€เธญเนเธ”';
+                    if (pos === 1 && n === 1) result += 'สิบ';
+                    else if (pos === 1 && n === 2) result += 'ยี่สิบ';
+                    else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เอ็ด';
                     else result += text[n] + unit[pos % 6]; // Quick mod for larger numbers
                 }
             }
-            return result || 'เธจเธนเธเธขเน';
+            return result || 'ศูนย์';
         };
-        let baht = convert(integerPart) + 'เธเธฒเธ—';
-        let satang = parseInt(fractionalPart) === 0 ? 'เธ–เนเธงเธ' : convert(fractionalPart) + 'เธชเธ•เธฒเธเธเน';
+        let baht = convert(integerPart) + 'บาท';
+        let satang = parseInt(fractionalPart) === 0 ? 'ถ้วน' : convert(fractionalPart) + 'สตางค์';
         return '( ' + baht + satang + ' )';
       };
 
@@ -860,21 +841,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="display: flex; border: 1px solid #000; overflow: hidden;">
                         <!-- Left Remarks -->
                         <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; font-size: 11px; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
-                            <strong>เธซเธกเธฒเธขเน€เธซเธ•เธธ (Remarks):</strong><br>
-                            - เธเธฒเธฃเน€เธชเธเธญเธฃเธฒเธเธฒเธเธตเนเธขเธทเธเธฃเธฒเธเธฒ ${cusInfo.credit_days} เธงเธฑเธ<br>
+                            <strong>หมายเหตุ (Remarks):</strong><br>
+                            - การเสนอราคานี้ยืนราคา ${cusInfo.credit_days} วัน<br>
                             ${cusInfo.remarks ? "- " + cusInfo.remarks + "<br>" : ""}
-                            - เธเธณเธฃเธฐเน€เธเธดเธเน€เธเนเธฒเธเธฑเธเธเธต: เธเธเธฒเธเธฒเธฃเธเธชเธดเธเธฃเนเธ—เธข เน€เธฅเธเธ—เธตเนเธเธฑเธเธเธต 123-4-56789-0 เธเธทเนเธญเธเธฑเธเธเธต เธเธเธ. เนเธเธฅเนเธเนเธเธ•เธตเน
+                            - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจก. โซลโซไซตี้
                         </div>
                         
                         <!-- Right Totals -->
                         <div style="width: 35%; max-width: 260px; background: white; display: flex; flex-direction: column; justify-content: center;">
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding: 2px 10px;">เธฃเธงเธกเน€เธเนเธเน€เธเธดเธ <span style="font-size:9px">(Gross Amount)</span></td>
+                                    <td style="padding: 2px 10px;">รวมเป็นเงิน <span style="font-size:9px">(Gross Amount)</span></td>
                                     <td style="padding: 2px 10px; text-align: right;">${formatCurrency(sumTotal)}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding: 2px 10px;">เธ เธฒเธฉเธตเธกเธนเธฅเธเนเธฒเน€เธเธดเนเธก 7% <span style="font-size:9px">(VAT)</span></td>
+                                    <td style="padding: 2px 10px;">ภาษีมูลค่าเพิ่ม 7% <span style="font-size:9px">(VAT)</span></td>
                                     <td style="padding: 2px 10px; text-align: right;">${formatCurrency(vat)}</td>
                                 </tr>
                             </table>
@@ -887,7 +868,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             ${bahtText(gTotal)}
                         </div>
                         <div style="width: 35%; max-width: 260px; padding: ${pBox}; display: flex; align-items: center; justify-content: space-between; font-size: ${fBase}; box-sizing: border-box;">
-                            <span>เธขเธญเธ”เธฃเธงเธกเธ—เธฑเนเธเธชเธดเนเธ <span style="font-size:9px">(Grand Total)</span></span>
+                            <span>ยอดรวมทั้งสิ้น <span style="font-size:9px">(Grand Total)</span></span>
                             <span>${formatCurrency(gTotal)}</span>
                         </div>
                     </div>
@@ -908,7 +889,7 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmPdfBtn.addEventListener("click", async () => {
       const oldBtnText = confirmPdfBtn.innerHTML;
       confirmPdfBtn.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin"></i> เธเธณเธฅเธฑเธเธเธฑเธเธ—เธถเธเนเธฅเธฐเธชเธฃเนเธฒเธ PDF...';
+        '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึกและสร้าง PDF...';
       confirmPdfBtn.disabled = true;
 
       // Save Logic (Skip if we are just viewing an old quote)
@@ -1007,7 +988,7 @@ document.addEventListener("DOMContentLoaded", () => {
           closeModal();
 
           if (urlParams.get("view")) {
-            showToast("เธ”เธฒเธงเธเนเนเธซเธฅเธ” PDF เธชเธณเน€เธฃเนเธ!");
+            showToast("ดาวน์โหลด PDF สำเร็จ!");
             // Remove ?view from URL without reloading
             window.history.replaceState(
               {},
@@ -1015,7 +996,7 @@ document.addEventListener("DOMContentLoaded", () => {
               window.location.pathname,
             );
           } else {
-            showToast("เธเธดเธกเธเน PDF เนเธฅเธฐเธเธฑเธเธ—เธถเธเธฅเธเธฃเธฐเธเธเธญเธฑเธ•เนเธเธกเธฑเธ•เธดเธชเธณเน€เธฃเนเธ!");
+            showToast("พิมพ์ PDF และบันทึกลงระบบอัตโนมัติสำเร็จ!");
           }
 
           // Clear draft so the next quote is fresh
@@ -1107,7 +1088,7 @@ window.loadQuoteData = (viewId, editId) => {
         if (editId) {
           const toastEl = document.getElementById("toast");
           const toastMsg = document.getElementById("toast-message");
-          if (toastMsg) toastMsg.innerText = "เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธชเธณเธซเธฃเธฑเธเนเธเนเนเธเน€เธฃเธตเธขเธเธฃเนเธญเธขเนเธฅเนเธง";
+          if (toastMsg) toastMsg.innerText = "โหลดข้อมูลสำหรับแก้ไขเรียบร้อยแล้ว";
           if (toastEl) {
             toastEl.classList.remove("hidden");
             setTimeout(() => toastEl.classList.add("hidden"), 3000);
@@ -1121,4 +1102,3 @@ window.loadQuoteData = (viewId, editId) => {
 };
 
 });
-
