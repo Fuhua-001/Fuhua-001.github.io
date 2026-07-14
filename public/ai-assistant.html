@@ -286,7 +286,26 @@
         });
 
         
-        let currentGeneratedData = null;
+        
+          const toast = document.getElementById("toast");
+          const toastMessage = document.getElementById("toast-message");
+
+          const showToast = (message, isError = false) => {
+            toastMessage.textContent = message;
+            toast.querySelector("i").className = isError
+              ? "fa-solid fa-circle-xmark"
+              : "fa-solid fa-circle-check";
+            toast.querySelector("i").style.color = isError
+              ? "#ef4444"
+              : "var(--success)";
+        
+            toast.classList.remove("hidden");
+            setTimeout(() => {
+              toast.classList.add("hidden");
+            }, 3000);
+          };
+
+          let currentGeneratedData = null;
         let currentMode = null;
 
         const aiPreviewSection = document.getElementById("ai-preview-section");
@@ -297,7 +316,7 @@
           const mode = aiModeSelect.value;
           const prompt = aiPrompt.value.trim();
           if (!prompt) {
-            alert("กรุณาพิมพ์คำสั่งก่อน");
+            showToast("กรุณาพิมพ์คำสั่งก่อน", true);
             return;
           }
 
@@ -372,17 +391,21 @@
                 }
 
                 aiPreviewData.appendChild(formGrid);
+                
+                aiPreviewData.appendChild(formGrid);
                 aiPreviewSection.classList.remove("hidden");
+                showToast("สร้างข้อมูลสำเร็จ! (กรุณาตรวจสอบด้านล่าง)");
+
               
               generateBtn.disabled = false;
               aiLoader.classList.add("hidden");
             } else {
-              alert("AI Error: " + (data.error || "Unknown"));
+              showToast("AI Error: " + (data.error || "Unknown"), true);
               generateBtn.disabled = false;
               aiLoader.classList.add("hidden");
             }
           } catch (e) {
-            alert("Network Error");
+            showToast("ไม่สามารถเชื่อมต่อกับ AI ได้", true);
             generateBtn.disabled = false;
             aiLoader.classList.add("hidden");
           }
