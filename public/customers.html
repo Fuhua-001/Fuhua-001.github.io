@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>เธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ - AI Enterprise Quotation Maker</title>
+    <title>ข้อมูลลูกค้า - AI Enterprise Quotation Maker</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -28,22 +28,22 @@
         </div>
         <nav class="menu">
           <a href="dashboard.html" class="menu-item"
-            ><i class="fa-solid fa-chart-pie"></i> เนเธ”เธเธเธญเธฃเนเธ”</a
+            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
           >
-          <a href="index.html?v=6" class="menu-item"
-            ><i class="fa-solid fa-plus"></i> เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</a
+          <a href="index.html" class="menu-item"
+            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
           >
           <a href="history.html?v=5" class="menu-item"
-            ><i class="fa-solid fa-list"></i> เธเธฃเธฐเธงเธฑเธ•เธดเน€เธญเธเธชเธฒเธฃ</a
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
           >
           <a href="customers.html" class="menu-item active"
-            ><i class="fa-solid fa-users"></i> เธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ</a
+            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
           >
           <a href="products.html" class="menu-item"
-            ><i class="fa-solid fa-box"></i> เธเนเธญเธกเธนเธฅเธชเธดเธเธเนเธฒ & เธชเธ•เนเธญเธ</a
+            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
           >
           <a href="employees.html" class="menu-item"
-            ><i class="fa-solid fa-user-tie"></i> เธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ (PIC)</a
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
           >
           <a
             href="#"
@@ -52,7 +52,7 @@
               sessionStorage.removeItem('isLoggedIn');
               window.location.href = 'login.html';
             "
-            ><i class="fa-solid fa-right-from-bracket"></i> เธญเธญเธเธเธฒเธเธฃเธฐเธเธ</a
+            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
           >
         </nav>
         <div class="user-profile">
@@ -67,10 +67,10 @@
       <!-- Main Content -->
       <main class="main-content page-fixed">
         <header class="top-header">
-          <h1>เธเธฑเธ”เธเธฒเธฃเธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ/เธเธนเนเธเธฒเธข ๐ข</h1>
+          <h1>จัดการข้อมูลลูกค้า/ผู้ขาย 🏢</h1>
           <div class="header-actions">
             <button class="btn btn-primary" id="btn-open-add-customer">
-              <i class="fa-solid fa-plus"></i> เน€เธเธดเนเธกเธฅเธนเธเธเนเธฒ/เธเธนเนเธเธฒเธขเนเธซเธกเน
+              <i class="fa-solid fa-plus"></i> เพิ่มลูกค้า/ผู้ขายใหม่
             </button>
           </div>
         </header>
@@ -79,14 +79,14 @@
           <section class="card form-section">
             <div class="card-header">
               <h2>
-                <i class="fa-solid fa-users"></i> เธฃเธฒเธขเธเธทเนเธญเธฅเธนเธเธเนเธฒ/เธเธนเนเธเธฒเธขเนเธเธฃเธฐเธเธ
+                <i class="fa-solid fa-users"></i> รายชื่อลูกค้า/ผู้ขายในระบบ
               </h2>
             </div>
             
             <div class="table-controls">
               <div class="search-bar">
                 <i class="fa-solid fa-search"></i>
-                <input type="text" id="search-customers" placeholder="เธเนเธเธซเธฒเธเธทเนเธญ, เธฃเธซเธฑเธช, เธญเธตเน€เธกเธฅ..." oninput="handleSearchCustomers()" aria-label="เธเนเธเธซเธฒเธฅเธนเธเธเนเธฒ">
+                <input type="text" id="search-customers" placeholder="ค้นหาชื่อ, รหัส, อีเมล..." oninput="handleSearchCustomers()" aria-label="ค้นหาลูกค้า">
               </div>
             </div>
 
@@ -105,36 +105,36 @@
                       <input type="checkbox" id="selectAllCustomers" onchange="toggleSelectAllCustomers(this)">
                     </th>
                     <th style="white-space: nowrap">
-                      เธฃเธซเธฑเธชเธฅเธนเธเธเนเธฒ/เธเธนเนเธเธฒเธข
+                      รหัสลูกค้า/ผู้ขาย
                     </th>
                     <th style="min-width: 150px">
-                      เธเธทเนเธญเธเธฃเธดเธฉเธฑเธ—/เธฅเธนเธเธเนเธฒ/เธเธนเนเธเธฒเธข
+                      ชื่อบริษัท/ลูกค้า/ผู้ขาย
                     </th>
                     <th style="white-space: nowrap">
-                      เธเธฅเธธเนเธกเธฅเธนเธเธเนเธฒ/เธเธนเนเธเธฒเธข
+                      กลุ่มลูกค้า/ผู้ขาย
                     </th>
-                    <th style="min-width: 200px">เธ—เธตเนเธญเธขเธนเน</th>
+                    <th style="min-width: 200px">ที่อยู่</th>
                     <th style="white-space: nowrap">
-                      เน€เธฅเธเธเธนเนเน€เธชเธตเธขเธ เธฒเธฉเธต
-                    </th>
-                    <th style="white-space: nowrap">
-                      เธเธนเนเธ•เธดเธ”เธ•เนเธญ
-                    </th>
-                    <th style="">เธญเธตเน€เธกเธฅ</th>
-                    <th style="white-space: nowrap">เน€เธเธญเธฃเนเนเธ—เธฃ</th>
-                    <th style="white-space: nowrap">
-                      เน€เธเธฃเธ”เธดเธ• (เธงเธฑเธ)
+                      เลขผู้เสียภาษี
                     </th>
                     <th style="white-space: nowrap">
-                      เธเธนเนเธ”เธนเนเธฅ (PIC)
+                      ผู้ติดต่อ
                     </th>
-                    <th style="" class="sticky-manage">เธเธฑเธ”เธเธฒเธฃ</th>
+                    <th style="">อีเมล</th>
+                    <th style="white-space: nowrap">เบอร์โทร</th>
+                    <th style="white-space: nowrap">
+                      เครดิต (วัน)
+                    </th>
+                    <th style="white-space: nowrap">
+                      ผู้ดูแล (PIC)
+                    </th>
+                    <th style="" class="sticky-manage">จัดการ</th>
                   </tr>
                 </thead>
                 <tbody id="customers-tbody">
                   <tr>
                     <td colspan="11" style="text-align: center; padding: 2rem">
-                      เธเธณเธฅเธฑเธเนเธซเธฅเธ”เธเนเธญเธกเธนเธฅ...
+                      กำลังโหลดข้อมูล...
                     </td>
                   </tr>
                 </tbody>
@@ -143,14 +143,14 @@
           </section>
 
           <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%;">
-            <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">เนเธชเธ”เธ 0-0 เธเธฒเธ 0 เธฃเธฒเธขเธเธฒเธฃ</div>
+            <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
             <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="prevCustomersPage()"><i class="fa-solid fa-chevron-left"></i> เธเนเธญเธเธซเธเนเธฒ</button>
-              <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">เธซเธเนเธฒ 1</span>
-              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextCustomersPage()">เธ–เธฑเธ”เนเธ <i class="fa-solid fa-chevron-right"></i></button>
+              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="prevCustomersPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
+              <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">หน้า 1</span>
+              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextCustomersPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
             </div>
             <button class="btn btn-secondary" id="btn-bulk-delete-customers" style="background-color: #ef4444 !important; color: white !important; display: none; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onclick="deleteSelectedCustomers()">
-                <i class="fa-solid fa-trash"></i> เธฅเธเธเนเธญเธกเธนเธฅเธ—เธตเนเน€เธฅเธทเธญเธ (<span id="delete-count-customers">0</span>)
+                <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span id="delete-count-customers">0</span>)
             </button>
           </div>
 
@@ -185,11 +185,11 @@
         <div style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;">
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
-        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">เธขเธทเธเธขเธฑเธเธเธฒเธฃเธฅเธเธเนเธญเธกเธนเธฅ</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">เธเธธเธ“เนเธเนเนเธเธซเธฃเธทเธญเนเธกเนเธงเนเธฒเธ•เนเธญเธเธเธฒเธฃเธฅเธเธเนเธญเธกเธนเธฅเธ—เธตเนเน€เธฅเธทเธญเธ <span id="delete-confirm-count" style="font-weight: bold; color: #ef4444;">0</span> เธฃเธฒเธขเธเธฒเธฃ? เธเธฒเธฃเธเธฃเธฐเธ—เธณเธเธตเนเนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธนเนเธเธทเธเนเธ”เน</p>
+        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">ยืนยันการลบข้อมูล</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก <span id="delete-confirm-count" style="font-weight: bold; color: #ef4444;">0</span> รายการ? การกระทำนี้ไม่สามารถกู้คืนได้</p>
         <div style="display: flex; gap: 1rem; justify-content: center;">
-          <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">เธขเธเน€เธฅเธดเธ</button>
-          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: #ef4444 !important; color: white !important; border: none;">เธขเธทเธเธขเธฑเธเธเธฒเธฃเธฅเธ</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">ยกเลิก</button>
+          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: #ef4444 !important; color: white !important; border: none;">ยืนยันการลบ</button>
         </div>
       </div>
     </div>
@@ -199,7 +199,7 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
       <i class="fa-solid fa-circle-check"></i>
-      <span id="toast-message">เนเธเนเธเน€เธ•เธทเธญเธ</span>
+      <span id="toast-message">แจ้งเตือน</span>
     </div>
 
     <!-- Edit Customer Modal -->
@@ -242,7 +242,7 @@
           "
         >
           <h2 id="modal-title">
-            <i class="fa-solid fa-pen-to-square"></i> เนเธเนเนเธเธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ/เธเธนเนเธเธฒเธข
+            <i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลลูกค้า/ผู้ขาย
           </h2>
           <button
             class="btn-text"
@@ -267,83 +267,83 @@
           <input type="hidden" id="cus-id" />
 
           <div class="ai-customer-box" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1)); padding: 1rem; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.2); margin-bottom: 0.5rem;">
-             <label style="color: var(--primary); font-weight: 600; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><i class="fa-solid fa-wand-magic-sparkles"></i> เธเธนเนเธเนเธงเธข AI เธเธฃเธญเธเธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ</label>
-             <textarea id="cus-ai-prompt" class="input-field" rows="3" placeholder="เธเธดเธกเธเนเธชเธดเนเธเธ—เธตเนเธกเธต เน€เธเนเธ 'เธเธฃเธดเธฉเธฑเธ— เธชเธกเธฒเธฃเนเธ— เน€เธ—เธเนเธเนเธฅเธขเธต เธเธณเธเธฑเธ” เน€เธเธญเธฃเน 0812345678 เธ—เธตเนเธญเธขเธนเน 123/45 เธเธ—เธก 10110 เน€เธฅเธเธเธนเนเน€เธชเธตเธขเธ เธฒเธฉเธต 01055555555'"></textarea>
-             <button type="button" id="btn-cus-ai" class="btn btn-primary" onclick="autoFillCustomerAI()" style="width: 100%; margin-top: 0.5rem; justify-content: center;"><i class="fa-solid fa-robot"></i> เนเธขเธเธเนเธญเธกเธนเธฅเธฅเธเธเธญเธฃเนเธก</button>
+             <label style="color: var(--primary); font-weight: 600; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI กรอกข้อมูลลูกค้า</label>
+             <textarea id="cus-ai-prompt" class="input-field" rows="3" placeholder="พิมพ์สิ่งที่มี เช่น 'บริษัท สมาร์ท เทคโนโลยี จำกัด เบอร์ 0812345678 ที่อยู่ 123/45 กทม 10110 เลขผู้เสียภาษี 01055555555'"></textarea>
+             <button type="button" id="btn-cus-ai" class="btn btn-primary" onclick="autoFillCustomerAI()" style="width: 100%; margin-top: 0.5rem; justify-content: center;"><i class="fa-solid fa-robot"></i> แยกข้อมูลลงฟอร์ม</button>
           </div>
 
           <div class="input-group">
-            <label>เธเธทเนเธญเธฅเธนเธเธเนเธฒ/เธเธฃเธดเธฉเธฑเธ— *</label>
+            <label>ชื่อลูกค้า/บริษัท *</label>
             <input type="text" id="cus-name" class="input-field" required />
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
             <div class="input-group">
-              <label>เน€เธฅเธเธเธนเนเน€เธชเธตเธขเธ เธฒเธฉเธต (Tax ID)</label>
+              <label>เลขผู้เสียภาษี (Tax ID)</label>
               <input type="text" id="cus-tax-id" class="input-field" />
             </div>
             <div class="input-group">
-              <label>เธเธนเนเธ•เธดเธ”เธ•เนเธญ (Contact Person)</label>
+              <label>ผู้ติดต่อ (Contact Person)</label>
               <input type="text" id="cus-contact" class="input-field" />
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
             <div class="input-group">
-              <label>เธญเธตเน€เธกเธฅ</label>
+              <label>อีเมล</label>
               <input type="email" id="cus-email" class="input-field" />
             </div>
             <div class="input-group">
-              <label>เน€เธเธญเธฃเนเนเธ—เธฃเธจเธฑเธเธ—เน</label>
+              <label>เบอร์โทรศัพท์</label>
               <input type="text" id="cus-phone" class="input-field" />
             </div>
           </div>
 
           <div class="input-group">
-            <label>เธ—เธตเนเธญเธขเธนเน</label>
+            <label>ที่อยู่</label>
             <textarea id="cus-address" class="input-field" rows="3"></textarea>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
             <div class="input-group">
-              <label>เน€เธเธฃเธ”เธดเธ• (เธงเธฑเธ)</label>
+              <label>เครดิต (วัน)</label>
               <input type="number" id="cus-credit" class="input-field" />
             </div>
             <div class="input-group">
-              <label>เธเธเธฑเธเธเธฒเธเธเธฒเธขเธ”เธนเนเธฅ (PIC Code)</label>
+              <label>พนักงานขายดูแล (PIC Code)</label>
               <input type="text" id="cus-pic" class="input-field" />
             </div>
           </div>
 
           <div class="input-group">
-            <label>เธเธฅเธธเนเธกเธฅเธนเธเธเนเธฒเธฃเธฐเธ”เธฑเธ (Level Group)</label>
+            <label>กลุ่มลูกค้าระดับ (Level Group)</label>
             <input type="text" id="cus-level-group" class="input-field" />
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
             <div class="input-group">
-              <label>เธญเธณเน€เธ เธญ/เน€เธเธ• (District)</label>
+              <label>อำเภอ/เขต (District)</label>
               <input type="text" id="cus-district" class="input-field" />
             </div>
             <div class="input-group">
-              <label>เธเธฑเธเธซเธงเธฑเธ” (Province)</label>
+              <label>จังหวัด (Province)</label>
               <input type="text" id="cus-province" class="input-field" />
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
             <div class="input-group">
-              <label>เธซเธกเธงเธ”เธซเธกเธนเน (Category)</label>
+              <label>หมวดหมู่ (Category)</label>
               <input type="text" id="cus-category" class="input-field" />
             </div>
             <div class="input-group">
-              <label>เธเธฃเธฐเน€เธ เธ—เธญเธธเธ•เธชเธฒเธซเธเธฃเธฃเธก (Industry)</label>
+              <label>ประเภทอุตสาหกรรม (Industry)</label>
               <input type="text" id="cus-industry" class="input-field" />
             </div>
           </div>
 
           <div class="input-group">
-            <label>เธซเธกเธฒเธขเน€เธซเธ•เธธ (Remark)</label>
+            <label>หมายเหตุ (Remark)</label>
             <textarea id="cus-remark" class="input-field" rows="2"></textarea>
           </div>
         </form>
@@ -373,17 +373,17 @@
             "
             onclick="deleteCustomer()"
           >
-            <i class="fa-solid fa-trash"></i> เธฅเธเธเนเธญเธกเธนเธฅเธเธตเน
+            <i class="fa-solid fa-trash"></i> ลบข้อมูลนี้
           </button>
           <button
             type="button"
             class="btn btn-secondary"
             onclick="closeCustomerModal()"
           >
-            เธขเธเน€เธฅเธดเธ
+            ยกเลิก
           </button>
           <button type="submit" form="customer-form" class="btn btn-primary">
-            <i class="fa-solid fa-save"></i> เธเธฑเธเธ—เธถเธเธเนเธญเธกเธนเธฅ
+            <i class="fa-solid fa-save"></i> บันทึกข้อมูล
           </button>
         </div>
       </div>
@@ -414,7 +414,7 @@
           renderCustomers();
         } catch (err) {
           tbody.innerHTML =
-            '<tr><td colspan="12" style="text-align: center; color: var(--danger);">เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธฅเนเธกเน€เธซเธฅเธง</td></tr>';
+            '<tr><td colspan="12" style="text-align: center; color: var(--danger);">โหลดข้อมูลล้มเหลว</td></tr>';
         }
       };
 
@@ -434,9 +434,9 @@
 
         if (filteredCustomers.length === 0) {
           tbody.innerHTML =
-            '<tr><td colspan="12" style="text-align: center; padding: 2rem; color: var(--text-muted);">เนเธกเนเธเธเธเนเธญเธกเธนเธฅเธ—เธตเนเธเนเธเธซเธฒ</td></tr>';
-          document.getElementById('pagination-info').innerText = 'เนเธชเธ”เธ 0-0 เธเธฒเธ 0 เธฃเธฒเธขเธเธฒเธฃ';
-          document.getElementById('page-number').innerText = 'เธซเธเนเธฒ 1';
+            '<tr><td colspan="12" style="text-align: center; padding: 2rem; color: var(--text-muted);">ไม่พบข้อมูลที่ค้นหา</td></tr>';
+          document.getElementById('pagination-info').innerText = 'แสดง 0-0 จาก 0 รายการ';
+          document.getElementById('page-number').innerText = 'หน้า 1';
           return;
         }
 
@@ -461,13 +461,13 @@
                           <td style="white-space: nowrap;">${cus.credit_days || 0}</td>
                           <td style="white-space: nowrap;">${cus.pic_code || "-"}</td>
                           <td style="text-align: center;" class="sticky-manage">
-<button class="btn-text" title="เนเธเนเนเธ" onclick="openEditCustomer(${start + index})"><i class="fa-solid fa-pen-to-square"></i></button></td>
+<button class="btn-text" title="แก้ไข" onclick="openEditCustomer(${start + index})"><i class="fa-solid fa-pen-to-square"></i></button></td>
                       </tr>
                   `;
         });
         
-        document.getElementById('pagination-info').innerText = `เนเธชเธ”เธ ${start + 1}-${end} เธเธฒเธ ${filteredCustomers.length} เธฃเธฒเธขเธเธฒเธฃ`;
-        document.getElementById('page-number').innerText = `เธซเธเนเธฒ ${currentCustomersPage}`;
+        document.getElementById('pagination-info').innerText = `แสดง ${start + 1}-${end} จาก ${filteredCustomers.length} รายการ`;
+        document.getElementById('page-number').innerText = `หน้า ${currentCustomersPage}`;
         
         const selectAll = document.getElementById('selectAllCustomers');
         if(selectAll) selectAll.checked = false;
@@ -535,7 +535,7 @@
                 } catch(e) {}
             }
             if (successCount > 0) {
-                showToast(`เธฅเธเธเนเธญเธกเธนเธฅเธชเธณเน€เธฃเนเธ ${successCount} เธฃเธฒเธขเธเธฒเธฃ`);
+                showToast(`ลบข้อมูลสำเร็จ ${successCount} รายการ`);
             }
             const selectAll = document.getElementById('selectAllCustomers');
             if(selectAll) selectAll.checked = false;
@@ -565,7 +565,7 @@
 
         document.getElementById("btn-delete-customer").style.display = "inline-flex";
         document.getElementById("modal-title").innerHTML =
-          '<i class="fa-solid fa-pen-to-square"></i> เนเธเนเนเธเธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ';
+          '<i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลลูกค้า';
         document.getElementById("customer-modal").classList.remove("hidden");
       };
 
@@ -580,7 +580,7 @@
         const name = document.getElementById("cus-name").value;
         if (!id) return;
 
-        document.getElementById('delete-confirm-count').innerHTML = `เธฅเธนเธเธเนเธฒเธฃเธฒเธขเธเธตเน ("${name}")`;
+        document.getElementById('delete-confirm-count').innerHTML = `ลูกค้ารายนี้ ("${name}")`;
         document.getElementById('delete-confirm-modal').style.display = 'flex';
         
         document.getElementById('btn-confirm-delete-action').onclick = async () => {
@@ -591,15 +591,15 @@
               method: "DELETE",
             });
             if (res.ok) {
-              showToast("เธฅเธเธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒเน€เธฃเธตเธขเธเธฃเนเธญเธขเนเธฅเนเธง");
+              showToast("ลบข้อมูลลูกค้าเรียบร้อยแล้ว");
               closeCustomerModal();
               fetchCustomers();
             } else {
               const data = await res.json();
-              showToast("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + data.error, true);
+              showToast("เกิดข้อผิดพลาด: " + data.error, true);
             }
           } catch (err) {
-            showToast("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธฅเธ", true);
+            showToast("เกิดข้อผิดพลาดในการลบ", true);
           }
         };
       };
@@ -629,7 +629,7 @@
             document.getElementById("btn-delete-customer").style.display =
               "none";
             document.getElementById("modal-title").innerHTML =
-              '<i class="fa-solid fa-user-plus"></i> เน€เธเธดเนเธกเธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ/เธเธนเนเธเธฒเธขเนเธซเธกเน';
+              '<i class="fa-solid fa-user-plus"></i> เพิ่มข้อมูลลูกค้า/ผู้ขายใหม่';
             document
               .getElementById("customer-modal")
               .classList.remove("hidden");
@@ -644,7 +644,7 @@
             const cusName = document.getElementById("cus-name").value.trim();
             const id = document.getElementById("cus-id").value;
             // Auto-generate code from name if adding new customer
-            const autoCode = "CUS-" + cusName.replace(/[^a-zA-Z0-9เธ-เน]/g, "").substring(0, 8).toUpperCase() + "-" + Date.now().toString().slice(-4);
+            const autoCode = "CUS-" + cusName.replace(/[^a-zA-Z0-9ก-๙]/g, "").substring(0, 8).toUpperCase() + "-" + Date.now().toString().slice(-4);
             const payload = {
               name: cusName,
               code: autoCode,
@@ -682,30 +682,30 @@
               });
 
               if (res.ok) {
-                showToast("เธเธฑเธเธ—เธถเธเธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒเน€เธฃเธตเธขเธเธฃเนเธญเธขเนเธฅเนเธง");
+                showToast("บันทึกข้อมูลลูกค้าเรียบร้อยแล้ว");
                 closeCustomerModal();
                 fetchCustomers();
               } else {
                 const data = await res.json();
                 let errorMsg = data.error || "Save failed";
                 if (data.details && data.details.includes("Duplicate entry")) {
-                  errorMsg = "เธฃเธซเธฑเธชเธฅเธนเธเธเนเธฒเธเธตเนเธกเธตเนเธเธฃเธฐเธเธเนเธฅเนเธง เนเธเธฃเธ”เธ•เธฃเธงเธเธชเธญเธเธเธงเธฒเธกเธ–เธนเธเธ•เนเธญเธ";
+                  errorMsg = "รหัสลูกค้านี้มีในระบบแล้ว โปรดตรวจสอบความถูกต้อง";
                 }
-                showToast("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + errorMsg, true);
+                showToast("เกิดข้อผิดพลาด: " + errorMsg, true);
               }
             } catch (err) {
-              showToast("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธดเธ”เธ•เนเธญเน€เธเธดเธฃเนเธเน€เธงเธญเธฃเนเนเธ”เน", true);
+              showToast("ไม่สามารถติดต่อเซิร์ฟเวอร์ได้", true);
             }
           });
         }
       });
       async function autoFillCustomerAI() {
         const promptInput = document.getElementById('cus-ai-prompt').value.trim();
-        if(!promptInput) return alert('เธเธฃเธธเธ“เธฒเธเธดเธกเธเนเธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒเธ—เธตเนเธ•เนเธญเธเธเธฒเธฃเนเธซเน AI เธเนเธงเธขเนเธขเธ');
+        if(!promptInput) return alert('กรุณาพิมพ์ข้อมูลลูกค้าที่ต้องการให้ AI ช่วยแยก');
         
         const btn = document.getElementById('btn-cus-ai');
         const oldText = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> เธเธณเธฅเธฑเธเนเธขเธเธเนเธญเธกเธนเธฅ...';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังแยกข้อมูล...';
         btn.disabled = true;
 
         try {
@@ -727,7 +727,7 @@
           if(data.pic_code) document.getElementById('cus-pic').value = data.pic_code;
           
         } catch (err) {
-          alert('เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเนเธเน AI เธเธฑเธ”เธเธฒเธฃเธเนเธญเธกเธนเธฅ: ' + err.message);
+          alert('เกิดข้อผิดพลาดในการใช้ AI จัดการข้อมูล: ' + err.message);
         } finally {
           btn.innerHTML = oldText;
           btn.disabled = false;
@@ -736,6 +736,5 @@
     </script>
   </body>
 </html>
-
 
 

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
     <title>AI Enterprise Quotation Maker</title>
     <meta
       name="description"
-      content="เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒเธญเธฑเธ•เนเธเธกเธฑเธ•เธดเธ”เนเธงเธข AI เธชเธณเธซเธฃเธฑเธเธญเธเธเนเธเธฃเธเธญเธเธเธธเธ“"
+      content="สร้างใบเสนอราคาอัตโนมัติด้วย AI สำหรับองค์กรของคุณ"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
@@ -41,22 +41,22 @@
         </div>
         <nav class="menu">
           <a href="dashboard.html" class="menu-item"
-            ><i class="fa-solid fa-chart-pie"></i> เนเธ”เธเธเธญเธฃเนเธ”</a
+            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
           >
-          <a href="index.html?v=6" class="menu-item active"
-            ><i class="fa-solid fa-plus"></i> เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</a
+          <a href="index.html" class="menu-item active"
+            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
           >
           <a href="history.html?v=5" class="menu-item"
-            ><i class="fa-solid fa-list"></i> เธเธฃเธฐเธงเธฑเธ•เธดเน€เธญเธเธชเธฒเธฃ</a
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
           >
           <a href="customers.html" class="menu-item"
-            ><i class="fa-solid fa-users"></i> เธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ</a
+            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
           >
           <a href="products.html" class="menu-item"
-            ><i class="fa-solid fa-box"></i> เธเนเธญเธกเธนเธฅเธชเธดเธเธเนเธฒ & เธชเธ•เนเธญเธ</a
+            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
           >
           <a href="employees.html" class="menu-item"
-            ><i class="fa-solid fa-user-tie"></i> เธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ (PIC)</a
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
           >
           <a
             href="#"
@@ -65,7 +65,7 @@
               sessionStorage.removeItem('isLoggedIn');
               window.location.href = 'login.html';
             "
-            ><i class="fa-solid fa-right-from-bracket"></i> เธญเธญเธเธเธฒเธเธฃเธฐเธเธ</a
+            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
           >
         </nav>
         <div class="user-profile">
@@ -83,7 +83,7 @@
           class="top-header"
           style="justify-content: space-between; align-items: center"
         >
-          <h1>เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</h1>
+          <h1>สร้างใบเสนอราคา</h1>
           <div class="header-actions"></div>
         </header>
 
@@ -96,18 +96,18 @@
               </div>
               <div>
                 <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0;">AI Assistant</h2>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem;">เธเธดเธกเธเนเธเธณเธชเธฑเนเธเนเธซเน AI เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒเนเธซเนเธเธธเธ“</p>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem;">พิมพ์คำสั่งให้ AI สร้างใบเสนอราคาให้คุณ</p>
               </div>
             </div>
             
             <div class="ai-input-group" style="position: relative;">
               <select id="ai-mode-select" class="input-field" style="margin-bottom: 0.5rem; font-weight: 600; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0.5rem 1rem; color: #334155;">
-                <option value="quote">๐ค– AI เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</option>
-                <option value="employee">๐‘ค AI เน€เธเธดเนเธกเธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ/เน€เธเธฅเธชเน</option>
+                <option value="quote">🤖 AI สร้างใบเสนอราคา</option>
+                <option value="employee">👤 AI เพิ่มข้อมูลพนักงาน/เซลส์</option>
               </select>
               <textarea
                 id="ai-prompt"
-                placeholder="เธ•เธฑเธงเธญเธขเนเธฒเธ: เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒเนเธซเนเธเธฃเธดเธฉเธฑเธ— ABC เธเธณเธเธฑเธ” เธเธทเนเธญเนเธฅเนเธเธ—เนเธญเธ 10 เน€เธเธฃเธทเนเธญเธ เธฃเธฒเธเธฒเน€เธเธฃเธทเนเธญเธเธฅเธฐ 25,000 เธเธฒเธ— เนเธฅเธฐเน€เธกเธฒเธชเนเนเธฃเนเธชเธฒเธข 10 เธญเธฑเธ เธฃเธฒเธเธฒเธญเธฑเธเธฅเธฐ 500 เธเธฒเธ—"
+                placeholder="ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท"
                 style="padding-bottom: 4rem; border-radius: 12px; background: #f8fafc;"
               ></textarea>
               
@@ -121,7 +121,7 @@
             
             <div id="ai-loader" class="loader hidden">
               <div class="spinner"></div>
-              <p>เธเธณเธฅเธฑเธเธงเธดเน€เธเธฃเธฒเธฐเธซเนเนเธฅเธฐเธชเธฃเนเธฒเธเธเนเธญเธกเธนเธฅ...</p>
+              <p>กำลังวิเคราะห์และสร้างข้อมูล...</p>
             </div>
           </section>
 
@@ -136,7 +136,7 @@
                 <div class="stat-icon" style="color: #9333ea; font-size: 2rem;"><i class="fa-solid fa-file-invoice"></i></div>
               </div>
               <div>
-                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0;">เนเธเธเธเธญเธฃเนเธกเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</h2>
+                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0;">แบบฟอร์มใบเสนอราคา</h2>
                 <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem;">Quotation Entry Form</p>
               </div>
             </div>
@@ -160,7 +160,7 @@
                   <label
                     for="customer-name"
                     style="font-weight: 600; color: #334155"
-                    ><i class="fa-solid fa-building"></i> เธเธทเนเธญเธฅเธนเธเธเนเธฒ / เธเธฃเธดเธฉเธฑเธ—
+                    ><i class="fa-solid fa-building"></i> ชื่อลูกค้า / บริษัท
                     (Customer Name):</label
                   >
                   <select
@@ -175,7 +175,7 @@
                     "
                   >
                     <option value="" disabled selected>
-                      -- เน€เธฅเธทเธญเธเธเธทเนเธญเธฅเธนเธเธเนเธฒ --
+                      -- เลือกชื่อลูกค้า --
                     </option>
                   </select>
                 </div>
@@ -183,7 +183,7 @@
                   <label
                     for="form-sales-rep"
                     style="font-weight: 600; color: #334155"
-                    ><i class="fa-solid fa-user-tie"></i> เธเธเธฑเธเธเธฒเธเธเธฒเธข (Sales
+                    ><i class="fa-solid fa-user-tie"></i> พนักงานขาย (Sales
                     Rep):</label
                   >
                   <select
@@ -198,18 +198,18 @@
                     "
                   >
                     <option value="" disabled selected>
-                      -- เน€เธฅเธทเธญเธเธเธเธฑเธเธเธฒเธเธเธฒเธข --
+                      -- เลือกพนักงานขาย --
                     </option>
                   </select>
                 </div>
                 <div class="form-group" style="margin-bottom: 0">
                   <label style="font-weight: 600; color: #334155"
-                    ><i class="fa-regular fa-calendar-days"></i> เธงเธฑเธเธ—เธตเน
+                    ><i class="fa-regular fa-calendar-days"></i> วันที่
                     (Date):</label
                   >
                   <input
                     type="text"
-                    value="เธญเธฑเธ•เนเธเธกเธฑเธ•เธด"
+                    value="อัตโนมัติ"
                     disabled
                     style="
                       background: #e2e8f0;
@@ -237,12 +237,12 @@
                 "
               >
                 <div class="form-group" style="margin-bottom: 0">
-                  <label style="font-weight: 600; color: #334155"><i class="fa-solid fa-phone"></i> เน€เธเธญเธฃเนเนเธ—เธฃเธจเธฑเธเธ—เน (Phone):</label>
-                  <input type="text" id="customer-phone" disabled placeholder="เน€เธเธญเธฃเนเนเธ—เธฃเธจเธฑเธเธ—เนเธฅเธนเธเธเนเธฒ..." style="background: #e2e8f0; color: #64748b; cursor: not-allowed; border: 1px solid #cbd5e1; padding: 0.75rem; border-radius: 6px; width: 100%;" />
+                  <label style="font-weight: 600; color: #334155"><i class="fa-solid fa-phone"></i> เบอร์โทรศัพท์ (Phone):</label>
+                  <input type="text" id="customer-phone" disabled placeholder="เบอร์โทรศัพท์ลูกค้า..." style="background: #e2e8f0; color: #64748b; cursor: not-allowed; border: 1px solid #cbd5e1; padding: 0.75rem; border-radius: 6px; width: 100%;" />
                 </div>
                 <div class="form-group" style="margin-bottom: 0">
-                  <label style="font-weight: 600; color: #334155"><i class="fa-solid fa-envelope"></i> เธญเธตเน€เธกเธฅ (Email):</label>
-                  <input type="text" id="customer-email" disabled placeholder="เธญเธตเน€เธกเธฅเธฅเธนเธเธเนเธฒ..." style="background: #e2e8f0; color: #64748b; cursor: not-allowed; border: 1px solid #cbd5e1; padding: 0.75rem; border-radius: 6px; width: 100%;" />
+                  <label style="font-weight: 600; color: #334155"><i class="fa-solid fa-envelope"></i> อีเมล (Email):</label>
+                  <input type="text" id="customer-email" disabled placeholder="อีเมลลูกค้า..." style="background: #e2e8f0; color: #64748b; cursor: not-allowed; border: 1px solid #cbd5e1; padding: 0.75rem; border-radius: 6px; width: 100%;" />
                 </div>
               </div>
               <div
@@ -261,8 +261,8 @@
                   <label
                     for="form-credit-days"
                     style="font-weight: 600; color: #334155"
-                    ><i class="fa-solid fa-calendar-check"></i> เน€เธเธฃเธ”เธดเธ•
-                    (เธงเธฑเธ):</label
+                    ><i class="fa-solid fa-calendar-check"></i> เครดิต
+                    (วัน):</label
                   >
                   <input
                     type="number"
@@ -283,7 +283,7 @@
                     for="form-payment-terms"
                     style="font-weight: 600; color: #334155"
                     ><i class="fa-solid fa-money-bill-transfer"></i>
-                    เน€เธเธทเนเธญเธเนเธเธเธณเธฃเธฐเน€เธเธดเธ:</label
+                    เงื่อนไขชำระเงิน:</label
                   >
                   <input
                     type="text"
@@ -302,12 +302,12 @@
                   <label
                     for="form-remarks"
                     style="font-weight: 600; color: #334155"
-                    ><i class="fa-solid fa-comment-dots"></i> เธซเธกเธฒเธขเน€เธซเธ•เธธ:</label
+                    ><i class="fa-solid fa-comment-dots"></i> หมายเหตุ:</label
                   >
                   <input
                     type="text"
                     id="form-remarks"
-                    placeholder="เธฃเธฐเธเธธเน€เธเธดเนเธกเน€เธ•เธดเธก..."
+                    placeholder="ระบุเพิ่มเติม..."
                     style="
                       border: 1px solid #cbd5e1;
                       background: #fff;
@@ -337,7 +337,7 @@
                   "
                 >
                   <h3 style="font-size: 1.1rem; color: #334155; margin: 0">
-                    <i class="fa-solid fa-boxes-stacked"></i> เธฃเธฒเธขเธเธฒเธฃเธชเธดเธเธเนเธฒ
+                    <i class="fa-solid fa-boxes-stacked"></i> รายการสินค้า
                     (Items)
                   </h3>
                 </div>
@@ -347,7 +347,7 @@
                       <th
                         style="color: #475569; border-bottom: 2px solid #e2e8f0"
                       >
-                        เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เธชเธดเธเธเนเธฒ
+                        รายละเอียดสินค้า
                       </th>
                       <th
                         width="15%"
@@ -357,7 +357,7 @@
                           text-align: center;
                         "
                       >
-                        เธเธณเธเธงเธ
+                        จำนวน
                       </th>
                       <th
                         width="20%"
@@ -367,7 +367,7 @@
                           text-align: right;
                         "
                       >
-                        เธฃเธฒเธเธฒเธ•เนเธญเธซเธเนเธงเธข
+                        ราคาต่อหน่วย
                       </th>
                       <th
                         width="20%"
@@ -377,7 +377,7 @@
                           text-align: right;
                         "
                       >
-                        เธฃเธฒเธเธฒเธฃเธงเธก
+                        ราคารวม
                       </th>
                       <th
                         width="5%"
@@ -409,7 +409,7 @@
                       padding: 10px;
                     "
                   >
-                    <i class="fa-solid fa-plus"></i> เน€เธเธดเนเธกเธฃเธฒเธขเธเธฒเธฃเธชเธดเธเธเนเธฒเนเธซเธกเน (Add
+                    <i class="fa-solid fa-plus"></i> เพิ่มรายการสินค้าใหม่ (Add
                     New Row)
                   </button>
                 </div>
@@ -435,12 +435,12 @@
                   "
                 >
                   <span style="font-size: 1rem; color: #64748b"
-                    >เธขเธญเธ”เธฃเธงเธกเธเนเธญเธเธ เธฒเธฉเธต (Subtotal):</span
+                    >ยอดรวมก่อนภาษี (Subtotal):</span
                   >
                   <span
                     id="sub-total"
                     style="font-size: 1.1rem; color: #475569; font-weight: 500"
-                    >เธฟ0.00</span
+                    >฿0.00</span
                   >
                 </div>
                 <div
@@ -452,12 +452,12 @@
                   "
                 >
                   <span style="font-size: 1rem; color: #64748b"
-                    >เธ เธฒเธฉเธตเธกเธนเธฅเธเนเธฒเน€เธเธดเนเธก 7% (VAT 7%):</span
+                    >ภาษีมูลค่าเพิ่ม 7% (VAT 7%):</span
                   >
                   <span
                     id="vat-total"
                     style="font-size: 1.1rem; color: #475569; font-weight: 500"
-                    >เธฟ0.00</span
+                    >฿0.00</span
                   >
                 </div>
                 <div
@@ -472,12 +472,12 @@
                 >
                   <span
                     style="font-size: 1.2rem; color: #475569; font-weight: 600"
-                    >เธขเธญเธ”เธฃเธงเธกเธชเธธเธ—เธเธด (Grand Total):</span
+                    >ยอดรวมสุทธิ (Grand Total):</span
                   >
                   <span
                     id="grand-total"
                     style="font-size: 2rem; color: var(--primary-color)"
-                    >เธฟ0.00</span
+                    >฿0.00</span
                   >
                 </div>
               </div>
@@ -497,7 +497,7 @@
                     box-shadow: 0 10px 25px -5px rgba(147, 51, 234, 0.4);
                   "
                 >
-                  <i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i> เธ•เธฃเธงเธเธชเธญเธเน€เธญเธเธชเธฒเธฃ (Preview)
+                  <i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i> ตรวจสอบเอกสาร (Preview)
                 </button>
               </div>
             </form>
@@ -510,7 +510,7 @@
     <div id="preview-modal" class="modal hidden">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>เธ•เธฑเธงเธญเธขเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ (Preview)</h2>
+          <h2>ตัวอย่างใบเสนอราคา (Preview)</h2>
           <button class="btn-close" id="close-modal">
             <i class="fa-solid fa-xmark"></i>
           </button>
@@ -529,10 +529,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline" id="cancel-print-btn">
-            เธขเธเน€เธฅเธดเธ
+            ยกเลิก
           </button>
           <button type="button" class="btn btn-primary" id="confirm-pdf-btn">
-            <i class="fa-solid fa-file-pdf"></i> เธเธดเธกเธเน PDF
+            <i class="fa-solid fa-file-pdf"></i> พิมพ์ PDF
           </button>
         </div>
       </div>
@@ -541,7 +541,7 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
       <i class="fa-solid fa-circle-check"></i>
-      <span id="toast-message">เนเธเนเธเน€เธ•เธทเธญเธ</span>
+      <span id="toast-message">แจ้งเตือน</span>
     </div>
 
     <!-- AI Warning Modal -->
@@ -558,7 +558,7 @@
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
         <h2 style="margin-bottom: 1rem; color: #0f172a">
-          เนเธเนเธเน€เธ•เธทเธญเธเธเธฒเธฃเธเธฃเธฑเธเธฅเธ”เธชเธดเธเธเนเธฒ
+          แจ้งเตือนการปรับลดสินค้า
         </h2>
         <div
           id="ai-warning-text"
@@ -586,14 +586,12 @@
             
           "
         >
-          เธฃเธฑเธเธ—เธฃเธฒเธ เนเธฅเธฐเธ”เธนเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ
+          รับทราบ และดูใบเสนอราคา
         </button>
       </div>
     </div>
 
-    <script src="script.js?v=6"></script>
+    <script src="script.js?v=4"></script>
   </body>
 </html>
-
-
 

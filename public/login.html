@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
@@ -114,31 +114,31 @@
         <i class="fa-solid fa-file-invoice-dollar"></i>
       </div>
       <h1 class="login-title">QuoteAI Enterprise</h1>
-      <p class="login-subtitle">เธฅเธเธเธทเนเธญเน€เธเนเธฒเนเธเนเน€เธเธทเนเธญเธเธฑเธ”เธเธฒเธฃเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</p>
+      <p class="login-subtitle">ลงชื่อเข้าใช้เพื่อจัดการใบเสนอราคา</p>
 
       <form id="login-form">
         <div class="form-group">
-          <label for="username">เธเธทเนเธญเธเธนเนเนเธเนเธเธฒเธ (เธฃเธซเธฑเธช PIC)</label>
+          <label for="username">ชื่อผู้ใช้งาน (รหัส PIC)</label>
           <input
             type="text"
             id="username"
             class="form-control"
-            placeholder="เน€เธเนเธ PIC001"
+            placeholder="เช่น PIC001"
             required
           />
         </div>
         <div class="form-group">
-          <label for="password">เธฃเธซเธฑเธชเธเนเธฒเธ</label>
+          <label for="password">รหัสผ่าน</label>
           <input
             type="password"
             id="password"
             class="form-control"
-            placeholder="โ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ข"
+            placeholder="••••••••"
             required
           />
         </div>
         <button type="submit" class="btn-login">
-          เน€เธเนเธฒเธชเธนเนเธฃเธฐเธเธ <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
+          เข้าสู่ระบบ <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
         </button>
       </form>
     </div>
@@ -148,7 +148,7 @@
         e.preventDefault();
         const btn = document.querySelector(".btn-login");
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> เธเธณเธฅเธฑเธเน€เธเนเธฒเธชเธนเนเธฃเธฐเธเธ...';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเข้าสู่ระบบ...';
         btn.disabled = true;
 
         const username = document.getElementById("username").value;
@@ -157,11 +157,10 @@
         setTimeout(() => {
           sessionStorage.setItem("isLoggedIn", "true");
           sessionStorage.setItem("currentUser", username);
-          window.location.href = "index.html?v=6";
+          window.location.href = "index.html";
         }, 1000);
       });
     </script>
   </body>
 </html>
-
 

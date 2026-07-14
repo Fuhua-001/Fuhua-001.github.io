@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>เธเธฃเธฐเธงเธฑเธ•เธดเน€เธญเธเธชเธฒเธฃ - AI Enterprise Quotation Maker</title>
+    <title>ประวัติเอกสาร - AI Enterprise Quotation Maker</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -78,13 +78,13 @@
       <aside class="sidebar">
         <div class="logo"><i class="fa-solid fa-file-invoice-dollar"></i><span>QuoteAI</span></div>
         <nav class="menu">
-          <a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i> เนเธ”เธเธเธญเธฃเนเธ”</a>
-          <a href="index.html?v=6" class="menu-item"><i class="fa-solid fa-plus"></i> เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</a>
-          <a href="history.html?v=5" class="menu-item active"><i class="fa-solid fa-list"></i> เธเธฃเธฐเธงเธฑเธ•เธดเน€เธญเธเธชเธฒเธฃ</a>
-          <a href="customers.html" class="menu-item"><i class="fa-solid fa-users"></i> เธเนเธญเธกเธนเธฅเธฅเธนเธเธเนเธฒ</a>
-          <a href="products.html" class="menu-item"><i class="fa-solid fa-box"></i> เธเนเธญเธกเธนเธฅเธชเธดเธเธเนเธฒ & เธชเธ•เนเธญเธ</a>
-          <a href="employees.html" class="menu-item"><i class="fa-solid fa-user-tie"></i> เธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ (PIC)</a>
-          <a href="#" class="menu-item text-danger" onclick="sessionStorage.removeItem('isLoggedIn'); window.location.href = 'login.html';"><i class="fa-solid fa-right-from-bracket"></i> เธญเธญเธเธเธฒเธเธฃเธฐเธเธ</a>
+          <a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a>
+          <a href="index.html" class="menu-item"><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a>
+          <a href="history.html?v=5" class="menu-item active"><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a>
+          <a href="customers.html" class="menu-item"><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a>
+          <a href="products.html" class="menu-item"><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a>
+          <a href="employees.html" class="menu-item"><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a>
+          <a href="#" class="menu-item text-danger" onclick="sessionStorage.removeItem('isLoggedIn'); window.location.href = 'login.html';"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a>
         </nav>
         <div class="user-profile">
           <div class="avatar"><i class="fa-solid fa-user"></i></div>
@@ -94,16 +94,16 @@
 
       <main class="main-content page-fixed">
         <header class="top-header">
-          <h1>เธเธฃเธฐเธงเธฑเธ•เธดเธเธฒเธฃเธญเธญเธเน€เธญเธเธชเธฒเธฃ ๐—๏ธ</h1>
+          <h1>ประวัติการออกเอกสาร 🗂️</h1>
         </header>
 
         <div class="content-grid">
           <section class="card form-section" style="display: flex; flex-direction: column; min-height: 0;">
             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem;">
-              <h2><i class="fa-solid fa-clock-rotate-left"></i> เธเธฃเธฐเธงเธฑเธ•เธดเน€เธญเธเธชเธฒเธฃเนเธฅเธฐเธเธฒเธฃเนเธเนเนเธ</h2>
+              <h2><i class="fa-solid fa-clock-rotate-left"></i> ประวัติเอกสารและการแก้ไข</h2>
               <div style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-primary" id="tab-btn-quotes" onclick="switchTab('quotes')">เนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</button>
-                <button class="btn btn-secondary" id="tab-btn-audits" onclick="switchTab('audits')">เธเธฃเธฐเธงเธฑเธ•เธดเธเธฒเธฃเนเธเนเนเธเธเนเธญเธกเธนเธฅ</button>
+                <button class="btn btn-primary" id="tab-btn-quotes" onclick="switchTab('quotes')">ใบเสนอราคา</button>
+                <button class="btn btn-secondary" id="tab-btn-audits" onclick="switchTab('audits')">ประวัติการแก้ไขข้อมูล</button>
               </div>
             </div>
             
@@ -114,7 +114,7 @@
               <div class="table-controls" style="margin-top: 1rem; padding: 0 1.5rem;">
                 <div class="search-bar">
                   <i class="fa-solid fa-search" aria-hidden="true"></i>
-                  <input type="text" id="search-history" placeholder="เธเนเธเธซเธฒเน€เธฅเธเธ—เธตเนเน€เธญเธเธชเธฒเธฃ, เธฅเธนเธเธเนเธฒ, เธซเธฃเธทเธญเธเธเธฑเธเธเธฒเธ..." oninput="handleSearchHistory()" aria-label="เธเนเธเธซเธฒเน€เธญเธเธชเธฒเธฃ">
+                  <input type="text" id="search-history" placeholder="ค้นหาเลขที่เอกสาร, ลูกค้า, หรือพนักงาน..." oninput="handleSearchHistory()" aria-label="ค้นหาเอกสาร">
                 </div>
               </div>
 
@@ -122,26 +122,26 @@
                 <table style="width: 100%; text-align: left; border-collapse: collapse;">
                   <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                     <tr>
-                      <th class="sticky-th" style="width: 12%; min-width: 120px;">เธงเธฑเธเธ—เธตเน/เน€เธงเธฅเธฒ</th>
-                      <th class="sticky-th" style="width: 15%; min-width: 120px;">เน€เธฅเธเธ—เธตเนเน€เธญเธเธชเธฒเธฃ</th>
-                      <th class="sticky-th" style="width: 15%; min-width: 120px;">เธเธเธฑเธเธเธฒเธเธเธฒเธข (PIC)</th>
-                      <th class="sticky-th" style="width: 30%; min-width: 250px;">เธฅเธนเธเธเนเธฒ</th>
-                      <th class="sticky-th" style="width: 10%; min-width: 100px;">เธขเธญเธ”เธฃเธงเธก</th>
-                      <th class="sticky-th" style="width: 10%; min-width: 120px;">เธชเธ–เธฒเธเธฐ</th>
-                      <th class="sticky-th" style="width: 10%; min-width: 80px;">เธเธฑเธ”เธเธฒเธฃ</th>
+                      <th class="sticky-th" style="width: 12%; min-width: 120px;">วันที่/เวลา</th>
+                      <th class="sticky-th" style="width: 15%; min-width: 120px;">เลขที่เอกสาร</th>
+                      <th class="sticky-th" style="width: 15%; min-width: 120px;">พนักงานขาย (PIC)</th>
+                      <th class="sticky-th" style="width: 30%; min-width: 250px;">ลูกค้า</th>
+                      <th class="sticky-th" style="width: 10%; min-width: 100px;">ยอดรวม</th>
+                      <th class="sticky-th" style="width: 10%; min-width: 120px;">สถานะ</th>
+                      <th class="sticky-th" style="width: 10%; min-width: 80px;">จัดการ</th>
                     </tr>
                   </thead>
                   <tbody id="history-tbody">
-                    <tr><td colspan="7" style="text-align: center; padding: 2rem">เธเธณเธฅเธฑเธเนเธซเธฅเธ”เธเนเธญเธกเธนเธฅ...</td></tr>
+                    <tr><td colspan="7" style="text-align: center; padding: 2rem">กำลังโหลดข้อมูล...</td></tr>
                   </tbody>
                 </table>
               </div>
               <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%; border-top: 1px solid var(--border);">
-                <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">เนเธชเธ”เธ 0-0 เธเธฒเธ 0 เธฃเธฒเธขเธเธฒเธฃ</div>
+                <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
                 <div style="display: flex; gap: 0.5rem; align-items: center;">
-                  <button class="btn btn-secondary" id="btn-prev-history" style="padding: 0.5rem 1rem;" onclick="prevHistoryPage()"><i class="fa-solid fa-chevron-left"></i> เธเนเธญเธเธซเธเนเธฒ</button>
-                  <span id="page-number" style="font-weight: 500; min-width: 100px; text-align: center;">เธซเธเนเธฒ 1 เธเธฒเธ 1</span>
-                  <button class="btn btn-secondary" id="btn-next-history" style="padding: 0.5rem 1rem;" onclick="nextHistoryPage()">เธ–เธฑเธ”เนเธ <i class="fa-solid fa-chevron-right"></i></button>
+                  <button class="btn btn-secondary" id="btn-prev-history" style="padding: 0.5rem 1rem;" onclick="prevHistoryPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
+                  <span id="page-number" style="font-weight: 500; min-width: 100px; text-align: center;">หน้า 1 จาก 1</span>
+                  <button class="btn btn-secondary" id="btn-next-history" style="padding: 0.5rem 1rem;" onclick="nextHistoryPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
                 </div>
                 <div></div>
               </div>
@@ -154,34 +154,34 @@
               <div class="table-controls" style="margin: 1rem 1.5rem 0 1.5rem; padding: 1rem; background: var(--bg-main); border: 1px solid var(--border); border-radius: var(--radius-sm); align-items: flex-end;">
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap; flex: 1;">
                   <div style="flex: 1; min-width: 150px;">
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">เธเธฒเธฃเธเธฃเธฐเธ—เธณ</label>
+                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">การกระทำ</label>
                     <select id="filter-action" class="form-control" onchange="applyFilters()">
-                      <option value="">เธ—เธฑเนเธเธซเธกเธ” (ALL)</option>
-                      <option value="CREATE">เน€เธเธดเนเธก (CREATE)</option>
-                      <option value="UPDATE">เนเธเนเนเธ (UPDATE)</option>
-                      <option value="DELETE">เธฅเธ (DELETE)</option>
+                      <option value="">ทั้งหมด (ALL)</option>
+                      <option value="CREATE">เพิ่ม (CREATE)</option>
+                      <option value="UPDATE">แก้ไข (UPDATE)</option>
+                      <option value="DELETE">ลบ (DELETE)</option>
                     </select>
                   </div>
                   <div style="flex: 1; min-width: 150px;">
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">เธฃเธฐเธเธเธ—เธตเนเนเธเนเนเธ</label>
+                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">ระบบที่แก้ไข</label>
                     <select id="filter-module" class="form-control" onchange="applyFilters()">
-                      <option value="">เธ—เธฑเนเธเธซเธกเธ”</option>
-                      <option value="เธชเธดเธเธเนเธฒ (Products)">เธชเธดเธเธเนเธฒ</option>
-                      <option value="เธฅเธนเธเธเนเธฒ (Customers)">เธฅเธนเธเธเนเธฒ</option>
-                      <option value="เธเธเธฑเธเธเธฒเธ (Employees)">เธเธเธฑเธเธเธฒเธ</option>
+                      <option value="">ทั้งหมด</option>
+                      <option value="สินค้า (Products)">สินค้า</option>
+                      <option value="ลูกค้า (Customers)">ลูกค้า</option>
+                      <option value="พนักงาน (Employees)">พนักงาน</option>
                     </select>
                   </div>
                   <div style="flex: 1; min-width: 150px;">
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">เธ•เธฑเนเธเนเธ•เนเธงเธฑเธเธ—เธตเน</label>
+                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">ตั้งแต่วันที่</label>
                     <input type="date" id="filter-date-start" class="form-control" onchange="applyFilters()" />
                   </div>
                   <div style="flex: 1; min-width: 150px;">
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">เธ–เธถเธเธงเธฑเธเธ—เธตเน</label>
+                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">ถึงวันที่</label>
                     <input type="date" id="filter-date-end" class="form-control" onchange="applyFilters()" />
                   </div>
                 </div>
                 <div>
-                   <button class="btn btn-outline" onclick="clearAuditsFilter()"><i class="fa-solid fa-rotate-right"></i> เธฅเนเธฒเธเธ•เธฑเธงเธเธฃเธญเธ</button>
+                   <button class="btn btn-outline" onclick="clearAuditsFilter()"><i class="fa-solid fa-rotate-right"></i> ล้างตัวกรอง</button>
                 </div>
               </div>
               
@@ -192,25 +192,25 @@
                 <table style="width: 100%; text-align: left; border-collapse: collapse;">
                   <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                     <tr>
-                      <th class="sticky-th" style="width: 12%; min-width: 120px;">เธงเธฑเธเธ—เธตเน/เน€เธงเธฅเธฒ</th>
-                      <th class="sticky-th" style="width: 10%; min-width: 100px;">เธเธฒเธฃเธเธฃเธฐเธ—เธณ</th>
-                      <th class="sticky-th" style="width: 15%; min-width: 150px;">เธฃเธฐเธเธเธ—เธตเนเนเธเนเนเธ</th>
-                      <th class="sticky-th" style="width: 20%; min-width: 200px;">เธเนเธญเธกเธนเธฅเธ—เธตเนเธ–เธนเธเนเธเน</th>
-                      <th class="sticky-th" style="width: 35%; min-width: 300px;">เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”</th>
-                      <th class="sticky-th" style="width: 8%; min-width: 100px;">เธเธนเนเนเธเนเธเธฒเธ</th>
+                      <th class="sticky-th" style="width: 12%; min-width: 120px;">วันที่/เวลา</th>
+                      <th class="sticky-th" style="width: 10%; min-width: 100px;">การกระทำ</th>
+                      <th class="sticky-th" style="width: 15%; min-width: 150px;">ระบบที่แก้ไข</th>
+                      <th class="sticky-th" style="width: 20%; min-width: 200px;">ข้อมูลที่ถูกแก้</th>
+                      <th class="sticky-th" style="width: 35%; min-width: 300px;">รายละเอียด</th>
+                      <th class="sticky-th" style="width: 8%; min-width: 100px;">ผู้ใช้งาน</th>
                     </tr>
                   </thead>
                   <tbody id="audits-tbody">
-                    <tr><td colspan="6" style="text-align: center; padding: 2rem">เธเธณเธฅเธฑเธเนเธซเธฅเธ”เธเนเธญเธกเธนเธฅ...</td></tr>
+                    <tr><td colspan="6" style="text-align: center; padding: 2rem">กำลังโหลดข้อมูล...</td></tr>
                   </tbody>
                 </table>
               </div>
               <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%; border-top: 1px solid var(--border);">
-                <div id="audits-pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">เนเธชเธ”เธ 0-0 เธเธฒเธ 0 เธฃเธฒเธขเธเธฒเธฃ</div>
+                <div id="audits-pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
                 <div style="display: flex; gap: 0.5rem; align-items: center;">
-                  <button class="btn btn-secondary" id="btn-prev-audits" style="padding: 0.5rem 1rem;" onclick="prevAuditsPage()"><i class="fa-solid fa-chevron-left"></i> เธเนเธญเธเธซเธเนเธฒ</button>
-                  <span id="audits-page-number" style="font-weight: 500; min-width: 100px; text-align: center;">เธซเธเนเธฒ 1 เธเธฒเธ 1</span>
-                  <button class="btn btn-secondary" id="btn-next-audits" style="padding: 0.5rem 1rem;" onclick="nextAuditsPage()">เธ–เธฑเธ”เนเธ <i class="fa-solid fa-chevron-right"></i></button>
+                  <button class="btn btn-secondary" id="btn-prev-audits" style="padding: 0.5rem 1rem;" onclick="prevAuditsPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
+                  <span id="audits-page-number" style="font-weight: 500; min-width: 100px; text-align: center;">หน้า 1 จาก 1</span>
+                  <button class="btn btn-secondary" id="btn-next-audits" style="padding: 0.5rem 1rem;" onclick="nextAuditsPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
                 </div>
                 <div></div>
               </div>
@@ -227,15 +227,15 @@
     <div id="pdf-preview-modal" class="modal hidden">
       <div class="modal-content" style="width: 90%; max-width: 900px; max-height: 92vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; border-radius: 16px;">
         <div class="modal-header" style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 16px 16px 0 0;">
-          <h3 style="margin: 0;">เธ•เธฑเธงเธญเธขเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ (Preview)</h3>
+          <h3 style="margin: 0;">ตัวอย่างใบเสนอราคา (Preview)</h3>
           <button class="btn-close" onclick="closePdfModal()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div style="flex: 1; overflow-y: auto; background: #f1f5f9; padding: 1.5rem; display: flex; flex-direction: column; align-items: center;">
           <div id="pdf-preview-content" style="background: white; width: 794px; min-height: 1000px; padding: 40px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);"></div>
         </div>
         <div class="modal-footer" style="padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.75rem; background: #fff; border-radius: 0 0 16px 16px;">
-          <button class="btn btn-outline" onclick="closePdfModal()">เธขเธเน€เธฅเธดเธ</button>
-          <button class="btn btn-primary" id="pdf-download-btn" onclick="downloadPdf()"><i class="fa-solid fa-file-pdf"></i> เธเธดเธกเธเน PDF</button>
+          <button class="btn btn-outline" onclick="closePdfModal()">ยกเลิก</button>
+          <button class="btn btn-primary" id="pdf-download-btn" onclick="downloadPdf()"><i class="fa-solid fa-file-pdf"></i> พิมพ์ PDF</button>
         </div>
       </div>
     </div>
@@ -244,7 +244,7 @@
     <div id="iframe-modal" class="modal hidden">
       <div class="modal-content" style="width: 95%; max-width: 1200px; height: 90vh; display: flex; flex-direction: column; padding: 0; overflow: hidden;">
         <div class="modal-header" style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #fff;">
-          <h3 style="margin: 0;">เนเธเนเนเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</h3>
+          <h3 style="margin: 0;">แก้ไขใบเสนอราคา</h3>
           <button class="btn-close" onclick="closeIframeModal()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div style="flex: 1; position: relative;">
@@ -255,7 +255,7 @@
 
     <div id="toast" class="toast hidden">
       <i class="fa-solid fa-circle-check"></i>
-      <span id="toast-message">เนเธเนเธเน€เธ•เธทเธญเธ</span>
+      <span id="toast-message">แจ้งเตือน</span>
     </div>
 
     <script src="script.js?v=4"></script>
@@ -305,7 +305,7 @@
           currentHistoryPage = 1;
           renderHistory();
         } catch (err) {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--danger);">เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธฅเนเธกเน€เธซเธฅเธง เธเธฃเธธเธ“เธฒเธฅเธญเธเนเธซเธกเนเธญเธตเธเธเธฃเธฑเนเธ</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--danger);">โหลดข้อมูลล้มเหลว กรุณาลองใหม่อีกครั้ง</td></tr>';
         }
       };
 
@@ -327,12 +327,12 @@
         if (filteredData.length === 0) {
           tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 4rem 1rem;">
             <div style="font-size: 3rem; color: var(--border); margin-bottom: 1rem;"><i class="fa-solid fa-folder-open"></i></div>
-            <h3 style="color: var(--text-main); margin-bottom: 0.5rem; font-weight: 600;">เนเธกเนเธเธเธเธฃเธฐเธงเธฑเธ•เธดเน€เธญเธเธชเธฒเธฃ</h3>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">เนเธกเนเธเธเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเธ•เธฃเธเธเธฑเธเน€เธเธทเนเธญเธเนเธเธเธฒเธฃเธเนเธเธซเธฒเธเธญเธเธเธธเธ“</p>
-            ${historySearchQuery ? '<button class="btn btn-outline" onclick="clearHistorySearch()">เธฅเนเธฒเธเธเธฒเธฃเธเนเธเธซเธฒ</button>' : ''}
+            <h3 style="color: var(--text-main); margin-bottom: 0.5rem; font-weight: 600;">ไม่พบประวัติเอกสาร</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหาของคุณ</p>
+            ${historySearchQuery ? '<button class="btn btn-outline" onclick="clearHistorySearch()">ล้างการค้นหา</button>' : ''}
           </td></tr>`;
-          document.getElementById('pagination-info').innerText = 'เนเธชเธ”เธ 0 เธเธฒเธ 0 เธฃเธฒเธขเธเธฒเธฃ';
-          document.getElementById('page-number').innerText = 'เธซเธเนเธฒ 1 เธเธฒเธ 1';
+          document.getElementById('pagination-info').innerText = 'แสดง 0 จาก 0 รายการ';
+          document.getElementById('page-number').innerText = 'หน้า 1 จาก 1';
           document.getElementById('btn-prev-history').disabled = true;
           document.getElementById('btn-next-history').disabled = true;
           return;
@@ -351,18 +351,18 @@
                           <td><span style="font-weight: 600; color: var(--text-main);">${doc.doc_no || "PR-" + String(doc.id).padStart(5, "0")}</span></td>
                           <td>${doc.salesperson || doc.pic_code || "-"}</td>
                           <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${doc.customer_name}"><span style="font-weight: 500;">${doc.customer_name}</span></td>
-                          <td><strong style="color: var(--primary);">เธฟ${parseFloat(doc.total_amount).toLocaleString("th-TH", { minimumFractionDigits: 2 })}</strong></td>
-                          <td><span class="badge badge-status-success"><i class="fa-solid fa-check-circle" style="margin-right:4px;"></i> เธญเธญเธเน€เธญเธเธชเธฒเธฃเนเธฅเนเธง</span></td>
+                          <td><strong style="color: var(--primary);">฿${parseFloat(doc.total_amount).toLocaleString("th-TH", { minimumFractionDigits: 2 })}</strong></td>
+                          <td><span class="badge badge-status-success"><i class="fa-solid fa-check-circle" style="margin-right:4px;"></i> ออกเอกสารแล้ว</span></td>
                           <td style="white-space: nowrap;">
-                              <button class="btn-text" title="เธ”เธนเน€เธญเธเธชเธฒเธฃ (View Document)" aria-label="เธ”เธนเน€เธญเธเธชเธฒเธฃ" onclick="openIframeModal(${doc.id}, 'view')"><i class="fa-solid fa-eye"></i></button>
-                              <button class="btn-text" title="เนเธเนเนเธ (Edit Document)" aria-label="เนเธเนเนเธเน€เธญเธเธชเธฒเธฃ" onclick="openIframeModal(${doc.id}, 'edit')"><i class="fa-solid fa-pen-to-square"></i></button>
+                              <button class="btn-text" title="ดูเอกสาร (View Document)" aria-label="ดูเอกสาร" onclick="openIframeModal(${doc.id}, 'view')"><i class="fa-solid fa-eye"></i></button>
+                              <button class="btn-text" title="แก้ไข (Edit Document)" aria-label="แก้ไขเอกสาร" onclick="openIframeModal(${doc.id}, 'edit')"><i class="fa-solid fa-pen-to-square"></i></button>
                           </td>
                       </tr>
                   `;
         });
         
-        document.getElementById('pagination-info').innerText = `เนเธชเธ”เธ ${start + 1}-${end} เธเธฒเธเธ—เธฑเนเธเธซเธกเธ” ${filteredData.length} เธฃเธฒเธขเธเธฒเธฃ`;
-        document.getElementById('page-number').innerText = `เธซเธเนเธฒ ${currentHistoryPage} เธเธฒเธ ${totalPages}`;
+        document.getElementById('pagination-info').innerText = `แสดง ${start + 1}-${end} จากทั้งหมด ${filteredData.length} รายการ`;
+        document.getElementById('page-number').innerText = `หน้า ${currentHistoryPage} จาก ${totalPages}`;
         document.getElementById('btn-prev-history').disabled = currentHistoryPage === 1;
         document.getElementById('btn-next-history').disabled = currentHistoryPage === totalPages;
       };
@@ -400,7 +400,7 @@
           allAuditsData = await res.json();
           applyFilters();
         } catch (err) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--danger);">เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธฅเนเธกเน€เธซเธฅเธง เธเธฃเธธเธ“เธฒเธฅเธญเธเนเธซเธกเนเธญเธตเธเธเธฃเธฑเนเธ</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--danger);">โหลดข้อมูลล้มเหลว กรุณาลองใหม่อีกครั้ง</td></tr>';
         }
       };
 
@@ -413,10 +413,10 @@
         // Render Active Filter Chips
         const chipsContainer = document.getElementById('active-filters-container');
         let chipsHtml = '';
-        if(actionFilter) chipsHtml += `<div class="filter-chip">เธเธฒเธฃเธเธฃเธฐเธ—เธณ: ${actionFilter} <button aria-label="เธฅเธเธ•เธฑเธงเธเธฃเธญเธเธเธฒเธฃเธเธฃเธฐเธ—เธณ" onclick="document.getElementById('filter-action').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
-        if(moduleFilter) chipsHtml += `<div class="filter-chip">เธฃเธฐเธเธ: ${moduleFilter} <button aria-label="เธฅเธเธ•เธฑเธงเธเธฃเธญเธเธฃเธฐเธเธ" onclick="document.getElementById('filter-module').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
-        if(startDateFilter) chipsHtml += `<div class="filter-chip">เธ•เธฑเนเธเนเธ•เน: ${startDateFilter} <button aria-label="เธฅเธเธ•เธฑเธงเธเธฃเธญเธเธงเธฑเธเธ—เธตเน" onclick="document.getElementById('filter-date-start').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
-        if(endDateFilter) chipsHtml += `<div class="filter-chip">เธ–เธถเธ: ${endDateFilter} <button aria-label="เธฅเธเธ•เธฑเธงเธเธฃเธญเธเธงเธฑเธเธ—เธตเน" onclick="document.getElementById('filter-date-end').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
+        if(actionFilter) chipsHtml += `<div class="filter-chip">การกระทำ: ${actionFilter} <button aria-label="ลบตัวกรองการกระทำ" onclick="document.getElementById('filter-action').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
+        if(moduleFilter) chipsHtml += `<div class="filter-chip">ระบบ: ${moduleFilter} <button aria-label="ลบตัวกรองระบบ" onclick="document.getElementById('filter-module').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
+        if(startDateFilter) chipsHtml += `<div class="filter-chip">ตั้งแต่: ${startDateFilter} <button aria-label="ลบตัวกรองวันที่" onclick="document.getElementById('filter-date-start').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
+        if(endDateFilter) chipsHtml += `<div class="filter-chip">ถึง: ${endDateFilter} <button aria-label="ลบตัวกรองวันที่" onclick="document.getElementById('filter-date-end').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
         chipsContainer.innerHTML = chipsHtml;
 
         filteredAuditsData = allAuditsData.filter(log => {
@@ -451,12 +451,12 @@
         if (filteredAuditsData.length === 0) {
           tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 4rem 1rem;">
             <div style="font-size: 3rem; color: var(--border); margin-bottom: 1rem;"><i class="fa-solid fa-folder-open"></i></div>
-            <h3 style="color: var(--text-main); margin-bottom: 0.5rem; font-weight: 600;">เนเธกเนเธเธเธเธฃเธฐเธงเธฑเธ•เธดเธเธฒเธฃเนเธเนเนเธ</h3>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">เนเธกเนเธเธเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเธ•เธฃเธเธเธฑเธเน€เธเธทเนเธญเธเนเธเธ•เธฑเธงเธเธฃเธญเธเธเธญเธเธเธธเธ“</p>
-            <button class="btn btn-outline" onclick="clearAuditsFilter()">เธฅเนเธฒเธเธ•เธฑเธงเธเธฃเธญเธเธ—เธฑเนเธเธซเธกเธ”</button>
+            <h3 style="color: var(--text-main); margin-bottom: 0.5rem; font-weight: 600;">ไม่พบประวัติการแก้ไข</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">ไม่พบรายการที่ตรงกับเงื่อนไขตัวกรองของคุณ</p>
+            <button class="btn btn-outline" onclick="clearAuditsFilter()">ล้างตัวกรองทั้งหมด</button>
           </td></tr>`;
-          document.getElementById('audits-pagination-info').innerText = 'เนเธชเธ”เธ 0 เธเธฒเธ 0 เธฃเธฒเธขเธเธฒเธฃ';
-          document.getElementById('audits-page-number').innerText = 'เธซเธเนเธฒ 1 เธเธฒเธ 1';
+          document.getElementById('audits-pagination-info').innerText = 'แสดง 0 จาก 0 รายการ';
+          document.getElementById('audits-page-number').innerText = 'หน้า 1 จาก 1';
           document.getElementById('btn-prev-audits').disabled = true;
           document.getElementById('btn-next-audits').disabled = true;
           return;
@@ -472,16 +472,16 @@
           
           let actionBadgeClass = `badge-${log.action_type}`;
           if(!['CREATE', 'UPDATE', 'DELETE'].includes(log.action_type)) actionBadgeClass = 'badge-DEFAULT';
-          const actionBadge = `<span class="badge-action ${actionBadgeClass}" aria-label="เธเธฒเธฃเธเธฃเธฐเธ—เธณ: ${log.action_type}">${log.action_type}</span>`;
+          const actionBadge = `<span class="badge-action ${actionBadgeClass}" aria-label="การกระทำ: ${log.action_type}">${log.action_type}</span>`;
           
           let detailsHtml = '';
           const rawDetails = log.record_details || '';
           
           const keyMap = {
-            name: 'เธเธทเนเธญ', code: 'เธฃเธซเธฑเธช', selling_price: 'เธฃเธฒเธเธฒเธเธฒเธข', purchase_price: 'เธฃเธฒเธเธฒเธ—เธธเธ',
-            contact_person: 'เธเธนเนเธ•เธดเธ”เธ•เนเธญ', phone: 'เน€เธเธญเธฃเนเนเธ—เธฃ', email: 'เธญเธตเน€เธกเธฅ', address_1: 'เธ—เธตเนเธญเธขเธนเน',
-            tax_id: 'เน€เธฅเธเธเธนเนเน€เธชเธตเธขเธ เธฒเธฉเธต', pic_name: 'เธเธทเนเธญเธเธเธฑเธเธเธฒเธ', pic_code: 'เธฃเธซเธฑเธชเธเธเธฑเธเธเธฒเธ',
-            department: 'เนเธเธเธ', contact_number: 'เน€เธเธญเธฃเนเธ•เธดเธ”เธ•เนเธญ', status: 'เธชเธ–เธฒเธเธฐ', stock_qty: 'เธเธณเธเธงเธเธชเธ•เนเธญเธ'
+            name: 'ชื่อ', code: 'รหัส', selling_price: 'ราคาขาย', purchase_price: 'ราคาทุน',
+            contact_person: 'ผู้ติดต่อ', phone: 'เบอร์โทร', email: 'อีเมล', address_1: 'ที่อยู่',
+            tax_id: 'เลขผู้เสียภาษี', pic_name: 'ชื่อพนักงาน', pic_code: 'รหัสพนักงาน',
+            department: 'แผนก', contact_number: 'เบอร์ติดต่อ', status: 'สถานะ', stock_qty: 'จำนวนสต๊อก'
           };
           const tKey = (k) => keyMap[k] || k;
           
@@ -502,7 +502,7 @@
                   changes.push(`<div class="badge-detail" title="${tKey(key)}: ${bVal} -> ${aVal}"><strong style="color:var(--text-main); margin-right:4px;">${tKey(key)}:</strong> <span style="color:var(--text-muted);text-decoration:line-through;max-width:80px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${bVal}</span> <i class="fa-solid fa-arrow-right" style="font-size:0.75rem;margin:0 6px;color:var(--text-muted)"></i> <span style="color:var(--primary);font-weight:600;max-width:120px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${aVal}</span></div>`);
                 }
               }
-              detailsHtml = changes.length > 0 ? changes.join('') : '<span style="color:var(--text-muted)">เนเธกเนเธกเธตเธเธฒเธฃเน€เธเธฅเธตเนเธขเธเนเธเธฅเธเธเนเธญเธกเธนเธฅเธชเธณเธเธฑเธ</span>';
+              detailsHtml = changes.length > 0 ? changes.join('') : '<span style="color:var(--text-muted)">ไม่มีการเปลี่ยนแปลงข้อมูลสำคัญ</span>';
             } catch(e) {
               detailsHtml = rawDetails;
             }
@@ -516,7 +516,7 @@
                       changes.push(`<div class="badge-detail" title="${tKey(key)}: ${parsed[key]}"><strong style="color:var(--text-main); margin-right:4px;">${tKey(key)}:</strong> <span style="color:var(--text-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${parsed[key]}</span></div>`);
                    }
                 }
-                detailsHtml = changes.length > 0 ? changes.join('') : '<span style="color:var(--text-muted)">เนเธกเนเธกเธตเธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เน€เธเธดเนเธกเน€เธ•เธดเธก</span>';
+                detailsHtml = changes.length > 0 ? changes.join('') : '<span style="color:var(--text-muted)">ไม่มีรายละเอียดเพิ่มเติม</span>';
              } catch(e) {
                 detailsHtml = rawDetails;
              }
@@ -538,8 +538,8 @@
           `;
         });
 
-        document.getElementById('audits-pagination-info').innerText = `เนเธชเธ”เธ ${start + 1}-${end} เธเธฒเธเธ—เธฑเนเธเธซเธกเธ” ${filteredAuditsData.length} เธฃเธฒเธขเธเธฒเธฃ`;
-        document.getElementById('audits-page-number').innerText = `เธซเธเนเธฒ ${currentAuditsPage} เธเธฒเธ ${totalPages}`;
+        document.getElementById('audits-pagination-info').innerText = `แสดง ${start + 1}-${end} จากทั้งหมด ${filteredAuditsData.length} รายการ`;
+        document.getElementById('audits-page-number').innerText = `หน้า ${currentAuditsPage} จาก ${totalPages}`;
         
         document.getElementById('btn-prev-audits').disabled = currentAuditsPage === 1;
         document.getElementById('btn-next-audits').disabled = currentAuditsPage === totalPages;
@@ -567,7 +567,7 @@
           // Direct PDF preview - no iframe needed
           const pdfModal = document.getElementById('pdf-preview-modal');
           const pdfContent = document.getElementById('pdf-preview-content');
-          pdfContent.innerHTML = '<div style="text-align:center;padding:3rem;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p>เธเธณเธฅเธฑเธเนเธซเธฅเธ”เธเนเธญเธกเธนเธฅ...</p></div>';
+          pdfContent.innerHTML = '<div style="text-align:center;padding:3rem;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p>กำลังโหลดข้อมูล...</p></div>';
           pdfModal.classList.remove('hidden');
 
           try {
@@ -579,7 +579,7 @@
             const allCustomers = await custRes.json();
 
             if (!quoteData.quote) {
-              pdfContent.innerHTML = '<p style="color:red;text-align:center">เนเธกเนเธเธเธเนเธญเธกเธนเธฅ</p>';
+              pdfContent.innerHTML = '<p style="color:red;text-align:center">ไม่พบข้อมูล</p>';
               return;
             }
 
@@ -605,24 +605,24 @@
                 const parts = numberStr.split('.');
                 const integerPart = parts[0];
                 const fractionalPart = parts[1];
-                const text = ['เธจเธนเธเธขเน', 'เธซเธเธถเนเธ', 'เธชเธญเธ', 'เธชเธฒเธก', 'เธชเธตเน', 'เธซเนเธฒ', 'เธซเธ', 'เน€เธเนเธ”', 'เนเธเธ”', 'เน€เธเนเธฒ'];
-                const unit = ['', 'เธชเธดเธ', 'เธฃเนเธญเธข', 'เธเธฑเธ', 'เธซเธกเธทเนเธ', 'เนเธชเธ', 'เธฅเนเธฒเธ'];
+                const text = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
+                const unit = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'];
                 const convert = (numStr) => {
                     let result = '';
                     for (let i = 0; i < numStr.length; i++) {
                         const n = parseInt(numStr[i]);
                         const pos = numStr.length - 1 - i;
                         if (n !== 0) {
-                            if (pos === 1 && n === 1) result += 'เธชเธดเธ';
-                            else if (pos === 1 && n === 2) result += 'เธขเธตเนเธชเธดเธ';
-                            else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เน€เธญเนเธ”';
+                            if (pos === 1 && n === 1) result += 'สิบ';
+                            else if (pos === 1 && n === 2) result += 'ยี่สิบ';
+                            else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เอ็ด';
                             else result += text[n] + unit[pos % 6];
                         }
                     }
-                    return result || 'เธจเธนเธเธขเน';
+                    return result || 'ศูนย์';
                 };
-                let baht = convert(integerPart) + 'เธเธฒเธ—';
-                let satang = parseInt(fractionalPart) === 0 ? 'เธ–เนเธงเธ' : convert(fractionalPart) + 'เธชเธ•เธฒเธเธเน';
+                let baht = convert(integerPart) + 'บาท';
+                let satang = parseInt(fractionalPart) === 0 ? 'ถ้วน' : convert(fractionalPart) + 'สตางค์';
                 return '( ' + baht + satang + ' )';
             };
 
@@ -663,7 +663,7 @@
                 
                 ctx.fillStyle = '#000000';
                 ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-                ctx.fillText('เนเธเธเธฒเธก เธฅเธนเธเธเนเธฒ / Customer', 179.5, 35);
+                ctx.fillText('ในนาม ลูกค้า / Customer', 179.5, 35);
                 
                 ctx.beginPath();
                 ctx.moveTo(79.5, 115);
@@ -674,11 +674,11 @@
                 ctx.fillStyle = '#666666';
                 ctx.fillText('(............................................................)', 179.5, 135);
                 ctx.fillStyle = '#000000';
-                ctx.fillText('เธเธนเนเธญเธเธธเธกเธฑเธ•เธดเธชเธฑเนเธเธเธทเนเธญ / Accepted By', 179.5, 153);
-                ctx.fillText('เธงเธฑเธเธ—เธตเน / Date: ......../......../........', 179.5, 170);
+                ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 153);
+                ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 170);
                 
                 ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-                ctx.fillText('เนเธเธเธฒเธก เนเธเธฅเนเธเนเธเธ•เธตเน (Soul Society)', 553.5, 35);
+                ctx.fillText('ในนาม โซลโซไซตี้ (Soul Society)', 553.5, 35);
                 
                 ctx.beginPath();
                 ctx.moveTo(453.5, 115);
@@ -689,8 +689,8 @@
                 ctx.fillStyle = '#0f172a';
                 ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 135);
                 ctx.fillStyle = '#000000';
-                ctx.fillText('เธเธนเนเน€เธชเธเธญเธฃเธฒเธเธฒ / Quoted By', 553.5, 153);
-                ctx.fillText('เธงเธฑเธเธ—เธตเน / Date: ' + (docDate || '......../......../........'), 553.5, 170);
+                ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
+                ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
                 
                 return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
             }
@@ -708,7 +708,7 @@
                 <td style="padding:${pCell};border-left:1px solid #000;border-right:1px solid #000;text-align:center;vertical-align:top">${i+1}</td>
                 <td style="padding:${pCell};border-right:1px solid #000;vertical-align:top;word-wrap:break-word;overflow-wrap:break-word;">${it.description}</td>
                 <td style="padding:${pCell};border-right:1px solid #000;text-align:center;vertical-align:top">${parseFloat(it.quantity).toLocaleString()}</td>
-                <td style="padding:${pCell};border-right:1px solid #000;text-align:center;vertical-align:top">${it.unit || 'เธเธดเนเธ'}</td>
+                <td style="padding:${pCell};border-right:1px solid #000;text-align:center;vertical-align:top">${it.unit || 'ชิ้น'}</td>
                 <td style="padding:${pCell};border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(it.unit_price)}</td>
                 <td style="padding:${pCell};border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(parseFloat(it.quantity)*parseFloat(it.unit_price))}</td>
               </tr>`;
@@ -741,19 +741,19 @@
                     <img src="logo.svg" alt="Company Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                   </div>
                   <div style="flex:2;text-align:center;">
-                    <h2 style="margin:0;font-size:${fH2};font-weight:bold;">เนเธเธฅเนเธเนเธเธ•เธตเน</h2>
+                    <h2 style="margin:0;font-size:${fH2};font-weight:bold;">โซลโซไซตี้</h2>
                     <p style="margin:2px 0;">Soul Society</p>
-                    <p style="margin:2px 0;">15/5 เธ–เธเธเธเธธเธ—เธเธฃเธฑเธเธฉเธฒ เธ•.เธเธฒเธเน€เธกเธทเธญเธ เธญ.เน€เธกเธทเธญเธ เธ.เธชเธกเธธเธ—เธฃเธเธฃเธฒเธเธฒเธฃ 10270</p>
+                    <p style="margin:2px 0;">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
                     <p style="margin:2px 0;">TEL : 02-789-5541 FAX: &nbsp;&nbsp; Email: Stainless.Stell@gmail.com</p>
                   </div>
                   <div style="flex:1;text-align:right;">
-                    <h2 style="margin:0;font-size:${fH2s};font-weight:normal;color:var(--primary-color);">เนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</h2>
+                    <h2 style="margin:0;font-size:${fH2s};font-weight:normal;color:var(--primary-color);">ใบเสนอราคา</h2>
                     <p style="margin:0;font-size:13px;font-weight:500;">Quotation</p>
                   </div>
                 </div>
 
                 <div style="text-align:left;margin-bottom:10px;">
-                  <p style="margin:0;">เน€เธฅเธเธเธฃเธฐเธเธณเธ•เธฑเธงเธเธนเนเน€เธชเธตเธขเธ เธฒเธฉเธต / Tax ID 6611611200003 เธชเธณเธเธฑเธเธเธฒเธเนเธซเธเน</p>
+                  <p style="margin:0;">เลขประจำตัวผู้เสียภาษี / Tax ID 6611611200003 สำนักงานใหญ่</p>
                 </div>
 
                 <!-- Info Box Section -->
@@ -763,7 +763,7 @@
                     <table style="width:100%;border-collapse:collapse;font-size:${fBase};">
                       <tr>
                         <td style="width:140px;padding-bottom:5px;">
-                          <div style="line-height:1.2;">เธฅเธนเธเธเนเธฒ</div>
+                          <div style="line-height:1.2;">ลูกค้า</div>
                           <div style="font-size:${fSmall};line-height:1.2;">Customer</div>
                         </td>
                         <td style="padding-bottom:5px;" colspan="3">${q.customer_code || cust.code || ''}<br><span style="color:transparent;">-</span></td>
@@ -772,16 +772,16 @@
                         <td colspan="4" style="padding-bottom:15px;">
                           ${q.customer_name || ''}<br>
                           ${cust.address_1 || ''}
-                          ${cust.level_group ? '<br>เธเธฅเธธเนเธกเธฅเธนเธเธเนเธฒเธฃเธฐเธ”เธฑเธ: '+cust.level_group : ''}
+                          ${cust.level_group ? '<br>กลุ่มลูกค้าระดับ: '+cust.level_group : ''}
                         </td>
                       </tr>
                       <tr>
-                        <td style="padding-bottom:5px;">เนเธ—เธฃ.</td>
+                        <td style="padding-bottom:5px;">โทร.</td>
                         <td style="padding-bottom:5px;" colspan="3">${q.phone || cust.phone || '-'}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
-                          <div style="line-height:1.2;">เน€เธฅเธเธเธฃเธฐเธเธณเธ•เธฑเธงเธเธนเนเน€เธชเธตเธขเธ เธฒเธฉเธต</div>
+                          <div style="line-height:1.2;">เลขประจำตัวผู้เสียภาษี</div>
                           <div style="font-size:${fSmall};line-height:1.2;">Tax ID</div>
                         </td>
                         <td style="padding-bottom:5px;">${cust.tax_id || '-'}</td>
@@ -795,42 +795,42 @@
                     <table style="width:100%;border-collapse:collapse;font-size:${fBase};">
                       <tr>
                         <td style="width:120px;padding-bottom:5px;">
-                          <div style="line-height:1.2;">เน€เธฅเธเธ—เธตเนเนเธเน€เธชเธเธญเธฃเธฒเธเธฒ</div>
+                          <div style="line-height:1.2;">เลขที่ใบเสนอราคา</div>
                           <div style="font-size:${fSmall};line-height:1.2;">Quotation No.</div>
                         </td>
-                        <td style="padding-bottom:5px;">${q.doc_no || '(เธญเธญเธเธญเธฑเธ•เนเธเธกเธฑเธ•เธด)'}</td>
+                        <td style="padding-bottom:5px;">${q.doc_no || '(ออกอัตโนมัติ)'}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
-                          <div style="line-height:1.2;">เธงเธฑเธเธ—เธตเน</div>
+                          <div style="line-height:1.2;">วันที่</div>
                           <div style="font-size:${fSmall};line-height:1.2;">Date</div>
                         </td>
                         <td style="padding-bottom:5px;">${docDateStr}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
-                          <div style="line-height:1.2;">เน€เธเธฃเธ”เธดเธ•</div>
+                          <div style="line-height:1.2;">เครดิต</div>
                           <div style="font-size:${fSmall};line-height:1.2;">Credit Terms</div>
                         </td>
-                        <td style="padding-bottom:5px;">${crDays} เธงเธฑเธ <span style="font-size:${fSmall};">Days</span></td>
+                        <td style="padding-bottom:5px;">${crDays} วัน <span style="font-size:${fSmall};">Days</span></td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
-                          <div style="line-height:1.2;">เธงเธฑเธเธขเธทเธเธฃเธฒเธเธฒ</div>
+                          <div style="line-height:1.2;">วันยืนราคา</div>
                           <div style="font-size:${fSmall};line-height:1.2;">Valid Until</div>
                         </td>
                         <td style="padding-bottom:5px;">${validDate}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
-                          <div style="line-height:1.2;">เน€เธเธทเนเธญเธเนเธเธเธณเธฃเธฐเน€เธเธดเธ</div>
+                          <div style="line-height:1.2;">เงื่อนไขชำระเงิน</div>
                           <div style="font-size:${fSmall};line-height:1.2;">Payment Terms</div>
                         </td>
                         <td style="padding-bottom:5px;">${q.payment_terms || 'Cash/Transfer'}</td>
                       </tr>
                       <tr>
                         <td style="padding-bottom:5px;">
-                          <div style="line-height:1.2;">เธเธเธฑเธเธเธฒเธเธเธฒเธข</div>
+                          <div style="line-height:1.2;">พนักงานขาย</div>
                           <div style="font-size:${fSmall};line-height:1.2;">Salesman</div>
                         </td>
                         <td style="padding-bottom:5px;">
@@ -847,27 +847,27 @@
                   <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                     <tr style="background-color:#ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                       <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:5%;text-align:center;">
-                        <div style="line-height:1.2;">เธฅเธณเธ”เธฑเธ</div>
+                        <div style="line-height:1.2;">ลำดับ</div>
                         <div style="font-size:${fSmall};line-height:1.2;">No.</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:40%;text-align:center;">
-                        <div style="line-height:1.2;">เธฃเธซเธฑเธชเธชเธดเธเธเนเธฒ / เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”</div>
+                        <div style="line-height:1.2;">รหัสสินค้า / รายละเอียด</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Code / Descriptions</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:10%;text-align:center;">
-                        <div style="line-height:1.2;">เธเธณเธเธงเธ</div>
+                        <div style="line-height:1.2;">จำนวน</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Quantity</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:10%;text-align:center;">
-                        <div style="line-height:1.2;">เธซเธเนเธงเธข</div>
+                        <div style="line-height:1.2;">หน่วย</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Unit</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:15%;text-align:center;">
-                        <div style="line-height:1.2;">เธซเธเนเธงเธขเธฅเธฐ</div>
+                        <div style="line-height:1.2;">หน่วยละ</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Unit Price</div>
                       </th>
                       <th style="letter-spacing:0px;text-transform:none;padding:${pCell};border:1px solid #000;width:20%;text-align:center;">
-                        <div style="line-height:1.2;">เธเธณเธเธงเธเน€เธเธดเธ</div>
+                        <div style="line-height:1.2;">จำนวนเงิน</div>
                         <div style="font-size:${fSmall};line-height:1.2;">Amount</div>
                       </th>
                     </tr>
@@ -882,19 +882,19 @@
                 <div style="margin-top: 0; page-break-inside: auto; break-inside: auto;">
                 <div style="display:flex;border:1px solid #000;overflow:hidden;">
                   <div style="flex:1;border-right:1px solid #000;padding:10px;font-size:11px;white-space:normal;word-wrap:break-word;overflow-wrap:break-word;">
-                    <strong>เธซเธกเธฒเธขเน€เธซเธ•เธธ (Remarks):</strong><br>
-                    - เธเธฒเธฃเน€เธชเธเธญเธฃเธฒเธเธฒเธเธตเนเธขเธทเธเธฃเธฒเธเธฒ ${crDays} เธงเธฑเธ<br>
+                    <strong>หมายเหตุ (Remarks):</strong><br>
+                    - การเสนอราคานี้ยืนราคา ${crDays} วัน<br>
                     ${q.remarks ? '- ' + q.remarks + '<br>' : ''}
-                    - เธเธณเธฃเธฐเน€เธเธดเธเน€เธเนเธฒเธเธฑเธเธเธต: เธเธเธฒเธเธฒเธฃเธเธชเธดเธเธฃเนเธ—เธข เน€เธฅเธเธ—เธตเนเธเธฑเธเธเธต 123-4-56789-0 เธเธทเนเธญเธเธฑเธเธเธต เธเธเธ. เนเธเธฅเนเธเนเธเธ•เธตเน
+                    - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจก. โซลโซไซตี้
                   </div>
                   <div style="width:260px;background:white;display:flex;flex-direction:column;justify-content:center;">
                     <table style="width:100%;border-collapse:collapse;font-size:${fBase};">
                       <tr>
-                        <td style="padding:5px 10px;">เธฃเธงเธกเน€เธเนเธเน€เธเธดเธ <span style="font-size:${fSmall};">(Gross Amount)</span></td>
+                        <td style="padding:5px 10px;">รวมเป็นเงิน <span style="font-size:${fSmall};">(Gross Amount)</span></td>
                         <td style="padding:5px 10px;text-align:right;">${fmt(subtotal)}</td>
                       </tr>
                       <tr>
-                        <td style="padding:5px 10px;">เธ เธฒเธฉเธตเธกเธนเธฅเธเนเธฒเน€เธเธดเนเธก 7% <span style="font-size:${fSmall};">(VAT)</span></td>
+                        <td style="padding:5px 10px;">ภาษีมูลค่าเพิ่ม 7% <span style="font-size:${fSmall};">(VAT)</span></td>
                         <td style="padding:5px 10px;text-align:right;">${fmt(vat)}</td>
                       </tr>
                     </table>
@@ -907,7 +907,7 @@
                     ${bahtText(grandTotal)}
                   </div>
                   <div style="width:260px;padding:10px;display:flex;align-items:center;justify-content:space-between;font-size:${fBase};box-sizing:border-box;">
-                    <span>เธขเธญเธ”เธฃเธงเธกเธ—เธฑเนเธเธชเธดเนเธ <span style="font-size:${fSmall};">(Grand Total)</span></span>
+                    <span>ยอดรวมทั้งสิ้น <span style="font-size:${fSmall};">(Grand Total)</span></span>
                     <span>${fmt(grandTotal)}</span>
                   </div>
                 </div>
@@ -918,7 +918,7 @@
 
               </div>`;
           } catch(err) {
-            pdfContent.innerHTML = '<p style="color:red;text-align:center">เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”</p>';
+            pdfContent.innerHTML = '<p style="color:red;text-align:center">เกิดข้อผิดพลาด</p>';
             console.error(err);
           }
         } else {
@@ -956,7 +956,7 @@
           window.closeIframeModal();
           if (event.data === 'quote_saved') {
             fetchHistory();
-            showToast('เธเธฑเธเธ—เธถเธเธเนเธญเธกเธนเธฅเน€เธฃเธตเธขเธเธฃเนเธญเธขเนเธฅเนเธง');
+            showToast('บันทึกข้อมูลเรียบร้อยแล้ว');
           }
         }
       });
@@ -975,4 +975,3 @@
     </script>
   </body>
 </html>
-
