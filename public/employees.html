@@ -519,6 +519,37 @@
             toggleEmployeeDeleteBtn();
             fetchEmployees();
 
+        // Auto-fill from AI Assistant
+        const draftEmployeeData = sessionStorage.getItem('draftEmployeeData');
+        if (draftEmployeeData) {
+            try {
+                const data = JSON.parse(draftEmployeeData);
+                sessionStorage.removeItem('draftEmployeeData');
+                
+                document.getElementById('emp-id').value = "";
+                if(document.getElementById('emp-code')) document.getElementById('emp-code').value = data.pic_code || "";
+                
+                if (data.pic_name) {
+                   const parts = data.pic_name.trim().split(/s+/);
+                   if(document.getElementById('emp-fname-th')) document.getElementById('emp-fname-th').value = parts[0] || "";
+                   if(document.getElementById('emp-lname-th')) document.getElementById('emp-lname-th').value = parts.slice(1).join(" ") || "";
+                }
+                
+                if (data.pic_name_eng) {
+                   const parts = data.pic_name_eng.trim().split(/s+/);
+                   if(document.getElementById('emp-fname-en')) document.getElementById('emp-fname-en').value = parts[0] || "";
+                   if(document.getElementById('emp-lname-en')) document.getElementById('emp-lname-en').value = parts.slice(1).join(" ") || "";
+                }
+                
+                if(document.getElementById('emp-phone')) document.getElementById('emp-phone').value = data.contact_number || "";
+                if(document.getElementById('emp-dept')) document.getElementById('emp-dept').value = data.department || "";
+                
+                document.getElementById('emp-modal-title').innerHTML = '<i class="fa-solid fa-user-plus"></i> เพิ่มพนักงาน (จาก AI)';
+                document.getElementById('emp-modal').classList.remove('hidden');
+            } catch(e) { console.error(e); }
+        }
+
+
         const aiDataRaw = sessionStorage.getItem("aiEmployeeData");
         if (aiDataRaw) {
           try {

@@ -567,6 +567,26 @@
             toggleProductDeleteBtn();
             fetchProducts();
 
+        // Auto-fill from AI Assistant
+        const draftProductData = sessionStorage.getItem('draftProductData');
+        if (draftProductData) {
+            try {
+                const data = JSON.parse(draftProductData);
+                sessionStorage.removeItem('draftProductData');
+                
+                document.getElementById('prod-id').value = "";
+                if(document.getElementById('prod-code')) document.getElementById('prod-code').value = data.code || "";
+                if(document.getElementById('prod-name')) document.getElementById('prod-name').value = data.name || "";
+                if(document.getElementById('prod-unit')) document.getElementById('prod-unit').value = data.unit || "";
+                if(document.getElementById('prod-price')) document.getElementById('prod-price').value = data.selling_price || "0";
+                if(document.getElementById('prod-cost')) document.getElementById('prod-cost').value = data.cost_price || "0";
+                
+                document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-plus"></i> เพิ่มข้อมูลสินค้า (จาก AI)';
+                document.getElementById('product-modal').classList.remove('hidden');
+            } catch(e) { console.error(e); }
+        }
+
+
         const aiDataRaw = sessionStorage.getItem("aiProductData");
         if (aiDataRaw) {
           try {

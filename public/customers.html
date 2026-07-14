@@ -537,6 +537,28 @@
             toggleCustomerDeleteBtn();
             fetchCustomers();
 
+        // Auto-fill from AI Assistant
+        const draftCustomerData = sessionStorage.getItem('draftCustomerData');
+        if (draftCustomerData) {
+            try {
+                const data = JSON.parse(draftCustomerData);
+                sessionStorage.removeItem('draftCustomerData');
+                
+                document.getElementById('cus-id').value = "";
+                if(document.getElementById('cus-name')) document.getElementById('cus-name').value = data.name || "";
+                if(document.getElementById('cus-tax-id')) document.getElementById('cus-tax-id').value = data.tax_id || "";
+                if(document.getElementById('cus-contact')) document.getElementById('cus-contact').value = data.contact_person || "";
+                if(document.getElementById('cus-email')) document.getElementById('cus-email').value = data.email || "";
+                if(document.getElementById('cus-phone')) document.getElementById('cus-phone').value = data.phone || "";
+                if(document.getElementById('cus-address')) document.getElementById('cus-address').value = data.address || "";
+                if(document.getElementById('cus-pic')) document.getElementById('cus-pic').value = data.pic_code || "";
+                
+                document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-user-plus"></i> เพิ่มข้อมูลลูกค้า (จาก AI)';
+                document.getElementById('customer-modal').classList.remove('hidden');
+            } catch(e) { console.error(e); }
+        }
+
+
         const aiDataRaw = sessionStorage.getItem("aiCustomerData");
         if (aiDataRaw) {
           try {
