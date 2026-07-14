@@ -585,17 +585,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Create a printable element HTML
-      let fBase = '13px', fSmall = '10px', pCell = '6px 8px', lh = '1.25', fH2 = '22px', fH2s = '20px', sigW = '734px', padCont = '20px 30px', pBox = '10px 15px', pTotal = '8px 12px';
-      
       const isMany = items.length >= 15;
-      const fBase = isMany ? '10px' : '12px';
-      const fSmall = isMany ? '8px' : '9px';
-      const pCell = isMany ? '1px 2px' : '2px 4px';
-      
-      const isMany = items.length >= 15;
-      const fBase = isMany ? '10px' : '12px';
-      const fSmall = isMany ? '8px' : '9px';
-      const pCell = isMany ? '1px 2px' : '2px 4px';
+      let fBase = isMany ? '10px' : '13px';
+      let fSmall = isMany ? '8px' : '10px';
+      let pCell = isMany ? '2px 4px' : '6px 8px';
+      let lh = '1.25', fH2 = '22px', fH2s = '20px', sigW = '734px', padCont = '20px 30px', pBox = '10px 15px', pTotal = '8px 12px';
       
       let tableHTML = `
                 <style>
