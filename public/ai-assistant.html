@@ -395,6 +395,11 @@
                 aiPreviewData.appendChild(formGrid);
                 aiPreviewSection.classList.remove("hidden");
                 showToast("สร้างข้อมูลสำเร็จ! (กรุณาตรวจสอบด้านล่าง)");
+                
+                // เลื่อนหน้าจอลงมาที่ส่วนพรีวิวอัตโนมัติ
+                setTimeout(() => {
+                  aiPreviewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
 
               
               generateBtn.disabled = false;
