@@ -12,16 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const toast = document.getElementById("toast");
   const toastMessage = document.getElementById("toast-message");
 
-  const aiModeSelect = document.getElementById("ai-mode-select");
-  if (aiModeSelect) {
-    aiModeSelect.addEventListener("change", (e) => {
-      if (e.target.value === "employee") {
-        aiPrompt.placeholder = "ตัวอย่าง: เซลส์ชื่อ สมชาย ใจดี รหัสพนักงาน EMP-001 เบอร์โทร 081-111-2222 อยู่แผนกขาย";
-      } else {
-        aiPrompt.placeholder = "ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท";
-      }
-    });
-  }
+  
 
   let items = [];
   window.productsList = [];

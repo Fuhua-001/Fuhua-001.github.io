@@ -566,6 +566,21 @@
             if(selectAll) selectAll.checked = false;
             toggleProductDeleteBtn();
             fetchProducts();
+
+        const aiDataRaw = sessionStorage.getItem("aiProductData");
+        if (aiDataRaw) {
+          try {
+            const data = JSON.parse(aiDataRaw);
+            sessionStorage.removeItem("aiProductData");
+            if(data.code) document.getElementById('prod-code').value = data.code;
+            if(data.name) document.getElementById('prod-name').value = data.name;
+            if(data.unit) document.getElementById('prod-unit').value = data.unit;
+            if(data.cost_price) document.getElementById('prod-cost').value = data.cost_price;
+            if(data.selling_price) document.getElementById('prod-sell').value = data.selling_price;
+            showToast("โหลดข้อมูลจาก AI สำเร็จ กรุณาตรวจสอบและกดบันทึก");
+          } catch(e) {}
+        }
+
         };
       };
 

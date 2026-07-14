@@ -267,12 +267,6 @@
         >
           <input type="hidden" id="cus-id" />
 
-          <div class="ai-customer-box" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1)); padding: 1rem; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.2); margin-bottom: 0.5rem;">
-             <label style="color: var(--primary); font-weight: 600; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI กรอกข้อมูลลูกค้า</label>
-             <textarea id="cus-ai-prompt" class="input-field" rows="3" placeholder="พิมพ์สิ่งที่มี เช่น 'บริษัท สมาร์ท เทคโนโลยี จำกัด เบอร์ 0812345678 ที่อยู่ 123/45 กทม 10110 เลขผู้เสียภาษี 01055555555'"></textarea>
-             <button type="button" id="btn-cus-ai" class="btn btn-primary" onclick="autoFillCustomerAI()" style="width: 100%; margin-top: 0.5rem; justify-content: center;"><i class="fa-solid fa-robot"></i> แยกข้อมูลลงฟอร์ม</button>
-          </div>
-
           <div class="input-group">
             <label>ชื่อลูกค้า/บริษัท *</label>
             <input type="text" id="cus-name" class="input-field" required />
@@ -542,6 +536,22 @@
             if(selectAll) selectAll.checked = false;
             toggleCustomerDeleteBtn();
             fetchCustomers();
+
+        const aiDataRaw = sessionStorage.getItem("aiCustomerData");
+        if (aiDataRaw) {
+          try {
+            const data = JSON.parse(aiDataRaw);
+            sessionStorage.removeItem("aiCustomerData");
+            if(data.name) document.getElementById('cus-name').value = data.name;
+            if(data.contact_person) document.getElementById('cus-contact').value = data.contact_person;
+            if(data.phone) document.getElementById('cus-phone').value = data.phone;
+            if(data.email) document.getElementById('cus-email').value = data.email;
+            if(data.address) document.getElementById('cus-address').value = data.address;
+            if(data.pic_code) document.getElementById('cus-pic').value = data.pic_code;
+            showToast("โหลดข้อมูลจาก AI สำเร็จ กรุณาตรวจสอบและกดบันทึก");
+          } catch(e) {}
+        }
+
         };
       };
 

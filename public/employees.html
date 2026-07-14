@@ -518,6 +518,28 @@
             if(selectAll) selectAll.checked = false;
             toggleEmployeeDeleteBtn();
             fetchEmployees();
+
+        const aiDataRaw = sessionStorage.getItem("aiEmployeeData");
+        if (aiDataRaw) {
+          try {
+            const data = JSON.parse(aiDataRaw);
+            sessionStorage.removeItem("aiEmployeeData");
+            if(data.pic_code) document.getElementById('emp-code').value = data.pic_code;
+            if(data.pic_name) {
+               const parts = data.pic_name.split(' ');
+               document.getElementById('emp-fname-th').value = parts[0] || '';
+               document.getElementById('emp-lname-th').value = parts.slice(1).join(' ') || '';
+            }
+            if(data.pic_name_eng) {
+               const parts = data.pic_name_eng.split(' ');
+               document.getElementById('emp-fname-en').value = parts[0] || '';
+               document.getElementById('emp-lname-en').value = parts.slice(1).join(' ') || '';
+            }
+            if(data.contact_number) document.getElementById('emp-tel').value = data.contact_number;
+            showToast("โหลดข้อมูลจาก AI สำเร็จ กรุณาตรวจสอบและกดบันทึก");
+          } catch(e) {}
+        }
+
         };
       };
 

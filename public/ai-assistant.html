@@ -102,10 +102,12 @@
             </div>
             
             <div class="ai-input-group" style="position: relative;">
-              <select id="ai-mode-select" class="input-field" style="margin-bottom: 0.5rem; font-weight: 600; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0.5rem 1rem; color: #334155;">
-                <option value="quote">🤖 AI สร้างใบเสนอราคา</option>
-                <option value="employee">👤 AI เพิ่มข้อมูลพนักงาน/เซลส์</option>
-              </select>
+              <select id="ai-mode-select" class="input-field" style="max-width: 250px;">
+                    <option value="quote">AI สร้างใบเสนอราคา</option>
+                    <option value="customer">AI สร้างข้อมูลลูกค้า</option>
+                    <option value="product">AI สร้างข้อมูลสินค้า</option>
+                    <option value="employee">AI สร้างข้อมูลพนักงาน</option>
+                  </select>
               <textarea
                 id="ai-prompt"
                 placeholder="ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท"
@@ -214,7 +216,81 @@
       </div>
     </div>
 
-    <script src="script.js?v=4"></script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const aiModeSelect = document.getElementById("ai-mode-select");
+        const aiPrompt = document.getElementById("ai-prompt");
+        const generateBtn = document.getElementById("generate-btn");
+        const aiLoader = document.getElementById("ai-loader");
+
+        const placeholders = {
+          quote: "ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง...",
+          customer: "ตัวอย่าง: บริษัท สมาร์ท เทคโนโลยี จำกัด เบอร์ 0812345678 ที่อยู่...",
+          product: "ตัวอย่าง: ท่อสแตนเลส 304 2 นิ้ว รหัส P001 ราคา 500 บาท มี 10 ชิ้น",
+          employee: "ตัวอย่าง: เซลส์ชื่อ สมชาย ใจดี รหัสพนักงาน EMP-001 เบอร์โทร 081-111-2222"
+        };
+
+        const endpoints = {
+          quote: "/api/generate-quote",
+          customer: "/api/ai-customer",
+          product: "/api/ai-product",
+          employee: "/api/ai-employee"
+        };
+
+        const storageKeys = {
+          quote: "aiQuotationData",
+          customer: "aiCustomerData",
+          product: "aiProductData",
+          employee: "aiEmployeeData"
+        };
+
+        const targetPages = {
+          quote: "index.html",
+          customer: "customers.html",
+          product: "products.html",
+          employee: "employees.html"
+        };
+
+        aiModeSelect.addEventListener("change", (e) => {
+          aiPrompt.placeholder = placeholders[e.target.value] || placeholders.quote;
+        });
+
+        generateBtn.addEventListener("click", async () => {
+          const mode = aiModeSelect.value;
+          const prompt = aiPrompt.value.trim();
+          if (!prompt) {
+            alert("กรุณาพิมพ์คำสั่งก่อน");
+            return;
+          }
+
+          generateBtn.disabled = true;
+          aiLoader.classList.remove("hidden");
+
+          try {
+            const res = await fetch(endpoints[mode], {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ prompt }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+              sessionStorage.setItem(storageKeys[mode], JSON.stringify(data));
+              window.location.href = targetPages[mode];
+            } else {
+              alert("AI Error: " + (data.error || "Unknown"));
+              generateBtn.disabled = false;
+              aiLoader.classList.add("hidden");
+            }
+          } catch (e) {
+            alert("Network Error");
+            generateBtn.disabled = false;
+            aiLoader.classList.add("hidden");
+          }
+        });
+      });
+    </script>
   </body>
+
 </html>
 
