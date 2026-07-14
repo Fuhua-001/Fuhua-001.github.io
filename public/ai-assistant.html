@@ -127,7 +127,27 @@
               <p>กำลังวิเคราะห์และสร้างข้อมูล...</p>
             </div>
           </section>
-          <!-- Preview Section -->
+          
+            <!-- Database Info Section -->
+            <section id="ai-db-info" class="card" style="margin-top: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+              <h3 style="margin-top: 0; color: #475569; font-size: 1rem;"><i class="fa-solid fa-database"></i> ข้อมูลในระบบที่สามารถอ้างอิงได้</h3>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+                <div style="background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
+                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.2rem; margin-bottom: 0.2rem;">ลูกค้า (Customers)</strong>
+                  <ul id="db-customers-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: #64748b;">
+                    <li>กำลังโหลด...</li>
+                  </ul>
+                </div>
+                <div style="background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
+                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.2rem; margin-bottom: 0.2rem;">สินค้า (Products)</strong>
+                  <ul id="db-products-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: #64748b;">
+                    <li>กำลังโหลด...</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- Preview Section -->
           <section id="ai-preview-section" class="card hidden" style="margin-top: 1.5rem; border-top: 4px solid #10b981;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
               <h3 style="margin: 0; color: #10b981;"><i class="fa-solid fa-eye"></i> ตรวจสอบข้อมูลก่อนนำไปใช้</h3>
@@ -368,7 +388,32 @@
           }
         });
 
-        btnApplyAi.addEventListener("click", () => {
+        
+          // Fetch DB Info for hints
+          const loadDbHints = async () => {
+            try {
+              const [cusRes, prodRes] = await Promise.all([
+                fetch("/api/customers"),
+                fetch("/api/products")
+              ]);
+              if(cusRes.ok) {
+                const customers = await cusRes.json();
+                const ul = document.getElementById('db-customers-list');
+                ul.innerHTML = customers.slice(0, 50).map(c => `<li style="padding: 2px 0;">${c.name}</li>`).join('');
+              }
+              if(prodRes.ok) {
+                const products = await prodRes.json();
+                const ul = document.getElementById('db-products-list');
+                ul.innerHTML = products.slice(0, 50).map(p => `<li style="padding: 2px 0;">${p.name} (${p.code})</li>`).join('');
+              }
+            } catch(e) {
+              console.error("Failed to load DB hints", e);
+            }
+          };
+          loadDbHints();
+
+
+          btnApplyAi.addEventListener("click", () => {
           if (currentGeneratedData && currentMode) {
             sessionStorage.setItem(storageKeys[currentMode], JSON.stringify(currentGeneratedData));
             window.location.href = targetPages[currentMode];
