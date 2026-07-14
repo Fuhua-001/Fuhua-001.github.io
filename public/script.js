@@ -610,7 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <p style="margin: 0; font-size: ${fBase};">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
                             <p style="margin: 0; font-size: ${fBase};">Tel: 02-789-5541 | Email: Stainless.Stell@gmail.com</p>
                         </div>
-                        <div style="flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: flex-start;">
+                        <div style="flex: 1; text-align: right;">
                             <h2 style="margin: 0; font-size: ${fH2s}; font-weight: bold; color: var(--primary-color);">ใบเสนอราคา</h2>
                             <p style="margin: 0; font-size: 13px; font-weight: 500;">Quotation</p>
                         </div>
