@@ -319,85 +319,96 @@
         const aiPreviewData = document.getElementById("ai-preview-data");
         const btnApplyAi = document.getElementById("btn-apply-ai");
 
-        generateBtn.addEventListener("click", async () => {
-          const mode = aiModeSelect.value;
-          const prompt = aiPrompt.value.trim();
-          if (!prompt) {
-            showToast("กรุณาพิมพ์คำสั่งก่อน", true);
-            return;
-          }
+        
+          generateBtn.addEventListener("click", async () => {
+            const prompt = document.getElementById("ai-prompt").value;
+            if (!prompt) {
+              showToast("กรุณาพิมพ์คำสั่งก่อน", true);
+              return;
+            }
 
-          generateBtn.disabled = true;
-          aiLoader.classList.remove("hidden");
-          aiPreviewSection.classList.add("hidden");
-
-          try {
-            const res = await fetch(endpoints[mode], {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ prompt }),
-            });
-            const data = await res.json();
-            if (res.ok) {
-              currentGeneratedData = data;
-              currentMode = mode;
+            generateBtn.disabled = true;
+            aiLoader.classList.remove("hidden");
+            aiPreviewSection.classList.add("hidden");
+            
+            try {
+              // 1. Detect Intent Mode
+              const detectRes = await fetch("/api/ai-detect-mode", {
+                 method: "POST",
+                 headers: { "Content-Type": "application/json" },
+                 body: JSON.stringify({ prompt })
+              });
               
-                              // Show preview instead of redirecting immediately
+              if (detectRes.ok) {
+                 const detectData = await detectRes.json();
+                 if (detectData.mode && detectData.mode !== aiModeSelect.value && endpoints[detectData.mode]) {
+                    // Auto-switch mode
+                    aiModeSelect.value = detectData.mode;
+                    updateDbPanelVisibility(); // update side panel
+                    
+                    const modeNames = {
+                       quote: "สร้างใบเสนอราคา",
+                       customer: "สร้างข้อมูลลูกค้า",
+                       product: "สร้างข้อมูลสินค้า",
+                       employee: "สร้างข้อมูลพนักงาน"
+                    };
+                    showToast("ระบบสลับเป็นโหมด '" + modeNames[detectData.mode] + "' อัตโนมัติ", false);
+                 }
+              }
+              
+              // 2. Generate with the (possibly updated) mode
+              const endpoint = endpoints[aiModeSelect.value];
+              currentMode = aiModeSelect.value;
+            
+              const res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt }),
+              });
+              const data = await res.json();
+              if (res.ok) {
+                currentGeneratedData = data;
+                
+                // Show preview instead of redirecting immediately
                 aiPreviewData.innerHTML = '';
                 aiPreviewData.style.background = 'transparent';
-                aiPreviewData.style.border = 'none';
-                aiPreviewData.style.padding = '0';
                 
                 const formGrid = document.createElement('div');
                 formGrid.style.display = 'grid';
-                formGrid.style.gridTemplateColumns = '1fr 1fr';
+                formGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
                 formGrid.style.gap = '1rem';
-
-                const createField = (label, value, isFullWidth = false) => {
-                  const div = document.createElement('div');
-                  if(isFullWidth) div.style.gridColumn = '1 / -1';
-                  div.innerHTML = `
-                    <label style="display: block; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.3rem; font-weight: 600;">${label}</label>
-                    <input type="text" class="input-field" value="${value || '-'}" readonly style="background: #f1f5f9; cursor: not-allowed; width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.5rem; color: #475569;" />
-                  `;
-                  return div;
-                };
-
-                if (mode === 'quote') {
-                  formGrid.appendChild(createField('ชื่อลูกค้า (Customer)', data.customer_name));
-                  if (data.items && data.items.length > 0) {
-                    const itemsDiv = document.createElement('div');
-                    itemsDiv.style.gridColumn = '1 / -1';
-                    let itemsHtml = '<label style="display: block; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.3rem; font-weight: 600;">รายการสินค้า</label><div style="border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0;"><table style="width:100%; border-collapse: collapse; background: white;"><tr style="background:#f8fafc; text-align: left;"><th style="padding:0.75rem; border-bottom: 1px solid #e2e8f0;">รายการ</th><th style="padding:0.75rem; border-bottom: 1px solid #e2e8f0;">จำนวน</th><th style="padding:0.75rem; border-bottom: 1px solid #e2e8f0;">ราคา/หน่วย</th></tr>';
-                    data.items.forEach(item => {
-                      itemsHtml += `<tr><td style="padding:0.75rem; border-bottom:1px solid #f1f5f9; color: #334155;">${item.description}</td><td style="padding:0.75rem; border-bottom:1px solid #f1f5f9; color: #334155;">${item.quantity}</td><td style="padding:0.75rem; border-bottom:1px solid #f1f5f9; color: #334155;">${item.unit_price}</td></tr>`;
-                    });
-                    itemsHtml += '</table></div>';
-                    itemsDiv.innerHTML = itemsHtml;
-                    formGrid.appendChild(itemsDiv);
+                
+                for (const key in data) {
+                  const fieldWrap = document.createElement('div');
+                  fieldWrap.style.background = '#f8fafc';
+                  fieldWrap.style.padding = '0.75rem';
+                  fieldWrap.style.borderRadius = '6px';
+                  fieldWrap.style.border = '1px solid #e2e8f0';
+                  
+                  const label = document.createElement('label');
+                  label.style.display = 'block';
+                  label.style.fontSize = '0.8rem';
+                  label.style.color = '#64748b';
+                  label.style.marginBottom = '0.25rem';
+                  label.style.fontWeight = 'bold';
+                  label.style.textTransform = 'capitalize';
+                  label.textContent = key;
+                  
+                  const value = document.createElement('div');
+                  value.style.color = '#334155';
+                  value.style.fontSize = '0.95rem';
+                  value.style.wordBreak = 'break-word';
+                  
+                  if (typeof data[key] === 'object') {
+                    value.innerHTML = '<pre style="margin:0; font-size: 0.8rem;">' + JSON.stringify(data[key], null, 2) + '</pre>';
+                  } else {
+                    value.textContent = data[key];
                   }
-                } else if (mode === 'customer') {
-                  formGrid.appendChild(createField('ชื่อบริษัท', data.name, true));
-                  formGrid.appendChild(createField('ชื่อผู้ติดต่อ', data.contact_person));
-                  formGrid.appendChild(createField('เบอร์โทรศัพท์', data.phone));
-                  formGrid.appendChild(createField('อีเมล', data.email));
-                  formGrid.appendChild(createField('เลขประจำตัวผู้เสียภาษี', data.tax_id));
-                  formGrid.appendChild(createField('ที่อยู่', data.address, true));
-                } else if (mode === 'product') {
-                  formGrid.appendChild(createField('รหัสสินค้า', data.code));
-                  formGrid.appendChild(createField('ชื่อสินค้า', data.name));
-                  formGrid.appendChild(createField('หน่วย', data.unit));
-                  formGrid.appendChild(createField('ต้นทุน', data.cost_price));
-                  formGrid.appendChild(createField('ราคาขาย', data.selling_price));
-                } else if (mode === 'employee') {
-                  formGrid.appendChild(createField('รหัสพนักงาน', data.pic_code));
-                  formGrid.appendChild(createField('ชื่อ-นามสกุล (TH)', data.pic_name));
-                  formGrid.appendChild(createField('ชื่อ-นามสกุล (EN)', data.pic_name_eng));
-                  formGrid.appendChild(createField('เบอร์โทร', data.contact_number));
-                  formGrid.appendChild(createField('แผนก', data.department));
+                  
+                  fieldWrap.appendChild(label);
+                  fieldWrap.appendChild(value);
+                  formGrid.appendChild(fieldWrap);
                 }
-
-                aiPreviewData.appendChild(formGrid);
                 
                 aiPreviewData.appendChild(formGrid);
                 aiPreviewSection.classList.remove("hidden");
@@ -407,21 +418,20 @@
                 setTimeout(() => {
                   aiPreviewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
-
-              
-              generateBtn.disabled = false;
-              aiLoader.classList.add("hidden");
-            } else {
-              showToast("AI Error: " + (data.error || "Unknown"), true);
+                
+                generateBtn.disabled = false;
+                aiLoader.classList.add("hidden");
+              } else {
+                showToast("AI Error: " + (data.error || "Unknown"), true);
+                generateBtn.disabled = false;
+                aiLoader.classList.add("hidden");
+              }
+            } catch (e) {
+              showToast("ไม่สามารถเชื่อมต่อกับ AI ได้", true);
               generateBtn.disabled = false;
               aiLoader.classList.add("hidden");
             }
-          } catch (e) {
-            showToast("ไม่สามารถเชื่อมต่อกับ AI ได้", true);
-            generateBtn.disabled = false;
-            aiLoader.classList.add("hidden");
-          }
-        });
+          });
 
         
           // Fetch DB Info for hints

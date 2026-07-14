@@ -26,6 +26,41 @@ try {
   console.log("Gemini API key not configured properly.");
 }
 
+
+// Auto-detect AI mode
+app.post('/api/ai-detect-mode', async (req, res) => {
+    try {
+        const { prompt } = req.body;
+        if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
+        
+        const systemPrompt = `Analyze the user's prompt and determine the intended action mode.
+Modes available:
+1. "quote": User wants to create or generate a quotation (ใบเสนอราคา), sell something, order items.
+2. "customer": User wants to add or update customer/client information (เพิ่มลูกค้า, บริษัท).
+3. "product": User wants to add or update product/item information (เพิ่มสินค้า, รหัสสินค้า, ราคาต้นทุน).
+4. "employee": User wants to add or update employee/staff information (พนักงานใหม่, แผนก, เซลส์).
+
+Return ONLY a JSON object:
+{
+  "mode": "quote" | "customer" | "product" | "employee"
+}`;
+
+        const result = await model.generateContent({
+            contents: [{ role: 'user', parts: [{ text: prompt }] }],
+            systemInstruction: systemPrompt,
+        });
+
+        let text = result.response.text();
+        const jsonMatch = text.match(/\{[\s\S]*?\}/);
+        if (jsonMatch) text = jsonMatch[0];
+        
+        res.json(JSON.parse(text));
+    } catch (e) {
+        console.error('Detect mode error:', e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
 app.post("/api/generate-quote", async (req, res) => {
   try {
     const { prompt } = req.body;
