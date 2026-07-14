@@ -695,6 +695,12 @@
                 return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
             }
 
+            const isMany = items.length >= 15;
+            const fBase = isMany ? '10px' : '12px';
+            const fSmall = isMany ? '8px' : '9px';
+            const pCell = isMany ? '1px 2px' : '2px 4px';
+            const lh = '1.25', fH2 = '22px', fH2s = '20px', sigW = '734px', padCont = '20px 30px', pBox = '10px 15px', pTotal = '8px 12px';
+
             let itemRowsHtml = '';
             items.forEach((it, i) => {
               itemRowsHtml += `
