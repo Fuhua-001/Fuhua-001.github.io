@@ -602,7 +602,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                         <div style="flex: 1; display: flex; align-items: flex-start;">
                             <!-- Corporate Logo -->
-                            <img src="logo.svg" alt="Logo" style="width: 70px; height: auto; border-radius: 8px;">
+                            <img src="logo.svg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                         </div>
                         <div style="flex: 2; text-align: center;">
                             <h2 style="margin: 0; font-size: ${fH2}; font-weight: bold; color: #0f172a;">บริษัท โซลโซไซตี้ จำกัด</h2>
@@ -661,46 +661,46 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div style="flex: 1; padding: ${pBox};">
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="width: 120px; padding-bottom: 2px;">
+                                    <td style="width: 120px; padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
                                         <div style="line-height: 1.1;">เลขที่ใบเสนอราคา</div>
-                                        <div style="font-size:9px; line-height: 1.1;">Quotation No.</div>
+                                        <div style="font-size:9px; line-height: 1.1; color:#64748b;">Quotation No.</div>
                                     </td>
-                                    <td style="padding-bottom: 2px;"><span id="pdf-doc-no">${cusInfo.doc_no}</span></td>
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1; font-weight: bold;"><span id="pdf-doc-no">${cusInfo.doc_no}</span></td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 2px;">
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
                                         <div style="line-height: 1.1;">วันที่</div>
-                                        <div style="font-size:9px; line-height: 1.1;">Date</div>
+                                        <div style="font-size:9px; line-height: 1.1; color:#64748b;">Date</div>
                                     </td>
-                                    <td style="padding-bottom: 2px;">${cusInfo.doc_date_str}</td>
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.doc_date_str}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 2px;">
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
                                         <div style="line-height: 1.1;">เครดิต</div>
-                                        <div style="font-size:9px; line-height: 1.1;">Credit Terms</div>
+                                        <div style="font-size:9px; line-height: 1.1; color:#64748b;">Credit Terms</div>
                                     </td>
-                                    <td style="padding-bottom: 2px;">${cusInfo.credit_days} วัน <span style="font-size:9px">Days</span></td>
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.credit_days} วัน <span style="font-size:9px">Days</span></td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 2px;">
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
                                         <div style="line-height: 1.1;">วันยืนราคา</div>
-                                        <div style="font-size:9px; line-height: 1.1;">Valid Until</div>
+                                        <div style="font-size:9px; line-height: 1.1; color:#64748b;">Valid Until</div>
                                     </td>
-                                    <td style="padding-bottom: 2px;">${cusInfo.due_date_str}</td>
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.due_date_str}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 2px;">
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">
                                         <div style="line-height: 1.1;">เงื่อนไขชำระเงิน</div>
-                                        <div style="font-size:9px; line-height: 1.1;">Payment Terms</div>
+                                        <div style="font-size:9px; line-height: 1.1; color:#64748b;">Payment Terms</div>
                                     </td>
-                                    <td style="padding-bottom: 2px;">${cusInfo.payment_terms}</td>
+                                    <td style="padding: 4px 0; border-bottom: 1px dashed #cbd5e1;">${cusInfo.payment_terms}</td>
                                 </tr>
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                    <td style="padding-bottom: 0;">
+                                    <td style="padding: 4px 0;">
                                         <div style="line-height: 1.1;">พนักงานขาย</div>
-                                        <div style="font-size:9px; line-height: 1.1;">Salesman</div>
+                                        <div style="font-size:9px; line-height: 1.1; color:#64748b;">Salesman</div>
                                     </td>
-                                    <td style="padding-bottom: 0;">
+                                    <td style="padding: 4px 0;">
                                         ${cusInfo.pic_name}<br>
                                         <span style="font-size:10px">Tel: ${cusInfo.pic_phone || "-"}</span>
                                     </td>
@@ -758,6 +758,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
       });
 
+      // Add minimum empty rows to ensure table auto-height doesn't look too short
+      const minRows = 5;
+      if (items.length < minRows) {
+        for (let i = items.length; i < minRows; i++) {
+          tableHTML += `
+                            <tr style="page-break-inside: avoid; break-inside: avoid;">
+                                <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; height: 32px;"></td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                            </tr>
+          `;
+        }
+      }
+
       const bahtText = (amount) => {
         const number = Math.round(amount * 100) / 100;
         const numberStr = number.toFixed(2);
@@ -798,7 +815,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <!-- Top: Remarks and Subtotals -->
                     <div style="display: flex; border: 1px solid #000; border-top: none; overflow: hidden;">
                         <!-- Left Remarks -->
-                        <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; font-size: 11px;">
+                        <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; font-size: 11px; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
                             <strong>หมายเหตุ (Remarks):</strong><br>
                             - การเสนอราคานี้ยืนราคา ${cusInfo.credit_days} วัน<br>
                             ${cusInfo.remarks ? "- " + cusInfo.remarks + "<br>" : ""}
