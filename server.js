@@ -282,7 +282,17 @@ app.post("/api/ai-customer", async (req, res) => {
     const { prompt } = req.body;
     if (!prompt) return res.status(400).json({ error: "Prompt is required" });
 
+    
+    // Fetch context from database
+    const [existingCustomers] = await db.query("SELECT code, name FROM customers LIMIT 50");
+    const [employees] = await db.query("SELECT pic_code, pic_name FROM employees LIMIT 50");
+    const custContext = existingCustomers.map(c => c.code + ': ' + c.name).join(', ');
+    const empContext = employees.map(e => e.pic_code + ': ' + e.pic_name).join(', ');
+    
     const systemPrompt = `You are a Customer Data Extraction AI.
+Here are existing customers in the database for reference: ${custContext}
+Here are existing sales reps (pic_code): ${empContext}
+
 Extract the customer details from the user's text into a JSON object.
 Use these rules:
 1. name: Company name or Person's full name.
@@ -334,7 +344,13 @@ app.post("/api/ai-employee", async (req, res) => {
     const { prompt } = req.body;
     if (!prompt) return res.status(400).json({ error: "Prompt is required" });
 
+    
+    const [existingEmps] = await db.query("SELECT pic_code, pic_name, department FROM employees LIMIT 50");
+    const empContext2 = existingEmps.map(e => e.pic_code + ': ' + e.pic_name + ' (' + e.department + ')').join(', ');
+    
     const systemPrompt = `You are an Employee Data Extraction AI.
+Here are existing employees and their departments for reference: ${empContext2}
+
 Extract the employee/sales details from the user's text into a JSON object.
 Use these rules:
 1. pic_code: Employee code or Sales code (e.g., EMP-001, S-001). Leave blank if not found.
@@ -467,7 +483,13 @@ app.post("/api/ai-product", async (req, res) => {
     const { prompt } = req.body;
     if (!prompt) return res.status(400).json({ error: "Prompt is required" });
 
+    
+    const [existingProducts] = await db.query("SELECT code, name FROM products LIMIT 50");
+    const prodContext = existingProducts.map(p => p.code + ': ' + p.name).join(', ');
+    
     const systemPrompt = `You are a Product Data Extraction AI.
+Here are existing products in the database for reference: ${prodContext}
+
 Extract the product details from the user's text into a JSON object.
 Use these rules:
 1. code: Product code or SKU (e.g., P001, SS-01). Leave blank if not found.

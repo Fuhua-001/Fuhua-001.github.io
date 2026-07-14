@@ -132,15 +132,22 @@
             <section id="ai-db-info" class="card" style="margin-top: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
               <h3 style="margin-top: 0; color: #475569; font-size: 1rem;"><i class="fa-solid fa-database"></i> ข้อมูลในระบบที่สามารถอ้างอิงได้</h3>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
-                <div style="background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
+                <div id="db-customers-wrapper" style="background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
                   <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.2rem; margin-bottom: 0.2rem;">ลูกค้า (Customers)</strong>
                   <ul id="db-customers-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: #64748b;">
                     <li>กำลังโหลด...</li>
                   </ul>
                 </div>
-                <div style="background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
+                <div id="db-products-wrapper" style="background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
                   <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.2rem; margin-bottom: 0.2rem;">สินค้า (Products)</strong>
                   <ul id="db-products-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: #64748b;">
+                    <li>กำลังโหลด...</li>
+                  </ul>
+                </div>
+
+                <div id="db-employees-wrapper" style="display: none; background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
+                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.2rem; margin-bottom: 0.2rem;">พนักงาน (Employees)</strong>
+                  <ul id="db-employees-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: #64748b;">
                     <li>กำลังโหลด...</li>
                   </ul>
                 </div>
@@ -418,27 +425,52 @@
 
         
           // Fetch DB Info for hints
+          
           const loadDbHints = async () => {
             try {
-              const [cusRes, prodRes] = await Promise.all([
+              const [cusRes, prodRes, empRes] = await Promise.all([
                 fetch("/api/customers"),
-                fetch("/api/products")
+                fetch("/api/products"),
+                fetch("/api/employees")
               ]);
               if(cusRes.ok) {
                 const customers = await cusRes.json();
-                const ul = document.getElementById('db-customers-list');
-                ul.innerHTML = customers.slice(0, 50).map(c => `<li style="padding: 2px 0;">${c.name}</li>`).join('');
+                document.getElementById('db-customers-list').innerHTML = customers.slice(0, 50).map(c => `<li style="padding: 2px 0;">${c.name}</li>`).join('');
               }
               if(prodRes.ok) {
                 const products = await prodRes.json();
-                const ul = document.getElementById('db-products-list');
-                ul.innerHTML = products.slice(0, 50).map(p => `<li style="padding: 2px 0;">${p.name} (${p.code})</li>`).join('');
+                document.getElementById('db-products-list').innerHTML = products.slice(0, 50).map(p => `<li style="padding: 2px 0;">${p.name} (${p.code})</li>`).join('');
+              }
+              if(empRes.ok) {
+                const employees = await empRes.json();
+                document.getElementById('db-employees-list').innerHTML = employees.slice(0, 50).map(e => `<li style="padding: 2px 0;">${e.pic_name} (${e.pic_code})</li>`).join('');
               }
             } catch(e) {
               console.error("Failed to load DB hints", e);
             }
           };
           loadDbHints();
+
+          // Change visible DB panel based on mode
+          const updateDbPanelVisibility = () => {
+             const mode = aiModeSelect.value;
+             const cWrap = document.getElementById('db-customers-wrapper');
+             const pWrap = document.getElementById('db-products-wrapper');
+             const eWrap = document.getElementById('db-employees-wrapper');
+             
+             if (mode === 'quote') {
+                cWrap.style.display = 'block'; pWrap.style.display = 'block'; eWrap.style.display = 'none';
+             } else if (mode === 'customer') {
+                cWrap.style.display = 'block'; pWrap.style.display = 'none'; eWrap.style.display = 'none';
+             } else if (mode === 'product') {
+                cWrap.style.display = 'none'; pWrap.style.display = 'block'; eWrap.style.display = 'none';
+             } else if (mode === 'employee') {
+                cWrap.style.display = 'none'; pWrap.style.display = 'none'; eWrap.style.display = 'block';
+             }
+          };
+          aiModeSelect.addEventListener('change', updateDbPanelVisibility);
+          updateDbPanelVisibility();
+
 
 
           btnApplyAi.addEventListener("click", () => {
