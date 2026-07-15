@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ประวัติเอกสาร - AI Enterprise Quotation Maker</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script>
       if (!sessionStorage.getItem('isLoggedIn')) window.location.href = 'login.html';
@@ -81,10 +81,11 @@
           <a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a>
           <a href="ai-assistant.html" class="menu-item"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a>
           <a href="index.html" class="menu-item"><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a>
-          <a href="history.html?v=5" class="menu-item active"><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a>
+          
           <a href="customers.html" class="menu-item"><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a>
           <a href="products.html" class="menu-item"><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a>
           <a href="employees.html" class="menu-item"><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a>
+          <a href="history.html?v=5" class="menu-item active"><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a>
           <a href="#" class="menu-item text-danger" onclick="sessionStorage.removeItem('isLoggedIn'); window.location.href = 'login.html';"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a>
         </nav>
         <div class="user-profile">
@@ -95,7 +96,7 @@
 
       <main class="main-content page-fixed">
         <header class="top-header">
-          <h1>ประวัติการออกเอกสาร 🗂️</h1>
+          <h1>ประวัติการออกเอกสาร ๐—๏ธ</h1>
         </header>
 
         <div class="content-grid">
@@ -259,7 +260,7 @@
       <span id="toast-message">แจ้งเตือน</span>
     </div>
 
-    <script src="script.js?v=4"></script>
+    <script src="js/script.js?v=4"></script>
     <script>
       // --- Tab Switching Logic ---
       window.switchTab = (tab) => {
@@ -739,7 +740,7 @@
                 <!-- Header Section -->
                 <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
                   <div style="flex:1;display:flex;align-items:flex-start;">
-                    <img src="logo.svg" alt="Company Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
+                    <img src="assets/logo.svg" alt="Company Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                   </div>
                   <div style="flex:2;text-align:center;">
                     <h2 style="margin:0;font-size:${fH2};font-weight:bold;">โซลโซไซตี้</h2>
@@ -972,7 +973,13 @@
         }
       };
 
-      window.onload = fetchHistory;
+      window.onload = async () => {
+        await fetchHistory();
+        const viewId = new URLSearchParams(window.location.search).get('view');
+        if(viewId) {
+            setTimeout(() => { openIframeModal(viewId, 'view'); }, 300);
+        }
+      };
     </script>
   </body>
 </html>

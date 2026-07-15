@@ -12,7 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -47,9 +47,7 @@
           <a href="index.html" class="menu-item"
             ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
           >
-          <a href="history.html?v=5" class="menu-item"
-            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
-          >
+          
           <a href="customers.html" class="menu-item"
             ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
           >
@@ -58,6 +56,9 @@
           >
           <a href="employees.html" class="menu-item"
             ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
+          >
+          <a href="history.html?v=5" class="menu-item"
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
           >
           <a
             href="#"
@@ -102,12 +103,17 @@
             </div>
             
             <div class="ai-input-group" style="position: relative;">
-              <select id="ai-mode-select" class="input-field" style="max-width: 250px;">
-                    <option value="quote">AI สร้างใบเสนอราคา</option>
-                    <option value="customer">AI สร้างข้อมูลลูกค้า</option>
-                    <option value="product">AI สร้างข้อมูลสินค้า</option>
-                    <option value="employee">AI สร้างข้อมูลพนักงาน</option>
+              <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                  <select id="ai-mode-select" class="input-field" style="max-width: 250px;">
+                        <option value="quote">AI สร้างใบเสนอราคา</option>
+                        <option value="customer">AI สร้างข้อมูลลูกค้า</option>
+                        <option value="product">AI สร้างข้อมูลสินค้า</option>
+                        <option value="employee">AI สร้างข้อมูลพนักงาน</option>
                   </select>
+                  <select id="ai-pic-select" class="input-field" style="max-width: 250px;" title="เลือกพนักงานขาย (PIC)">
+                        <option value="">กำลังโหลดพนักงานขาย...</option>
+                  </select>
+              </div>
               <textarea
                 id="ai-prompt"
                 placeholder="ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท"
@@ -160,7 +166,7 @@
               <h3 style="margin: 0; color: #10b981;"><i class="fa-solid fa-eye"></i> ตรวจสอบข้อมูลก่อนนำไปใช้</h3>
               <button id="btn-apply-ai" class="btn btn-primary" style="background: #10b981; border-color: #10b981;"><i class="fa-solid fa-check"></i> นำข้อมูลไปใช้งาน</button>
             </div>
-            <pre id="ai-preview-data" style="background: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; color: #334155; border: 1px solid #e2e8f0;"></pre>
+            <div id="ai-preview-data" style="background: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; color: #334155; border: 1px solid #e2e8f0;"></div>
           </section>
 
 
@@ -372,45 +378,128 @@
                 // Show preview instead of redirecting immediately
                 aiPreviewData.innerHTML = '';
                 aiPreviewData.style.background = 'transparent';
+                aiPreviewData.style.border = 'none';
+                aiPreviewData.style.padding = '0';
                 
-                const formGrid = document.createElement('div');
-                formGrid.style.display = 'grid';
-                formGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
-                formGrid.style.gap = '1rem';
-                
-                for (const key in data) {
-                  const fieldWrap = document.createElement('div');
-                  fieldWrap.style.background = '#f8fafc';
-                  fieldWrap.style.padding = '0.75rem';
-                  fieldWrap.style.borderRadius = '6px';
-                  fieldWrap.style.border = '1px solid #e2e8f0';
-                  
-                  const label = document.createElement('label');
-                  label.style.display = 'block';
-                  label.style.fontSize = '0.8rem';
-                  label.style.color = '#64748b';
-                  label.style.marginBottom = '0.25rem';
-                  label.style.fontWeight = 'bold';
-                  label.style.textTransform = 'capitalize';
-                  label.textContent = key;
-                  
-                  const value = document.createElement('div');
-                  value.style.color = '#334155';
-                  value.style.fontSize = '0.95rem';
-                  value.style.wordBreak = 'break-word';
-                  
-                  if (typeof data[key] === 'object') {
-                    value.innerHTML = '<pre style="margin:0; font-size: 0.8rem;">' + JSON.stringify(data[key], null, 2) + '</pre>';
-                  } else {
-                    value.textContent = data[key];
-                  }
-                  
-                  fieldWrap.appendChild(label);
-                  fieldWrap.appendChild(value);
-                  formGrid.appendChild(fieldWrap);
+                const previewWrapper = document.createElement('div');
+                previewWrapper.style.display = 'flex';
+                previewWrapper.style.flexDirection = 'column';
+                previewWrapper.style.gap = '1.5rem';
+
+                // Helper to create sections
+                const createSection = (title, icon, bgColor, borderColor, textColor, contentHtml) => {
+                  return `
+                    <div style="background: ${bgColor}; border-left: 4px solid ${borderColor}; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                      <h4 style="margin: 0 0 0.75rem 0; color: ${textColor}; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="${icon}"></i> ${title}
+                      </h4>
+                      ${contentHtml}
+                    </div>
+                  `;
+                };
+
+                let htmlContent = '';
+
+                let aiFailed = false;
+                let failMessage = "";
+                if (currentMode === 'quote' && (!data.items || data.items.length === 0)) {
+                   aiFailed = true;
+                   failMessage = "ไม่พบรายการสินค้าที่ต้องการสั่งซื้อ หรือข้อความอาจกำกวมเกินไป (เช่น ไม่มีชื่อสินค้าและจำนวน)";
+                } else if (currentMode === 'customer' && (!data.name || data.name.trim() === '')) {
+                   aiFailed = true;
+                   failMessage = "ไม่พบชื่อลูกค้าที่ชัดเจนในข้อความของคุณ";
+                } else if (currentMode === 'product' && (!data.name || data.name.trim() === '')) {
+                   aiFailed = true;
+                   failMessage = "ไม่พบชื่อสินค้าที่ชัดเจนในข้อความของคุณ";
+                } else if (currentMode === 'employee' && (!data.name || data.name.trim() === '')) {
+                   aiFailed = true;
+                   failMessage = "ไม่พบชื่อพนักงานที่ชัดเจนในข้อความของคุณ";
                 }
-                
-                aiPreviewData.appendChild(formGrid);
+
+                if (aiFailed) {
+                  htmlContent += createSection(
+                    'ข้อมูลไม่เพียงพอ หรือ AI ไม่เข้าใจ (Data Extraction Failed)',
+                    'fa-solid fa-triangle-exclamation',
+                    '#fef2f2', '#ef4444', '#b91c1c',
+                    `<p style="margin:0; color:#7f1d1d; font-size:0.95rem;"><strong>สาเหตุ:</strong> ${failMessage}</p>
+                     <p style="margin:8px 0 0 0; font-size:0.85rem; color:#991b1b;">💡 <strong>คำแนะนำ:</strong> กรุณาลองพิมพ์ข้อความให้ชัดเจนขึ้น เช่น "ขอใบเสนอราคาให้ บริษัท ABC ซื้อคอมพิวเตอร์ 2 เครื่อง ราคาเครื่องละ 15,000 บาท"</p>`
+                  );
+                  // ปิดปุ่มบันทึก
+                  btnApplyAi.disabled = true;
+                  btnApplyAi.style.opacity = '0.5';
+                  btnApplyAi.style.cursor = 'not-allowed';
+                } else {
+                  // เปิดปุ่มบันทึกตามปกติ
+                  btnApplyAi.disabled = false;
+                  btnApplyAi.style.opacity = '1';
+                  btnApplyAi.style.cursor = 'pointer';
+                }
+
+                // 1. Missing Products / Warnings (Alerts)
+                if (data.missing_products && data.missing_products.length > 0) {
+                  htmlContent += createSection(
+                    'สินค้าที่ไม่พบในระบบ (Missing Products)', 
+                    'fa-solid fa-triangle-exclamation', 
+                    '#fef2f2', '#ef4444', '#b91c1c', 
+                    `<ul style="margin: 0; padding-left: 1.5rem; color: #7f1d1d; font-size: 0.95rem;">
+                      ${data.missing_products.map(item => `<li>${item}</li>`).join('')}
+                    </ul>`
+                  );
+                }
+
+                if (data.warnings && data.warnings.length > 0) {
+                  htmlContent += createSection(
+                    'ข้อควรระวัง (Warnings)', 
+                    'fa-solid fa-circle-exclamation', 
+                    '#fffbeb', '#f59e0b', '#d97706', 
+                    `<ul style="margin: 0; padding-left: 1.5rem; color: #92400e; font-size: 0.95rem;">
+                      ${data.warnings.map(item => `<li>${item}</li>`).join('')}
+                    </ul>`
+                  );
+                }
+
+                // 2. Customer / General Info Grid
+                const generalFields = Object.keys(data).filter(k => k !== 'items' && k !== 'missing_products' && k !== 'warnings');
+                if (generalFields.length > 0) {
+                  const gridHtml = generalFields.map(key => `
+                    <div style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                      <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 0.25rem;">${key.replace(/_/g, ' ')}</div>
+                      <div style="font-size: 1.1rem; color: #0f172a; font-weight: 500;">${data[key] || '-'}</div>
+                    </div>
+                  `).join('');
+                  htmlContent += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">${gridHtml}</div>`;
+                }
+
+                // 3. Items Table
+                if (data.items && Array.isArray(data.items) && data.items.length > 0) {
+                  const tableRows = data.items.map((item, index) => `
+                    <tr style="border-bottom: 1px solid #e2e8f0; background: ${index % 2 === 0 ? 'white' : '#f8fafc'};">
+                      <td style="padding: 0.75rem 1rem; color: #334155;">${item.description || item.name || '-'}</td>
+                      <td style="padding: 0.75rem 1rem; text-align: center; color: #475569; font-weight: 500;">${item.quantity || 0} ${item.unit || ''}</td>
+                      <td style="padding: 0.75rem 1rem; text-align: right; color: #10b981; font-weight: 600;">฿${Number(item.unit_price || item.cost_price || item.selling_price || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                    </tr>
+                  `).join('');
+
+                  htmlContent += `
+                    <div style="background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead style="background: #f1f5f9; border-bottom: 2px solid #e2e8f0;">
+                          <tr>
+                            <th style="padding: 0.75rem 1rem; font-size: 0.85rem; color: #475569; font-weight: 600;">รายการสินค้า</th>
+                            <th style="padding: 0.75rem 1rem; font-size: 0.85rem; color: #475569; font-weight: 600; text-align: center;">จำนวน</th>
+                            <th style="padding: 0.75rem 1rem; font-size: 0.85rem; color: #475569; font-weight: 600; text-align: right;">ราคา/หน่วย</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          ${tableRows}
+                        </tbody>
+                      </table>
+                    </div>
+                  `;
+                }
+
+                previewWrapper.innerHTML = htmlContent;
+                aiPreviewData.appendChild(previewWrapper);
                 aiPreviewSection.classList.remove("hidden");
                 showToast("สร้างข้อมูลสำเร็จ! (กรุณาตรวจสอบด้านล่าง)");
                 
@@ -454,6 +543,18 @@
               if(empRes.ok) {
                 const employees = await empRes.json();
                 document.getElementById('db-employees-list').innerHTML = employees.slice(0, 50).map(e => `<li style="padding: 2px 0;">${e.pic_name} (${e.pic_code})</li>`).join('');
+                
+                const picSelect = document.getElementById('ai-pic-select');
+                if(picSelect) {
+                   picSelect.innerHTML = employees.map(e => `<option value="${e.pic_code}">${e.pic_name} (${e.pic_code})</option>`).join('');
+                   const currentUser = sessionStorage.getItem("currentUser");
+                   if(currentUser) {
+                       const found = employees.find(e => e.pic_name.toLowerCase().includes(currentUser.toLowerCase()) || e.pic_code.toLowerCase() === currentUser.toLowerCase());
+                       if(found) {
+                           picSelect.value = found.pic_code;
+                       }
+                   }
+                }
               }
             } catch(e) {
               console.error("Failed to load DB hints", e);
@@ -470,12 +571,16 @@
              
              if (mode === 'quote') {
                 cWrap.style.display = 'block'; pWrap.style.display = 'block'; eWrap.style.display = 'none';
+                if(btnApplyAi) btnApplyAi.innerHTML = '<i class="fa-solid fa-file-pdf"></i> บันทึก & สร้าง PDF ทันที';
              } else if (mode === 'customer') {
                 cWrap.style.display = 'block'; pWrap.style.display = 'none'; eWrap.style.display = 'none';
+                if(btnApplyAi) btnApplyAi.innerHTML = '<i class="fa-solid fa-check"></i> นำข้อมูลไปใช้งาน';
              } else if (mode === 'product') {
                 cWrap.style.display = 'none'; pWrap.style.display = 'block'; eWrap.style.display = 'none';
+                if(btnApplyAi) btnApplyAi.innerHTML = '<i class="fa-solid fa-check"></i> นำข้อมูลไปใช้งาน';
              } else if (mode === 'employee') {
                 cWrap.style.display = 'none'; pWrap.style.display = 'none'; eWrap.style.display = 'block';
+                if(btnApplyAi) btnApplyAi.innerHTML = '<i class="fa-solid fa-check"></i> นำข้อมูลไปใช้งาน';
              }
           };
           aiModeSelect.addEventListener('change', updateDbPanelVisibility);
@@ -483,10 +588,60 @@
 
 
 
-          btnApplyAi.addEventListener("click", () => {
+          btnApplyAi.addEventListener("click", async () => {
           if (currentGeneratedData && currentMode) {
-            sessionStorage.setItem(storageKeys[currentMode], JSON.stringify(currentGeneratedData));
-            window.location.href = targetPages[currentMode];
+            if (currentMode === 'quote') {
+                // Calculate total
+                let totalAmount = 0;
+                if(currentGeneratedData.items && Array.isArray(currentGeneratedData.items)){
+                   currentGeneratedData.items.forEach(item => {
+                       const qty = parseFloat(item.quantity) || 0;
+                       const price = parseFloat(item.unit_price || item.cost_price || item.selling_price) || 0;
+                       totalAmount += (qty * price);
+                   });
+                }
+                
+                const promptVal = document.getElementById("ai-prompt") ? document.getElementById("ai-prompt").value : '';
+                
+                const payload = {
+                    customer_name: currentGeneratedData.customer_name || 'ลูกค้าทั่วไป',
+                    total_amount: totalAmount,
+                    items: currentGeneratedData.items || [],
+                    ai_prompt: promptVal,
+                    credit_days: 30,
+                    payment_terms: 'Cash/Transfer',
+                    pic_code: 'EMP-001'
+                };
+                
+                btnApplyAi.disabled = true;
+                btnApplyAi.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึก...';
+                
+                try {
+                    const res = await fetch('/api/save-quote', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const saveRes = await res.json();
+                    if(res.ok && saveRes.quoteId) {
+                        showToast('บันทึกสำเร็จ! กำลังสร้าง PDF...');
+                        setTimeout(() => {
+                           window.location.href = 'history.html?view=' + saveRes.quoteId;
+                        }, 1000);
+                    } else {
+                        showToast('เกิดข้อผิดพลาด: ' + (saveRes.error || ''), true);
+                        btnApplyAi.disabled = false;
+                        btnApplyAi.innerHTML = '<i class="fa-solid fa-file-pdf"></i> บันทึก & สร้าง PDF ทันที';
+                    }
+                } catch(e) {
+                    showToast('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้', true);
+                    btnApplyAi.disabled = false;
+                    btnApplyAi.innerHTML = '<i class="fa-solid fa-file-pdf"></i> บันทึก & สร้าง PDF ทันที';
+                }
+            } else {
+                sessionStorage.setItem(storageKeys[currentMode], JSON.stringify(currentGeneratedData));
+                window.location.href = targetPages[currentMode];
+            }
           }
         });
       });

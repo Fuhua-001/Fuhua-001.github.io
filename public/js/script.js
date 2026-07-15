@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (custSelect) {
           customers
             .filter(
-              (c) => c.level_group !== "Vender" && c.level_group !== "Vendor",
+              (c) => c.level_group !== "Vendor",
             )
             .forEach((c) => {
               const opt = document.createElement("option");
@@ -336,102 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Generate with AI
-  generateBtn.addEventListener("click", async () => {
-    const prompt = aiPrompt.value.trim();
-    if (!prompt) {
-      showToast("กรุณาพิมพ์คำสั่งก่อนให้ AI สร้าง", true);
-      return;
-    }
-
-    generateBtn.disabled = true;
-    aiLoader.classList.remove("hidden");
-
-    try {
-      let apiEndpoint = "/api/generate-quote";
-      const aiModeSelect = document.getElementById("ai-mode-select");
-      if (aiModeSelect && aiModeSelect.value === "employee") {
-        apiEndpoint = "/api/ai-employee";
-      }
-
-      const response = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        if (apiEndpoint === "/api/ai-employee") {
-          showToast("เพิ่มข้อมูลพนักงานลงระบบสำเร็จ!");
-          aiPrompt.value = "";
-          generateBtn.disabled = false;
-          aiLoader.classList.add("hidden");
-          return;
-        }
-
-        if (!customerNameInput) {
-          // If we are on the ai-assistant page, customerNameInput doesn't exist
-          sessionStorage.setItem("aiQuotationData", JSON.stringify(data));
-          window.location.href = "index.html";
-          return;
-        }
-
-        if (data.customer_name && data.customer_name !== "Unknown") {
-          customerNameInput.value = data.customer_name;
-          customerNameInput.dispatchEvent(new Event("change"));
-        }
-
-        if (data.items && Array.isArray(data.items)) {
-          items = data.items;
-          renderItems();
-        }
-
-        // Show the form section after AI generation
-        document
-          .getElementById("quotation-form-section")
-          .classList.remove("hidden");
-
-        saveDraft();
-
-        if (data.warnings && data.warnings.length > 0) {
-          const warningModal = document.getElementById("ai-warning-modal");
-          const warningText = document.getElementById("ai-warning-text");
-          if (warningModal && warningText) {
-            warningText.innerHTML = data.warnings.join("<br><br>");
-            warningModal.classList.remove("hidden");
-          } else {
-            alert("⚠️ แจ้งเตือนจาก AI:\n\n" + data.warnings.join("\n"));
-          }
-          showToast("AI สร้างเสร็จ แต่มีการปรับจำนวนสินค้าตามสต๊อก", true);
-        } else {
-          showToast("AI สร้างใบเสนอราคาสำเร็จ");
-        }
-      } else {
-        throw new Error(data.error || "Failed to generate");
-      }
-    } catch (error) {
-      const warningModal = document.getElementById("ai-warning-modal");
-      const warningText = document.getElementById("ai-warning-text");
-      if (warningModal && warningText) {
-        warningText.innerHTML = `<strong>ระบบ AI ขัดข้อง:</strong><br><br>ไม่สามารถสร้างใบเสนอราคาได้ในขณะนี้<br><br><span style="font-size: 0.9em; color: #ef4444;">สาเหตุ: ${error.message || "ข้อมูลผิดพลาด โปรดลองใหม่อีกครั้ง"}</span>`;
-        warningModal.classList.remove("hidden");
-      } else {
-        alert(
-          "⚠️ ระบบแจ้งเตือน:\n\nไม่สามารถสร้างใบเสนอราคาได้\nสาเหตุ: " +
-            (error.message || "ข้อมูลผิดพลาด หรือระบบ AI ขัดข้อง"),
-        );
-      }
-    } finally {
-      generateBtn.disabled = false;
-      aiLoader.classList.add("hidden");
-    }
-  });
-
-  // Manual Save Logic Removed (now part of PDF generation)
-
-  // Export PDF via Preview Modal
-  const previewModal = document.getElementById("preview-modal");
+    const previewModal = document.getElementById("preview-modal");
   const closeModalBtn = document.getElementById("close-modal");
   const cancelPrintBtn = document.getElementById("cancel-print-btn");
   const confirmPdfBtn = document.getElementById("confirm-pdf-btn");
@@ -647,7 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                         <div style="flex: 1; display: flex; align-items: flex-start;">
                             <!-- Corporate Logo -->
-                            <img src="logo.svg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
+                            <img src="assets/logo.svg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                         </div>
                         <div style="flex: 2; text-align: center;">
                             <h2 style="margin: 0; font-size: ${fH2}; font-weight: bold; color: #0f172a;">บริษัท โซลโซไซตี้ จำกัด</h2>
@@ -658,11 +563,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div style="flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: flex-start;">
                             <h2 style="margin: 0; font-size: ${fH2s}; font-weight: bold; color: var(--primary-color);">ใบเสนอราคา</h2>
                             <p style="margin: 0; font-size: 13px; font-weight: 500;">Quotation</p>
+                            <p style="margin: 0;">เลขประจำตัวผู้เสียภาษี / Tax ID 6611611200003 สำนักงานใหญ่</p>
                         </div>
                     </div>
                     
                     <div style="text-align: left; margin-bottom: 5px;">
-                        <p style="margin: 0;">เลขประจำตัวผู้เสียภาษี / Tax ID 6611611200003 สำนักงานใหญ่</p>
                     </div>
 
                     <!-- Info Box Section -->
@@ -864,7 +769,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <strong>หมายเหตุ (Remarks):</strong><br>
                             - การเสนอราคานี้ยืนราคา ${cusInfo.credit_days} วัน<br>
                             ${cusInfo.remarks ? "- " + cusInfo.remarks + "<br>" : ""}
-                            - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจก. โซลโซไซตี้
+                            - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจ. โซลโซไซตี้
                         </div>
                         
                         <!-- Right Totals -->
