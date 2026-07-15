@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
@@ -70,12 +70,17 @@
             ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
           >
         </nav>
-        <div class="user-profile">
-          <div class="avatar"><i class="fa-solid fa-user"></i></div>
-          <div class="user-info">
-            <span class="user-name">Sales Team</span>
-            <span class="user-role">Enterprise</span>
+        <div class="user-profile" style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info">
+              <span class="user-name" id="sidebar-username">Sales Team</span>
+              <span class="user-role">Enterprise</span>
+            </div>
           </div>
+          <button class="dark-mode-toggle" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:0.5rem;" title="สลับโหมดมืด/สว่าง">
+            <i class="fa-solid fa-moon"></i>
+          </button>
         </div>
       </aside>
 

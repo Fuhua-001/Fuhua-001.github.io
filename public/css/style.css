@@ -312,3 +312,61 @@ tbody tr:last-child td { border-bottom: none; }
 .badge-UPDATE { background: var(--primary-light); color: var(--primary); }
 .badge-DELETE { background: #FDE8E6; color: var(--danger); }
 .badge-DEFAULT { background: var(--bg-main); color: var(--text-muted); }
+
+/* --- Dark Mode --- */
+body.dark-mode {
+    --primary: #5b3aff;       
+    --primary-hover: #4a28f0; 
+    --primary-active: #3311DB;
+    --primary-light: #2a225c; 
+    --secondary: #39B8FF;    
+    --success: #05CD99;      
+    --danger: #EE5D50;       
+    --warning: #FFCE20;      
+    --bg-main: #0b1437;
+    --bg-card: #111c44;
+    --text-main: #ffffff;
+    --text-muted: #a3aed1;
+    --border: #1a2755;
+    
+    --sidebar-bg: #111c44;   
+    --sidebar-text: #a3aed1;
+    --sidebar-hover: #1a2755;
+    --sidebar-active-bg: #1a2755;
+    --sidebar-active-text: #ffffff;
+
+    --shadow-sm: 0px 2px 5px rgba(0,0,0,0.3);
+    --shadow-md: 0px 18px 40px rgba(0,0,0,0.5);
+    --shadow-hover: 0px 20px 50px rgba(0,0,0,0.6);
+}
+
+body.dark-mode .table-container,
+body.dark-mode table th,
+body.dark-mode table td {
+    border-color: var(--border);
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: #0b1437;
+    color: var(--text-main);
+    border-color: var(--border);
+}
+
+body.dark-mode .stat-card {
+    background-color: var(--bg-card);
+}
+
+body.dark-mode .icon-wrapper {
+    background-color: #1a2755 !important;
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--bg-card);
+}
+
+body.dark-mode .btn-secondary {
+    background-color: #1a2755;
+    color: var(--text-main);
+}

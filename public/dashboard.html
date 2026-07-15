@@ -91,12 +91,17 @@
             onclick="sessionStorage.removeItem('isLoggedIn'); window.location.href = 'login.html';"
             ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a>
         </nav>
-        <div class="user-profile">
-          <div class="avatar"><i class="fa-solid fa-user"></i></div>
-          <div class="user-info">
-            <span class="user-name" id="sidebar-username">Sales Team</span>
-            <span class="user-role">Enterprise</span>
+        <div class="user-profile" style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info">
+              <span class="user-name" id="sidebar-username">Sales Team</span>
+              <span class="user-role">Enterprise</span>
+            </div>
           </div>
+          <button class="dark-mode-toggle" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:0.5rem;" title="สลับโหมดมืด/สว่าง">
+            <i class="fa-solid fa-moon"></i>
+          </button>
         </div>
       </aside>
 
@@ -113,7 +118,7 @@
           <!-- Stats Cards -->
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
             
-            <div class="card stat-card" style="border: none;">
+            <div class="card stat-card" style="border: none; cursor: pointer;" onclick="document.getElementById('sales-chart-section').scrollIntoView({behavior: 'smooth', block: 'center'});">
               <div class="icon-wrapper" style="background-color: #fee2e2;">
                 <div class="stat-icon" style="color: #ef4444;"><i class="fa-solid fa-coins"></i></div>
               </div>
@@ -124,7 +129,7 @@
               <div class="card-arrow" style="background-color: #ef4444;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="card stat-card" style="border: none;">
+            <div class="card stat-card" style="border: none; cursor: pointer;" onclick="window.location.href='history.html';">
               <div class="icon-wrapper" style="background-color: #e0e7ff;">
                 <div class="stat-icon" style="color: #4f46e5;"><i class="fa-solid fa-file-invoice"></i></div>
               </div>
@@ -135,7 +140,7 @@
               <div class="card-arrow" style="background-color: #4f46e5;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="card stat-card" style="border: none;">
+            <div class="card stat-card" style="border: none; cursor: pointer;" onclick="window.location.href='customers.html';">
               <div class="icon-wrapper" style="background-color: #f3e8ff;">
                 <div class="stat-icon" style="color: #9333ea;"><i class="fa-solid fa-users"></i></div>
               </div>
@@ -146,7 +151,7 @@
               <div class="card-arrow" style="background-color: #9333ea;"><i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="card stat-card" style="border: none;">
+            <div class="card stat-card" style="border: none; cursor: pointer;" onclick="window.location.href='products.html';">
               <div class="icon-wrapper" style="background-color: #dcfce7;">
                 <div class="stat-icon" style="color: #10b981;"><i class="fa-solid fa-box-open"></i></div>
               </div>
@@ -161,7 +166,7 @@
 
           <!-- Chart + Top Customers -->
           <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-            <section class="card" style="padding: 2rem">
+            <section id="sales-chart-section" class="card" style="padding: 2rem">
               <h3 style="margin-bottom: 1.5rem; color: var(--text-main)">
                 <i class="fa-solid fa-chart-line" style="color:var(--primary); margin-right:0.5rem;"></i>
                 กราฟแสดงแนวโน้มยอดขาย (Sales Trend)

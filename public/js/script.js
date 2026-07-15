@@ -1,3 +1,34 @@
+
+// --- Dark Mode Logic ---
+function setupDarkMode() {
+  const isDark = localStorage.getItem('theme') === 'dark';
+  if (isDark) document.body.classList.add('dark-mode');
+  
+  // Create toggle listener for all buttons
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.dark-mode-toggle');
+    if (btn) {
+      document.body.classList.toggle('dark-mode');
+      const currentlyDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('theme', currentlyDark ? 'dark' : 'light');
+      
+      // Update icons
+      document.querySelectorAll('.dark-mode-toggle i').forEach(icon => {
+        icon.className = currentlyDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      });
+    }
+  });
+
+  // Set initial icon
+  window.addEventListener('DOMContentLoaded', () => {
+    const isDarkNow = document.body.classList.contains('dark-mode');
+    document.querySelectorAll('.dark-mode-toggle i').forEach(icon => {
+      icon.className = isDarkNow ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    });
+  });
+}
+setupDarkMode();
+
 document.addEventListener("DOMContentLoaded", () => {
   const quoteForm = document.getElementById("quote-form");
   const customerNameInput = document.getElementById("customer-name");
