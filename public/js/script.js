@@ -1,4 +1,4 @@
-﻿
+
 document.addEventListener("DOMContentLoaded", () => {
   const quoteForm = document.getElementById("quote-form");
   const customerNameInput = document.getElementById("customer-name");
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (typeof renderItems === 'function') renderItems();
           }
 
-          showToast("AI เธชเธฃเนเธฒเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒเธชเธณเน€เธฃเนเธ!");
+          showToast("AI สร้างใบเสนอราคาสำเร็จ!");
         } catch (e) {
           console.error("Failed to parse AI data", e);
         }
@@ -254,8 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
                 <td>
-                    <select id="${selectId}" required placeholder="-- เธเนเธเธซเธฒ/เธเธดเธกเธเนเธเธทเนเธญเธชเธดเธเธเนเธฒ --">
-                        <option value="">-- เธเนเธเธซเธฒ/เธเธดเธกเธเนเธเธทเนเธญเธชเธดเธเธเนเธฒ --</option>
+                    <select id="${selectId}" required placeholder="-- ค้นหา/พิมพ์ชื่อสินค้า --">
+                        <option value="">-- ค้นหา/พิมพ์ชื่อสินค้า --</option>
                         ${(window.productsList || []).map((p) => `<option value="${p.name}" ${p.name === item.description ? "selected" : ""}>${p.name}</option>`).join("")}
                         ${item.description && !(window.productsList || []).find(p => p.name === item.description) ? `<option value="${item.description.replace(/"/g, '&quot;')}" selected>${item.description}</option>` : ''}
                     </select>
@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       if (items.length === 0) {
         alert(
-          "โ ๏ธ เนเธเนเธเน€เธ•เธทเธญเธ:\n\nเธเธธเธ“เธขเธฑเธเนเธกเนเนเธ”เนเน€เธเธดเนเธกเธชเธดเธเธเนเธฒเนเธเนเธเน€เธชเธเธญเธฃเธฒเธเธฒเธเธฃเธฑเธ เธเธฃเธธเธ“เธฒเน€เธเธดเนเธกเธชเธดเธเธเนเธฒเธญเธขเนเธฒเธเธเนเธญเธข 1 เธฃเธฒเธขเธเธฒเธฃเธเนเธญเธเน€เธเธทเนเธญเธ•เธฃเธงเธเธชเธญเธเน€เธญเธเธชเธฒเธฃ",
+          "แจ้งเตือน:\n\nคุณยังไม่ได้เพิ่มสินค้าในใบเสนอราคาครับ กรุณาเพิ่มสินค้าอย่างน้อย 1 รายการก่อนเพื่อตรวจสอบเอกสาร",
         );
         return;
       }
@@ -389,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pic_name: "Sales Team",
         pic_phone: "",
         credit_days: crDays,
-        doc_no: "(เธเธณเธฅเธฑเธเธญเธญเธเน€เธฅเธ...)",
+        doc_no: "(กำลังออกเลข...)",
         doc_date_str: new Date().toLocaleDateString("en-GB"),
         due_date_str: new Date(
           Date.now() + crDays * 86400000,
@@ -413,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cusInfo.pic_code = window.loadedQuoteData.pic_code || "";
         cusInfo.pic_name = window.loadedQuoteData.pic_name || "Sales Team";
         cusInfo.pic_phone = window.loadedQuoteData.pic_phone || "";
-        cusInfo.doc_no = window.loadedQuoteData.doc_no || "(เธเธณเธฅเธฑเธเธญเธญเธเน€เธฅเธ...)";
+        cusInfo.doc_no = window.loadedQuoteData.doc_no || "(กำลังออกเลข...)";
         cusInfo.doc_date_str = dDate.toLocaleDateString("en-GB");
         cusInfo.due_date_str = new Date(
           dDate.getTime() + crDays * 86400000,
@@ -503,7 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
           
           ctx.fillStyle = '#000000';
           ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-          ctx.fillText('เนเธเธเธฒเธก เธฅเธนเธเธเนเธฒ / Customer', 179.5, 35);
+          ctx.fillText('ในนาม ลูกค้า / Customer', 179.5, 35);
           
           ctx.beginPath();
           ctx.moveTo(79.5, 115);
@@ -514,11 +514,11 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillStyle = '#666666';
           ctx.fillText('(............................................................)', 179.5, 135);
           ctx.fillStyle = '#000000';
-          ctx.fillText('เธเธนเนเธญเธเธธเธกเธฑเธ•เธดเธชเธฑเนเธเธเธทเนเธญ / Accepted By', 179.5, 153);
-          ctx.fillText('เธงเธฑเธเธ—เธตเน / Date: ......../......../........', 179.5, 170);
+          ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 153);
+          ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 170);
           
           ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-          ctx.fillText('เนเธเธเธฒเธก เนเธเธฅเนเธเนเธเธ•เธตเน (Soul Society)', 553.5, 35);
+          ctx.fillText('ในนาม โซลโซไซตี้ (Soul Society)', 553.5, 35);
           
           ctx.beginPath();
           ctx.moveTo(453.5, 115);
@@ -529,17 +529,16 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillStyle = 'var(--text-main)';
           ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 135);
           ctx.fillStyle = '#000000';
-          ctx.fillText('เธเธนเนเน€เธชเธเธญเธฃเธฒเธเธฒ / Quoted By', 553.5, 153);
-          ctx.fillText('เธงเธฑเธเธ—เธตเน / Date: ' + (docDate || '......../......../........'), 553.5, 170);
+          ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
+          ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
           
           return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
       }
 
       // Create a printable element HTML
-      const isMany = items.length >= 15;
-      let fBase = isMany ? '10px' : '13px';
-      let fSmall = isMany ? '8px' : '10px';
-      let pCell = isMany ? '2px 4px' : '6px 8px';
+      let fBase = '13px';
+      let fSmall = '10px';
+      let pCell = '6px 8px';
       let lh = '1.25', fH2 = '22px', fH2s = '20px', sigW = '734px', padCont = '20px 30px', pBox = '10px 15px', pTotal = '8px 12px';
       
       let tableHTML = `
@@ -553,7 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                         <div style="flex: 1; display: flex; align-items: flex-start;">
                             <!-- Corporate Logo -->
-                            <img src="assets/logo.svg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
+                            <img src="assets/logo.jpg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                         </div>
                         <div style="flex: 2; text-align: center;">
                             <h2 style="margin: 0; font-size: ${fH2}; font-weight: bold; color: var(--text-main);">เธเธฃเธดเธฉเธฑเธ— เนเธเธฅเนเธเนเธเธ•เธตเน เธเธณเธเธฑเธ”</h2>
@@ -842,7 +841,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const response = await fetch("/api/save-quote", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              "Bypass-Tunnel-Reminder": "true"
+            },
             body: JSON.stringify(payload),
           });
 
@@ -870,12 +872,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 2. Generate PDF
       const opt = {
-        margin: 0,
+        margin: [10, 10, 15, 10], // Top, Right, Bottom, Left margins (in mm)
         filename: `quotation-${Date.now()}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2, scrollY: 0, y: 0 },
+        html2canvas: { scale: 2, scrollY: 0, y: 0, windowWidth: 900 }, // Fix width to prevent font shrinking
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { mode: ['css', 'legacy'] },
+        pagebreak: { mode: ['css', 'legacy'], avoid: 'tr' }, // Avoid breaking inside table rows
       };
 
       // Critical fix for html2canvas blank/offset bug

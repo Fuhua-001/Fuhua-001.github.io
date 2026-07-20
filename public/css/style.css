@@ -314,3 +314,6 @@ tbody tr:last-child td { border-bottom: none; }
 .badge-DEFAULT { background: var(--bg-main); color: var(--text-muted); }
 
 
+
+.btn:disabled { opacity: 0.7; cursor: not-allowed; filter: grayscale(50%); }
+

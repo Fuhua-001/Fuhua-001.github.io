@@ -43,9 +43,9 @@ exports.generateQuote = async (req, res) => {
     const customerList = customers.map((c) => c.name).join(", ");
     const productList = products
       .map((p) => `${p.name} (ราคาขาย: ${p.selling_price} บาท, หน่วย: ${p.unit || 'ชิ้น'}, จำนวนสต็อก: ${p.stock_qty})`)
-      .join("\\n");
+      .join("\n");
 
-    const systemPrompt = `You are an Enterprise Quotation Generation AI.\\n        \\n        Here is the data from our company database:\\n        [Existing Customers]: ${customerList}\\n        [Available Products in Stock & Standard Prices]:\\n        ${productList}\\n\\n        Instructions:\\n        1. Try to match the customer name in the prompt to one of the [Existing Customers]. If it matches partially, use the full official name from the database.\\n        2. Match the requested items to the [Available Products in Stock]. You MUST ONLY use products from this list. Use the exact standard price.\\n        3. Do NOT exceed the available stock quantity for any product. If a user asks for more than the stock, reduce the quantity to the maximum available stock.\\n        4. If the item is NOT in the database, DO NOT include it. Never invent products or guess prices.\\n        5. FINAL RECHECK: Before responding, verify that every item you included exists in the [Available Products in Stock] list, the price is exactly as stated, and the quantity is within the stock limit.\\n        6. VERY IMPORTANT: If the user explicitly asks for ANY product that is NOT in the [Available Products in Stock], you MUST add the requested product's name to the "missing_products" array.\\n        7. CAUTION ON QUANTITY (CRITICAL): The numbers '304', '316', and '316L' are Stainless Steel GRADES, NOT quantities! Never put 304 or 316 as the 'quantity' unless the user explicitly requested 304 pieces. Always look for words like 'อย่างละ 10 ชิ้น' or 'เอา 20 อัน' to determine the true quantity.\\n        8. CHAIN OF THOUGHT: You MUST use a <thought> block to analyze the request step-by-step BEFORE outputting the JSON. \\n        Example:\\n        <thought>\\n        1. Customer: ACA -> matches 'ACA INDUSTRIAL...'\\n        2. Item: 2 inch pipe -> Not found. Add to missing.\\n        </thought>\\n        \`\`\`json\\n        ...\\n        \`\`\`\\n        \\n        Return strictly in JSON format matching this schema after the thought block:\\n        {\\n          "customer_name": "Matched Customer Name from DB or 'Unknown'",\\n          "items": [\\n            { "description": "Matched Product Name", "quantity": 1, "unit": "Matched Unit", "unit_price": 100 }\\n          ],\\n          "missing_products": ["Name of product requested but not found in stock"],\\n          "warnings": []\\n        }\\n        Do not include markdown blocks or any other text. Only return valid JSON.`;
+    const systemPrompt = `You are an Enterprise Quotation Generation AI.\n        \n        Here is the data from our company database:\n        [Existing Customers]: ${customerList}\n        [Available Products in Stock & Standard Prices]:\n        ${productList}\n\n        Instructions:\n        1. Try to match the customer name in the prompt to one of the [Existing Customers]. If it matches partially, use the full official name from the database.\n        2. Match the requested items to the [Available Products in Stock]. You MUST ONLY use products from this list. Use the exact standard price.\n        3. ONLY include products that the user EXPLICITLY requested. DO NOT add any extra products or assume the user wants all of them.\n        4. Do NOT exceed the available stock quantity for any product. If a user asks for more than the stock, reduce the quantity to the maximum available stock.\n        5. If the item is NOT in the database, DO NOT include it. Never invent products or guess prices.\n        6. FINAL RECHECK: Before responding, verify that every item you included exists in the [Available Products in Stock] list, the price is exactly as stated, and the quantity is within the stock limit.\n        7. VERY IMPORTANT: If the user explicitly asks for ANY product that is NOT in the [Available Products in Stock], you MUST add the requested product's name to the "missing_products" array.\n        8. CAUTION ON QUANTITY (CRITICAL): The numbers '304', '316', and '316L' are Stainless Steel GRADES, NOT quantities! Never put 304 or 316 as the 'quantity' unless the user explicitly requested 304 pieces. Always look for words like 'อย่างละ 10 ชิ้น' or 'เอา 20 อัน' to determine the true quantity.\n        9. CHAIN OF THOUGHT: You MUST use a <thought> block to analyze the request step-by-step BEFORE outputting the JSON. \n        Example:\n        <thought>\n        1. Customer: ACA -> matches 'ACA INDUSTRIAL...'\n        2. Item: 2 inch pipe -> Not found. Add to missing.\n        3. Item: 1 item -> Only add this 1 specific item requested.\n        </thought>\n        \`\`\`json\n        ...\n        \`\`\`\n        \n        Return strictly in JSON format matching this schema after the thought block:\n        {\n          "customer_name": "Matched Customer Name from DB or 'Unknown'",\n          "items": [\n            { "description": "Matched Product Name", "quantity": 1, "unit": "Matched Unit", "unit_price": 100 }\n          ],\n          "missing_products": ["Name of product requested but not found in stock"],\n          "warnings": []\n        }\n        Do not include markdown blocks or any other text. Only return valid JSON.`;
 
     let aiParsed;
     try {
@@ -54,37 +54,36 @@ exports.generateQuote = async (req, res) => {
       }
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: `${systemPrompt}\\n\\nUser Request: ${prompt}`,
+        contents: `${systemPrompt}\n\nUser Request: ${prompt}`,
       });
-      let text = response.text.trim();
-      
-      // ดึง JSON ออกมาจาก Response (บางครั้ง AI อาจตอบกลับมาพร้อม Markdown backticks)
-      let jsonMatch = text.match(/```json([\\s\\S]*?)```/);
-      let jsonText = jsonMatch ? jsonMatch[1].trim() : text.substring(text.indexOf('{')).trim();
-      
-      aiParsed = JSON.parse(jsonText);
-    } catch (apiError) {
-      console.warn("AI API Error, falling back to Regex Matcher:", apiError.message);
-      
-      // ฟอลแบ็ค (Fallback) ใช้ Regex ง่ายๆ จับคำ ในกรณีที่ API พังหรือโควต้าหมด
-      const [fbCustomers] = await db.query("SELECT name FROM customers");
-      const [fbProducts] = await db.query("SELECT name, selling_price as price FROM products");
-
+      let text = response.response.text();
+      aiParsed = JSON.parse(text.replace(/```json/g, "").replace(/```/g, ""));
+    } catch (e) {
+      // Fallback: หาก AI พังหรือติดขัด ให้ใช้ logic พื้นฐานดึงข้อมูลจากสินค้าที่มี
       let matchedCustomer = "Unknown";
-      for (let c of fbCustomers) {
-        if (prompt.toLowerCase().includes(c.name.split(" ")[0].toLowerCase())) {
-          matchedCustomer = c.name;
-          break;
-        }
+      for (let c of customers) {
+        if (prompt.includes(c.name)) matchedCustomer = c.name;
       }
 
       let items = [];
-      for (let p of fbProducts) {
-        const keyword = p.name.split(" ")[0].toLowerCase();
-        if (prompt.toLowerCase().includes(keyword)) {
-          const qtyMatch = prompt.match(new RegExp(`(\\d+)\\s*${keyword}|${keyword}.*?(\\d+)`));
-          const qty = qtyMatch ? parseInt(qtyMatch[1] || qtyMatch[2]) : 1;
-          items.push({ description: p.name, quantity: qty || 1, unit_price: p.price });
+      for (let p of products) {
+        // Strict fallback logic: Ensure the user's prompt contains the full product name to prevent false positives
+        if (prompt.toLowerCase().includes(p.name.toLowerCase())) {
+          const qtyRegex = new RegExp(`(?:จำนวน|เอา)?\\s*(\\d+)\\s*(ชิ้น|เส้น|อัน|แผ่น|กล่อง|kg|เมตร|ท่อน|ม้วน)`, 'i');
+          const match = prompt.match(qtyRegex);
+          let qty = 1;
+          
+          if (match && match[1]) {
+            qty = parseInt(match[1]);
+          } else {
+             const fallbackMatch = prompt.match(new RegExp(`${keywords.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')}.*?(?<!304|316|316L)\\b(\\d+)\\b(?!\\s*(มม|นิ้ว|mm|inch))`));
+             if (fallbackMatch && fallbackMatch[1]) {
+                qty = parseInt(fallbackMatch[1]);
+             }
+          }
+          if (qty === 304 || qty === 316) qty = 1;
+
+          items.push({ description: p.name, quantity: qty || 1, unit_price: p.selling_price });
         }
       }
 
@@ -194,8 +193,27 @@ exports.saveQuote = async (req, res) => {
         await conn.query(`DELETE FROM sub_sales_pr WHERE sales_pr_id = ?`, [salesPrId]);
       } else {
         // --- กรณี: สร้างใบเสนอราคาใหม่ (Insert) ---
-        // สร้างเลขที่เอกสารแบบสุ่มชั่วคราว (TODO: ควรเปลี่ยนเป็นการนับ Running Number ตามปี/เดือนในอนาคต)
-        const doc_no = "PR-" + Date.now().toString().slice(-6) + Math.floor(Math.random() * 100);
+        // เปลี่ยนเป็นการนับ Running Number ตามปี/เดือน (เช่น PR-2310-001)
+        const date = new Date();
+        const year = date.getFullYear().toString().slice(-2);
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const prefix = `PR-${year}${month}-`;
+
+        const [lastDocRows] = await conn.query(
+          `SELECT doc_no FROM sales_pr WHERE doc_no LIKE ? ORDER BY id DESC LIMIT 1`,
+          [`${prefix}%`]
+        );
+
+        let nextNumber = 1;
+        if (lastDocRows.length > 0) {
+          const lastNumberStr = lastDocRows[0].doc_no.replace(prefix, '');
+          const lastNumber = parseInt(lastNumberStr, 10);
+          if (!isNaN(lastNumber)) {
+            nextNumber = lastNumber + 1;
+          }
+        }
+        
+        const doc_no = `${prefix}${nextNumber.toString().padStart(3, '0')}`;
         const [result] = await conn.query(
           `INSERT INTO sales_pr 
                 (doc_no, doc_date, pic_code, customer_code, contact_person, 
