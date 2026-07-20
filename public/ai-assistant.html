@@ -78,9 +78,7 @@
               <span class="user-role">Enterprise</span>
             </div>
           </div>
-          <button class="dark-mode-toggle" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:0.5rem;" title="สลับโหมดมืด/สว่าง">
-            <i class="fa-solid fa-moon"></i>
-          </button>
+          
         </div>
       </aside>
 
@@ -122,7 +120,7 @@
               <textarea
                 id="ai-prompt"
                 placeholder="ตัวอย่าง: สร้างใบเสนอราคาให้บริษัท ABC จำกัด ซื้อแล็ปท็อป 10 เครื่อง ราคาเครื่องละ 25,000 บาท และเมาส์ไร้สาย 10 อัน ราคาอันละ 500 บาท"
-                style="padding-bottom: 4rem; border-radius: 12px; background: #f8fafc;"
+                style="padding-bottom: 4rem; border-radius: 12px; background: var(--bg-card);"
               ></textarea>
               
               <!-- Circular action button replacing standard button -->
@@ -140,25 +138,25 @@
           </section>
           
             <!-- Database Info Section -->
-            <section id="ai-db-info" class="card" style="margin-top: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+            <section id="ai-db-info" class="card" style="margin-top: 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;">
               <h3 style="margin-top: 0; color: #475569; font-size: 1rem;"><i class="fa-solid fa-database"></i> ข้อมูลในระบบที่สามารถอ้างอิงได้</h3>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
                 <div id="db-customers-wrapper" style="background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
-                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.2rem; margin-bottom: 0.2rem;">ลูกค้า (Customers)</strong>
-                  <ul id="db-customers-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: #64748b;">
+                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem; margin-bottom: 0.2rem;">ลูกค้า (Customers)</strong>
+                  <ul id="db-customers-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: var(--text-muted);">
                     <li>กำลังโหลด...</li>
                   </ul>
                 </div>
                 <div id="db-products-wrapper" style="background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
-                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.2rem; margin-bottom: 0.2rem;">สินค้า (Products)</strong>
-                  <ul id="db-products-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: #64748b;">
+                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem; margin-bottom: 0.2rem;">สินค้า (Products)</strong>
+                  <ul id="db-products-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: var(--text-muted);">
                     <li>กำลังโหลด...</li>
                   </ul>
                 </div>
 
                 <div id="db-employees-wrapper" style="display: none; background: white; padding: 0.5rem; border-radius: 6px; border: 1px solid #cbd5e1; max-height: 150px; overflow-y: auto;">
-                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.2rem; margin-bottom: 0.2rem;">พนักงาน (Employees)</strong>
-                  <ul id="db-employees-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: #64748b;">
+                  <strong style="font-size: 0.85rem; color: #334155; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem; margin-bottom: 0.2rem;">พนักงาน (Employees)</strong>
+                  <ul id="db-employees-list" style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: var(--text-muted);">
                     <li>กำลังโหลด...</li>
                   </ul>
                 </div>
@@ -166,12 +164,12 @@
             </section>
 
             <!-- Preview Section -->
-          <section id="ai-preview-section" class="card hidden" style="margin-top: 1.5rem; border-top: 4px solid #10b981;">
+          <section id="ai-preview-section" class="card hidden" style="margin-top: 1.5rem; border-top: 4px solid var(--accent-success);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <h3 style="margin: 0; color: #10b981;"><i class="fa-solid fa-eye"></i> ตรวจสอบข้อมูลก่อนนำไปใช้</h3>
-              <button id="btn-apply-ai" class="btn btn-primary" style="background: #10b981; border-color: #10b981;"><i class="fa-solid fa-check"></i> นำข้อมูลไปใช้งาน</button>
+              <h3 style="margin: 0; color: var(--accent-success);"><i class="fa-solid fa-eye"></i> ตรวจสอบข้อมูลก่อนนำไปใช้</h3>
+              <button id="btn-apply-ai" class="btn btn-primary" style="background: var(--accent-success); border-color: var(--accent-success);"><i class="fa-solid fa-check"></i> นำข้อมูลไปใช้งาน</button>
             </div>
-            <div id="ai-preview-data" style="background: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; color: #334155; border: 1px solid #e2e8f0;"></div>
+            <div id="ai-preview-data" style="background: var(--bg-card); padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; color: #334155; border: 1px solid var(--border-color);"></div>
           </section>
 
 
@@ -229,7 +227,7 @@
         <div style="font-size: 3rem; color: #f59e0b; margin-bottom: 1rem">
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
-        <h2 style="margin-bottom: 1rem; color: #0f172a">
+        <h2 style="margin-bottom: 1rem; color: var(--text-main)">
           แจ้งเตือนการปรับลดสินค้า
         </h2>
         <div
@@ -314,7 +312,7 @@
               ? "fa-solid fa-circle-xmark"
               : "fa-solid fa-circle-check";
             toast.querySelector("i").style.color = isError
-              ? "#ef4444"
+              ? "var(--accent-danger)"
               : "var(--success)";
         
             toast.classList.remove("hidden");
@@ -425,7 +423,7 @@
                   htmlContent += createSection(
                     'ข้อมูลไม่เพียงพอ หรือ AI ไม่เข้าใจ (Data Extraction Failed)',
                     'fa-solid fa-triangle-exclamation',
-                    '#fef2f2', '#ef4444', '#b91c1c',
+                    '#fef2f2', 'var(--accent-danger)', '#b91c1c',
                     `<p style="margin:0; color:#7f1d1d; font-size:0.95rem;"><strong>สาเหตุ:</strong> ${failMessage}</p>
                      <p style="margin:8px 0 0 0; font-size:0.85rem; color:#991b1b;">💡 <strong>คำแนะนำ:</strong> กรุณาลองพิมพ์ข้อความให้ชัดเจนขึ้น เช่น "ขอใบเสนอราคาให้ บริษัท ABC ซื้อคอมพิวเตอร์ 2 เครื่อง ราคาเครื่องละ 15,000 บาท"</p>`
                   );
@@ -445,7 +443,7 @@
                   htmlContent += createSection(
                     'สินค้าที่ไม่พบในระบบ (Missing Products)', 
                     'fa-solid fa-triangle-exclamation', 
-                    '#fef2f2', '#ef4444', '#b91c1c', 
+                    '#fef2f2', 'var(--accent-danger)', '#b91c1c', 
                     `<ul style="margin: 0; padding-left: 1.5rem; color: #7f1d1d; font-size: 0.95rem;">
                       ${data.missing_products.map(item => `<li>${item}</li>`).join('')}
                     </ul>`
@@ -467,9 +465,9 @@
                 const generalFields = Object.keys(data).filter(k => k !== 'items' && k !== 'missing_products' && k !== 'warnings');
                 if (generalFields.length > 0) {
                   const gridHtml = generalFields.map(key => `
-                    <div style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                      <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 0.25rem;">${key.replace(/_/g, ' ')}</div>
-                      <div style="font-size: 1.1rem; color: #0f172a; font-weight: 500;">${data[key] || '-'}</div>
+                    <div style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                      <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 0.25rem;">${key.replace(/_/g, ' ')}</div>
+                      <div style="font-size: 1.1rem; color: var(--text-main); font-weight: 500;">${data[key] || '-'}</div>
                     </div>
                   `).join('');
                   htmlContent += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">${gridHtml}</div>`;
@@ -478,17 +476,17 @@
                 // 3. Items Table
                 if (data.items && Array.isArray(data.items) && data.items.length > 0) {
                   const tableRows = data.items.map((item, index) => `
-                    <tr style="border-bottom: 1px solid #e2e8f0; background: ${index % 2 === 0 ? 'white' : '#f8fafc'};">
+                    <tr style="border-bottom: 1px solid var(--border-color); background: ${index % 2 === 0 ? 'white' : 'var(--bg-card)'};">
                       <td style="padding: 0.75rem 1rem; color: #334155;">${item.description || item.name || '-'}</td>
                       <td style="padding: 0.75rem 1rem; text-align: center; color: #475569; font-weight: 500;">${item.quantity || 0} ${item.unit || ''}</td>
-                      <td style="padding: 0.75rem 1rem; text-align: right; color: #10b981; font-weight: 600;">฿${Number(item.unit_price || item.cost_price || item.selling_price || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                      <td style="padding: 0.75rem 1rem; text-align: right; color: var(--accent-success); font-weight: 600;">฿${Number(item.unit_price || item.cost_price || item.selling_price || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                     </tr>
                   `).join('');
 
                   htmlContent += `
-                    <div style="background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="background: white; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                       <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                        <thead style="background: #f1f5f9; border-bottom: 2px solid #e2e8f0;">
+                        <thead style="background: var(--bg-body); border-bottom: 2px solid var(--border-color);">
                           <tr>
                             <th style="padding: 0.75rem 1rem; font-size: 0.85rem; color: #475569; font-weight: 600;">รายการสินค้า</th>
                             <th style="padding: 0.75rem 1rem; font-size: 0.85rem; color: #475569; font-weight: 600; text-align: center;">จำนวน</th>

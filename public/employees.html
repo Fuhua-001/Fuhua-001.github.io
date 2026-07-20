@@ -64,9 +64,7 @@
               <span class="user-role">Enterprise</span>
             </div>
           </div>
-          <button class="dark-mode-toggle" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:0.5rem;" title="สลับโหมดมืด/สว่าง">
-            <i class="fa-solid fa-moon"></i>
-          </button>
+          
         </div>
       </aside>
 
@@ -128,7 +126,7 @@
               <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">หน้า 1</span>
               <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextEmployeesPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
             </div>
-            <button class="btn btn-secondary" id="btn-bulk-delete-employees" style="background-color: #ef4444 !important; color: white !important; display: none; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onclick="deleteSelectedEmployees()">
+            <button class="btn btn-secondary" id="btn-bulk-delete-employees" style="background-color: var(--accent-danger) !important; color: white !important; display: none; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onclick="deleteSelectedEmployees()">
                 <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span id="delete-count-employees">0</span>)
             </button>
           </div>
@@ -161,14 +159,14 @@
         box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       ">
-        <div style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;">
+        <div style="font-size: 3rem; color: var(--accent-danger); margin-bottom: 1rem;">
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
         <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">ยืนยันการลบข้อมูล</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก <span id="delete-confirm-count" style="font-weight: bold; color: #ef4444;">0</span> รายการ? การกระทำนี้ไม่สามารถกู้คืนได้</p>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก <span id="delete-confirm-count" style="font-weight: bold; color: var(--accent-danger);">0</span> รายการ? การกระทำนี้ไม่สามารถกู้คืนได้</p>
         <div style="display: flex; gap: 1rem; justify-content: center;">
           <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">ยกเลิก</button>
-          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: #ef4444 !important; color: white !important; border: none;">ยืนยันการลบ</button>
+          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: var(--accent-danger) !important; color: white !important; border: none;">ยืนยันการลบ</button>
         </div>
       </div>
     </div>
@@ -369,8 +367,8 @@
               id="btn-delete-employee"
               style="
                 background-color: transparent !important;
-                color: #ef4444 !important;
-                border: 1px solid #ef4444;
+                color: var(--accent-danger) !important;
+                border: 1px solid var(--accent-danger);
                 margin-right: auto;
                 display: none;
               "
@@ -400,7 +398,7 @@
           ? "fa-solid fa-circle-xmark"
           : "fa-solid fa-circle-check";
         toast.querySelector("i").style.color = isError
-          ? "#ef4444"
+          ? "var(--accent-danger)"
           : "var(--success)";
         toast.classList.remove("hidden");
         setTimeout(() => toast.classList.add("hidden"), 3000);
