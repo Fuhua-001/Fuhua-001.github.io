@@ -901,9 +901,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // 3. Allow DOM to repaint the updated doc_no before capturing
       await new Promise(r => setTimeout(r, 100));
 
-      html2pdf()
-        .set(opt)
-        .from(previewContainer.firstElementChild)
+      html2pdf().set(opt).from(previewContainer.querySelector(".pdf-container"))
         .save()
         .then(() => {
           // Restore styles and scroll
