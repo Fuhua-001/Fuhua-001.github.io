@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (typeof renderItems === 'function') renderItems();
           }
 
-          showToast("AI ���ҧ��ʹ��Ҥ������!");
+          showToast("AI ร่างใบเสนอราคาสำเร็จ!");
         } catch (e) {
           console.error("Failed to parse AI data", e);
         }
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     saveDraft();
   };
 
-  // --- Mode Switching ---
+  // --- เลือก/ค้นหาสินค้า ---
   window.switchMode = (mode) => {
     const btnAi = document.getElementById("btn-mode-ai");
     const btnManual = document.getElementById("btn-mode-manual");
@@ -254,8 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
                 <td>
-                    <select id="${selectId}" required placeholder="-- ����/���������Թ��� --">
-                        <option value="">-- ����/���������Թ��� --</option>
+                    <select id="${selectId}" required placeholder="-- เลือก/ค้นหาสินค้า --">
+                        <option value="">-- เลือก/ค้นหาสินค้า --</option>
                         ${(window.productsList || []).map((p) => `<option value="${p.name}" ${p.name === item.description ? "selected" : ""}>${p.name}</option>`).join("")}
                         ${item.description && !(window.productsList || []).find(p => p.name === item.description) ? `<option value="${item.description.replace(/"/g, '&quot;')}" selected>${item.description}</option>` : ''}
                     </select>
@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       if (items.length === 0) {
         alert(
-          "����͹:\n\n�س�ѧ����������Թ������ʹ��ҤҤ�Ѻ ��س������Թ������ҧ���� 1 ��¡�á�͹���͵�Ǩ�ͺ�͡���",
+        "คำเตือน:\n\nคุณยังไม่ได้เพิ่มสินค้าในใบเสนอราคาครับ กรุณาเพิ่มสินค้าอย่างน้อย 1 รายการก่อนเพื่อตรวจสอบอีกครั้ง",
         );
         return;
       }
@@ -389,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pic_name: "Sales Team",
         pic_phone: "",
         credit_days: crDays,
-        doc_no: "(���ѧ�͡�Ţ...)",
+        doc_no: "(กำลังออกเลข...)",
         doc_date_str: new Date().toLocaleDateString("en-GB"),
         due_date_str: new Date(
           Date.now() + crDays * 86400000,
@@ -413,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cusInfo.pic_code = window.loadedQuoteData.pic_code || "";
         cusInfo.pic_name = window.loadedQuoteData.pic_name || "Sales Team";
         cusInfo.pic_phone = window.loadedQuoteData.pic_phone || "";
-        cusInfo.doc_no = window.loadedQuoteData.doc_no || "(���ѧ�͡�Ţ...)";
+        cusInfo.doc_no = window.loadedQuoteData.doc_no || "(กำลังออกเลข...)";
         cusInfo.doc_date_str = dDate.toLocaleDateString("en-GB");
         cusInfo.due_date_str = new Date(
           dDate.getTime() + crDays * 86400000,
@@ -503,7 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
           
           ctx.fillStyle = '#000000';
           ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-          ctx.fillText('㹹�� �١��� / Customer', 179.5, 35);
+      ctx.fillText('ในนาม ลูกค้า / Customer', 179.5, 35);
           
           ctx.beginPath();
           ctx.moveTo(79.5, 115);
@@ -514,11 +514,11 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillStyle = '#666666';
           ctx.fillText('(............................................................)', 179.5, 135);
           ctx.fillStyle = '#000000';
-          ctx.fillText('���͹��ѵ���觫��� / Accepted By', 179.5, 153);
-          ctx.fillText('�ѹ��� / Date: ......../......../........', 179.5, 170);
+      ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 153);
+      ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 170);
           
           ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-          ctx.fillText('㹹�� ���䫵�� (Soul Society)', 553.5, 35);
+      ctx.fillText('ในนาม โซลโซไซตี้ (Soul Society)', 553.5, 35);
           
           ctx.beginPath();
           ctx.moveTo(453.5, 115);
@@ -529,8 +529,8 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillStyle = 'var(--text-main)';
           ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 135);
           ctx.fillStyle = '#000000';
-          ctx.fillText('����ʹ��Ҥ� / Quoted By', 553.5, 153);
-          ctx.fillText('�ѹ��� / Date: ' + (docDate || '......../......../........'), 553.5, 170);
+      ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
+      ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
           
           return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
       }
@@ -548,10 +548,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 </style>
                 <div class="pdf-container" style="width: 100%; max-width: 794px; min-height: auto; box-sizing: border-box; display: block; font-family: 'Prompt', 'Sarabun', sans-serif !important; letter-spacing: 0px !important; color: #000; padding: ${padCont}; background: white; font-size: ${fBase}; line-height: ${lh}; margin: 0 auto; text-align: left;">
                     
-                    <!-- Header Section -->
+                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                         <div style="flex: 1; display: flex; align-items: flex-start;">
-                            <!-- Corporate Logo -->
+                            <!-- เลือก/ค้นหาสินค้า -->
                             <img src="assets/logo.jpg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                         </div>
                         <div style="flex: 2; text-align: center;">
@@ -570,10 +570,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="text-align: left; margin-bottom: 5px;">
                     </div>
 
-                    <!-- Info Box Section -->
+                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="display: flex; border: 1px solid #000; border-radius: 8px; margin-bottom: 2px; overflow: hidden;">
                         
-                        <!-- Left Box -->
+                        <!-- เลือก/ค้นหาสินค้า -->
                         <div style="flex: 1; padding: ${pBox}; border-right: 1px solid #000;">
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
@@ -607,7 +607,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </table>
                         </div>
 
-                        <!-- Right Box -->
+                        <!-- เลือก/ค้นหาสินค้า -->
                         <div style="flex: 1; padding: ${pBox};">
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
@@ -659,7 +659,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
-                    <!-- Items Table -->
+                    <!-- เลือก/ค้นหาสินค้า -->
                     <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0;">
                         <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                             <tr style="background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
@@ -760,11 +760,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         </tbody>
                     </table>
 
-                    <!-- Summary Section -->
+                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="margin-top: 0; page-break-inside: auto; break-inside: auto;">
-                    <!-- Top: Remarks and Subtotals -->
+                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="display: flex; border: 1px solid #000; overflow: hidden;">
-                        <!-- Left Remarks -->
+                        <!-- เลือก/ค้นหาสินค้า -->
                         <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; font-size: 11px; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
                             <strong>หมายเหตุ (Remarks):</strong><br>
                             - การเสนอราคานี้ยืนราคา ${cusInfo.credit_days} วัน<br>
@@ -772,7 +772,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจ. โซลโซไซตี้
                         </div>
                         
-                        <!-- Right Totals -->
+                        <!-- เลือก/ค้นหาสินค้า -->
                         <div style="width: 35%; max-width: 260px; background: white; display: flex; flex-direction: column; justify-content: center;">
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
@@ -787,7 +787,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
-                    <!-- Bottom: Red Grand Total -->
+                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="display: flex; border: 1px solid #000; border-top: 1px solid #000; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; margin-bottom: 2px; overflow: hidden; background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold;">
                         <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; text-align: center; display: flex; align-items: center; justify-content: center;">
                             ${bahtText(gTotal)}
@@ -798,10 +798,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
-                    <!-- Footer Signatures (Locked as Image) -->
+                    <!-- เลือก/ค้นหาสินค้า -->
                     ${generateSignatureCanvas(cusInfo.salesperson, cusInfo.doc_date_str, sigW)}
 
-                    </div> <!-- End of page-break-avoid wrapper for Summary and Signature -->
+                    </div> <!-- เลือก/ค้นหาสินค้า -->
                 </div>
             `;
 
