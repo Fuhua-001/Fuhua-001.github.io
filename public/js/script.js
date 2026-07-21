@@ -579,15 +579,41 @@ document.addEventListener("DOMContentLoaded", () => {
       
       let tableHTML = `
                 <style>
+                    .pdf-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; }
                     .pdf-container, .pdf-container * { box-sizing: border-box; }
                     @page { size: A4; margin: 10mm; }
+                    .html2pdf__page-break { height: 0; page-break-before: always; margin: 0; padding: 0; border: 0; }
                 </style>
+                <div class="pdf-wrapper">
+      `;
+
+      const ITEMS_PER_PAGE = 15;
+      const chunks = [];
+      if (items.length === 0) {
+        chunks.push([]);
+      } else {
+        for (let i = 0; i < items.length; i += ITEMS_PER_PAGE) {
+          chunks.push(items.slice(i, i + ITEMS_PER_PAGE));
+        }
+      }
+
+      let sumTotal = 0;
+      let globalItemIndex = 1;
+
+      chunks.forEach((chunk, chunkIndex) => {
+          const isLastPage = chunkIndex === chunks.length - 1;
+          const pageNum = chunkIndex + 1;
+          const totalPages = chunks.length;
+
+          if (chunkIndex > 0) {
+              tableHTML += `<div class="html2pdf__page-break"></div>`;
+          }
+
+          tableHTML += `
                 <div class="pdf-container" style="width: 100%; max-width: 794px; min-height: auto; box-sizing: border-box; display: block; font-family: 'Prompt', 'Sarabun', sans-serif !important; letter-spacing: 0px !important; color: #000; padding: ${padCont}; background: white; font-size: ${fBase}; line-height: ${lh}; margin: 0 auto; text-align: left;">
                     
-                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                         <div style="flex: 1; display: flex; align-items: flex-start;">
-                            <!-- เลือก/ค้นหาสินค้า -->
                             <img src="assets/logo.jpg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                         </div>
                         <div style="flex: 2; text-align: center;">
@@ -599,17 +625,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div style="flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: flex-start;">
                             <h2 style="margin: 0; font-size: ${fH2s}; font-weight: bold; color: var(--primary-color);">ใบเสนอราคา</h2>
                             <p style="margin: 0; font-size: 13px; font-weight: 500;">Quotation</p>
-                            <p style="margin: 0;">เลขประจำตัวผู้เสียภาษี / Tax ID 6611611200003 สำนักงานใหญ่</p>
+                            <p style="margin: 0; font-size: 11px;">หน้า ${pageNum}/${totalPages}</p>
+                            <p style="margin: 0;">เลขประจำตัวผู้เสียภาษี 6611611200003 สำนักงานใหญ่</p>
                         </div>
                     </div>
                     
                     <div style="text-align: left; margin-bottom: 5px;">
                     </div>
 
-                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="display: flex; border: 1px solid #000; border-radius: 8px; margin-bottom: 2px; overflow: hidden;">
                         
-                        <!-- เลือก/ค้นหาสินค้า -->
                         <div style="flex: 1; padding: ${pBox}; border-right: 1px solid #000;">
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
@@ -643,7 +668,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             </table>
                         </div>
 
-                        <!-- เลือก/ค้นหาสินค้า -->
                         <div style="flex: 1; padding: ${pBox};">
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
@@ -695,7 +719,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
-                    <!-- เลือก/ค้นหาสินค้า -->
                     <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0;">
                         <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
                             <tr style="background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
@@ -726,81 +749,81 @@ document.addEventListener("DOMContentLoaded", () => {
                             </tr>
                         </thead>
                         <tbody style="display: table-row-group;">
-            `;
-
-      let sumTotal = 0;
-      items.forEach((item, index) => {
-        const rowTotal = item.quantity * item.unit_price;
-        sumTotal += rowTotal;
-        tableHTML += `
-                            <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; vertical-align: top;">${index + 1}</td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">${item.description}</td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.quantity.toLocaleString()}</td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.unit || 'ชิ้น'}</td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(item.unit_price)}</td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(rowTotal)}</td>
-                            </tr>
-                `;
-      });
-
-      // Add minimum empty rows to ensure table auto-height doesn't look too short
-      const minRows = 5;
-      if (items.length < minRows) {
-        for (let i = items.length; i < minRows; i++) {
-          tableHTML += `
-                            <tr style="page-break-inside: avoid; break-inside: avoid;">
-                                <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; height: 32px;"></td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
-                                <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
-                            </tr>
           `;
-        }
-      }
 
-      const bahtText = (amount) => {
-        const number = Math.round(amount * 100) / 100;
-        const numberStr = number.toFixed(2);
-        const parts = numberStr.split('.');
-        const integerPart = parts[0];
-        const fractionalPart = parts[1];
-        const text = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
-        const unit = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'];
-        const convert = (numStr) => {
-            let result = '';
-            for (let i = 0; i < numStr.length; i++) {
-                const n = parseInt(numStr[i]);
-                const pos = numStr.length - 1 - i;
-                if (n !== 0) {
-                    if (pos === 1 && n === 1) result += 'สิบ';
-                    else if (pos === 1 && n === 2) result += 'ยี่สิบ';
-                    else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เอ็ด';
-                    else result += text[n] + unit[pos % 6]; // Quick mod for larger numbers
+          chunk.forEach((item) => {
+            const rowTotal = item.quantity * item.unit_price;
+            sumTotal += rowTotal;
+            tableHTML += `
+                                <tr style="page-break-inside: avoid; break-inside: avoid;">
+                                    <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; vertical-align: top;">${globalItemIndex++}</td>
+                                    <td style="padding: ${pCell}; border-right: 1px solid #000; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">${item.description}</td>
+                                    <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.quantity.toLocaleString()}</td>
+                                    <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.unit || 'ชิ้น'}</td>
+                                    <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(item.unit_price)}</td>
+                                    <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(rowTotal)}</td>
+                                </tr>
+                    `;
+          });
+
+          // Add minimum empty rows to ensure table auto-height doesn't look too short on the last page
+          if (isLastPage) {
+              const minRows = 5;
+              if (chunk.length < minRows) {
+                for (let i = chunk.length; i < minRows; i++) {
+                  tableHTML += `
+                                    <tr style="page-break-inside: avoid; break-inside: avoid;">
+                                        <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; height: 32px;"></td>
+                                        <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                        <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                        <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                        <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                        <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
+                                    </tr>
+                  `;
                 }
-            }
-            return result || 'ศูนย์';
-        };
-        let baht = convert(integerPart) + 'บาท';
-        let satang = parseInt(fractionalPart) === 0 ? 'ถ้วน' : convert(fractionalPart) + 'สตางค์';
-        return '( ' + baht + satang + ' )';
-      };
+              }
+          }
 
-      const gTotal = sumTotal * 1.07;
-      const vat = sumTotal * 0.07;
-
-      tableHTML += `
-                            
+          tableHTML += `
                         </tbody>
                     </table>
+          `;
 
-                    <!-- เลือก/ค้นหาสินค้า -->
+          if (isLastPage) {
+              const bahtText = (amount) => {
+                const number = Math.round(amount * 100) / 100;
+                const numberStr = number.toFixed(2);
+                const parts = numberStr.split('.');
+                const integerPart = parts[0];
+                const fractionalPart = parts[1];
+                const text = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
+                const unit = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'];
+                const convert = (numStr) => {
+                    let result = '';
+                    for (let i = 0; i < numStr.length; i++) {
+                        const n = parseInt(numStr[i]);
+                        const pos = numStr.length - 1 - i;
+                        if (n !== 0) {
+                            if (pos === 1 && n === 1) result += 'สิบ';
+                            else if (pos === 1 && n === 2) result += 'ยี่สิบ';
+                            else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เอ็ด';
+                            else result += text[n] + unit[pos % 6]; 
+                        }
+                    }
+                    return result || 'ศูนย์';
+                };
+                let baht = convert(integerPart) + 'บาท';
+                let satang = parseInt(fractionalPart) === 0 ? 'ถ้วน' : convert(fractionalPart) + 'สตางค์';
+                return '( ' + baht + satang + ' )';
+              };
+
+              const gTotal = sumTotal * 1.07;
+              const vat = sumTotal * 0.07;
+
+              tableHTML += `
                     <div style="margin-top: 0; page-break-inside: auto; break-inside: auto;">
-                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="display: flex; border: 1px solid #000; overflow: hidden;">
-                        <!-- เลือก/ค้นหาสินค้า -->
                         <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; font-size: 11px; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
                             <strong>หมายเหตุ (Remarks):</strong><br>
                             - การเสนอราคานี้ยืนราคา ${cusInfo.credit_days} วัน<br>
@@ -808,7 +831,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจ. โซลโซไซตี้
                         </div>
                         
-                        <!-- เลือก/ค้นหาสินค้า -->
                         <div style="width: 35%; max-width: 260px; background: white; display: flex; flex-direction: column; justify-content: center;">
                             <table style="width: 100%; border-collapse: collapse; font-size: ${fBase};">
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
@@ -823,7 +845,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
-                    <!-- เลือก/ค้นหาสินค้า -->
                     <div style="display: flex; border: 1px solid #000; border-top: 1px solid #000; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; margin-bottom: 2px; overflow: hidden; background-color: #ff6666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold;">
                         <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; text-align: center; display: flex; align-items: center; justify-content: center;">
                             ${bahtText(gTotal)}
@@ -834,12 +855,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
-                    <!-- เลือก/ค้นหาสินค้า -->
                     ${generateSignatureCanvas(cusInfo.salesperson, cusInfo.doc_date_str, sigW)}
 
-                    </div> <!-- เลือก/ค้นหาสินค้า -->
-                </div>
-            `;
+                    </div>
+              `;
+          }
+
+          tableHTML += `</div> <!-- End pdf-container -->`;
+      });
+
+      tableHTML += `</div> <!-- End pdf-wrapper -->`;
+
 
       previewContainer.innerHTML = tableHTML;
       previewModal.classList.remove("hidden");
@@ -937,7 +963,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // 3. Allow DOM to repaint the updated doc_no before capturing
       await new Promise(r => setTimeout(r, 100));
 
-      html2pdf().set(opt).from(previewContainer.querySelector(".pdf-container"))
+      html2pdf().set(opt).from(previewContainer.querySelector(".pdf-wrapper"))
         .save()
         .then(() => {
           // Restore styles and scroll
