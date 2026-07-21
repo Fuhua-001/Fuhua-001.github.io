@@ -572,9 +572,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Create a printable element HTML
-      let fBase = '13px';
-      let fSmall = '10px';
-      let pCell = '6px 8px';
+      let fBase = items.length > 12 ? '11px' : '13px';
+      let fSmall = items.length > 12 ? '9px' : '10px';
+      let pCell = items.length > 12 ? '4px 6px' : '6px 8px';
       let lh = '1.25', fH2 = '22px', fH2s = '20px', sigW = '734px', padCont = '20px 30px', pBox = '10px 15px', pTotal = '8px 12px';
       
       let tableHTML = `
@@ -587,13 +587,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="pdf-wrapper">
       `;
 
-      const ITEMS_PER_PAGE = 15;
+      const ITEMS_PER_PAGE_NORMAL = 22;
+      const ITEMS_PER_PAGE_LAST = 12;
       const chunks = [];
-      if (items.length === 0) {
+      let remainingItems = [...items];
+
+      if (remainingItems.length === 0) {
         chunks.push([]);
       } else {
-        for (let i = 0; i < items.length; i += ITEMS_PER_PAGE) {
-          chunks.push(items.slice(i, i + ITEMS_PER_PAGE));
+        while (remainingItems.length > 0) {
+          if (remainingItems.length <= ITEMS_PER_PAGE_LAST) {
+            chunks.push(remainingItems);
+            remainingItems = [];
+          } else if (remainingItems.length <= ITEMS_PER_PAGE_NORMAL) {
+            // Prevent empty footer page by ensuring at least 1 item is pushed to the last page
+            chunks.push(remainingItems.slice(0, remainingItems.length - 1));
+            remainingItems = remainingItems.slice(remainingItems.length - 1);
+          } else {
+            chunks.push(remainingItems.slice(0, ITEMS_PER_PAGE_NORMAL));
+            remainingItems = remainingItems.slice(ITEMS_PER_PAGE_NORMAL);
+          }
         }
       }
 
