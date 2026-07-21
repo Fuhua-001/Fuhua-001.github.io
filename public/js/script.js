@@ -122,7 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (product) {
       items[index].unit_price = parseFloat(product.selling_price) || 0;
     }
+    const focusedId = document.activeElement ? document.activeElement.id : null;
     renderItems();
+    if (focusedId) {
+      const el = document.getElementById(focusedId);
+      if (el) el.focus();
+    }
     saveDraft();
   };
 
@@ -261,10 +266,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     </select>
                 </td>
                 <td>
-                    <input type="number" value="${item.quantity}" min="1" onchange="updateItem(${index}, 'quantity', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <input type="number" id="qty-${index}" value="${item.quantity}" min="1" onchange="updateItem(${index}, 'quantity', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </td>
                 <td>
-                    <input type="number" value="${item.unit_price}" min="0" step="0.01" onchange="updateItem(${index}, 'unit_price', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <input type="number" id="price-${index}" value="${item.unit_price}" min="0" step="0.01" onchange="updateItem(${index}, 'unit_price', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </td>
                 <td class="font-medium">${formatCurrency(itemTotal)}</td>
                 <td>
@@ -300,7 +305,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       items[index][field] = value;
     }
+    const focusedId = document.activeElement ? document.activeElement.id : null;
     renderItems();
+    if (focusedId) {
+      const el = document.getElementById(focusedId);
+      if (el) el.focus();
+    }
     saveDraft();
   };
 
