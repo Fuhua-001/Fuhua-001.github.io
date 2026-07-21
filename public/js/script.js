@@ -911,9 +911,9 @@ document.addEventListener("DOMContentLoaded", () => {
         margin: [10, 10, 15, 10], // Top, Right, Bottom, Left margins (in mm)
         filename: `quotation-${Date.now()}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2, scrollY: 0, y: 0, windowWidth: 900 }, // Fix width to prevent font shrinking
+        html2canvas: { scale: 1.5, scrollY: 0, y: 0, useCORS: true, letterRendering: true },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { mode: ['css', 'legacy'], avoid: 'tr' }, // Avoid breaking inside table rows
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
       };
 
       // Critical fix for html2canvas blank/offset bug
