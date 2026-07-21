@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Custom update function for product selection
   window.updateProductSelection = (index, productName) => {
+    if (items[index].description === productName) return;
     items[index].description = productName;
     const product = window.productsList.find((p) => p.name === productName);
     if (product) {
@@ -243,8 +244,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }).format(amount);
   };
 
+  // Keep track of TomSelect instances to prevent memory leaks
+  window.tomSelectInstances = window.tomSelectInstances || [];
+
   // Render items to the table
   const renderItems = () => {
+    if (window.tomSelectInstances) {
+      window.tomSelectInstances.forEach(ts => {
+        if (ts && typeof ts.destroy === 'function') ts.destroy();
+      });
+      window.tomSelectInstances = [];
+    }
+    
     quoteItemsContainer.innerHTML = "";
     let total = 0;
 
@@ -279,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quoteItemsContainer.appendChild(tr);
 
       // Initialize TomSelect for this row
-      new TomSelect(`#${selectId}`, {
+      const tsInstance = new TomSelect(`#${selectId}`, {
         create: true,
         sortField: { field: "text", direction: "asc" },
         onChange: function(value) {
@@ -288,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       });
+      window.tomSelectInstances.push(tsInstance);
     });
 
     const vat = total * 0.07;
