@@ -247,7 +247,26 @@ document.addEventListener("DOMContentLoaded", () => {
   // Keep track of TomSelect instances to prevent memory leaks
   window.tomSelectInstances = window.tomSelectInstances || [];
 
-  // Render items to the table
+  // Lightweight: only update totals without re-rendering DOM
+  const updateTotals = () => {
+    let total = 0;
+    items.forEach((item, index) => {
+      const itemTotal = item.quantity * item.unit_price;
+      total += itemTotal;
+      const totalCell = document.getElementById('total-' + index);
+      if (totalCell) totalCell.textContent = formatCurrency(itemTotal);
+    });
+    const vat = total * 0.07;
+    const grandTotal = total + vat;
+    const subTotalEl = document.getElementById('sub-total');
+    const vatTotalEl = document.getElementById('vat-total');
+    if (subTotalEl) subTotalEl.textContent = formatCurrency(total);
+    if (vatTotalEl) vatTotalEl.textContent = formatCurrency(vat);
+    if (grandTotalEl) grandTotalEl.textContent = formatCurrency(grandTotal);
+  };
+
+  // Full render: only call when rows are added/removed
+  // (Full) Render items to the table
   const renderItems = () => {
     if (window.tomSelectInstances) {
       window.tomSelectInstances.forEach(ts => {
@@ -282,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>
                     <input type="number" id="price-${index}" value="${item.unit_price}" min="0" step="0.01" onchange="updateItem(${index}, 'unit_price', this.value)" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </td>
-                <td class="font-medium">${formatCurrency(itemTotal)}</td>
+                <td class="font-medium" id="total-${index}">${formatCurrency(itemTotal)}</td>
                 <td>
                     <button type="button" class="btn-delete" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i></button>
                 </td>
@@ -317,12 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       items[index][field] = value;
     }
-    const focusedId = document.activeElement ? document.activeElement.id : null;
-    renderItems();
-    if (focusedId) {
-      const el = document.getElementById(focusedId);
-      if (el) el.focus();
-    }
+    updateTotals();
     saveDraft();
   };
 
