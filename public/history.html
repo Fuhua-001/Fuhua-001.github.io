@@ -13,6 +13,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
       if (!sessionStorage.getItem("isLoggedIn"))
         window.location.href = "login.html";
@@ -118,8 +119,11 @@
       }
 
       td {
-        vertical-align: middle;
+        background-color: var(--card-bg);
       }
+
+      /* PDF Page Break */
+      .html2pdf__page-break { height: 0; margin: 0; padding: 0; border: 0; }
     </style>
   </head>
   <body>
@@ -1384,7 +1388,7 @@
 
               if (chunkIndex > 0) {
                 finalHtml +=
-                  '<div style="height: 0; page-break-before: always; margin: 0; padding: 0; border: 0;"></div>';
+                  '<div class="html2pdf__page-break"></div>';
               }
 
               finalHtml += `
@@ -1634,15 +1638,32 @@
       window.downloadPdf = () => {
         const content = document.getElementById("pdf-preview-content");
         if (!content) return;
-        const win = window.open("", "_blank");
-        win.document.write(
-          `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;font-family:'Prompt','Sarabun',sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact;} @media print { @page { margin: 0; size: A4 portrait; } body { margin: 0; padding: 0; } }</style><link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"></head><body>${content.innerHTML}</body></html>`,
-        );
-        win.document.close();
-        win.focus();
-        setTimeout(() => {
-          win.print();
-        }, 500);
+        
+        const docNoText = content.innerText.match(/PR-\d+-\d+/);
+        const docNo = docNoText ? docNoText[0] : "Quotation";
+        
+        const opt = {
+          margin: 0,
+          filename: `${docNo}.pdf`,
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+          pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+        };
+
+        const btn = document.getElementById("pdf-download-btn");
+        const oldHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังสร้าง PDF...';
+        btn.disabled = true;
+
+        html2pdf()
+          .set(opt)
+          .from(content)
+          .save()
+          .then(() => {
+             btn.innerHTML = oldHtml;
+             btn.disabled = false;
+          });
       };
 
       window.closeIframeModal = () => {
