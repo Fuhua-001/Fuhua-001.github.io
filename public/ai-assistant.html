@@ -149,6 +149,7 @@
                   ผู้ช่วย AI (AI Assistant)
                 </h2>
                 <p
+                  id="ai-subtitle"
                   style="
                     color: var(--text-muted);
                     font-size: 0.95rem;
@@ -494,6 +495,13 @@
             "ตัวอย่าง: เซลส์ชื่อ สมชาย ใจดี รหัสพนักงาน EMP-001 เบอร์โทร 081-111-2222",
         };
 
+        const subtitles = {
+          quote: "พิมพ์คำสั่งให้ AI สร้างใบเสนอราคาให้คุณ",
+          customer: "พิมพ์คำสั่งให้ AI สร้างข้อมูลลูกค้าให้คุณ",
+          product: "พิมพ์คำสั่งให้ AI สร้างข้อมูลสินค้าให้คุณ",
+          employee: "พิมพ์คำสั่งให้ AI สร้างข้อมูลพนักงานให้คุณ",
+        };
+
         const endpoints = {
           quote: "/api/generate-quote",
           customer: "/api/ai-customer",
@@ -516,8 +524,13 @@
         };
 
         aiModeSelect.addEventListener("change", (e) => {
+          const val = e.target.value;
           aiPrompt.placeholder =
-            placeholders[e.target.value] || placeholders.quote;
+            placeholders[val] || placeholders.quote;
+          const subtitleEl = document.getElementById("ai-subtitle");
+          if (subtitleEl) {
+            subtitleEl.innerText = subtitles[val] || subtitles.quote;
+          }
         });
 
         const toast = document.getElementById("toast");
