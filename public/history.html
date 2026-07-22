@@ -828,7 +828,7 @@
         const paginatedData = filteredData.slice(start, end);
 
         paginatedData.forEach((doc) => {
-          const dateObj = new Date(doc.doc_date || doc.created_at);
+          const dateObj = new Date(doc.created_at || doc.doc_date);
           const formattedDate = dateObj.toLocaleDateString("th-TH", {
             year: "numeric",
             month: "short",

@@ -241,7 +241,7 @@ exports.saveQuote = async (req, res) => {
         await conn.query(
           `UPDATE sales_pr 
            SET pic_code=?, customer_code=?, contact_person=?, phone=?, email=?,
-               validity_date=DATE_ADD(CURDATE(), INTERVAL ? DAY), credit_days=?, payment_terms=?, updated_by='Sales Team'
+               validity_date=DATE_ADD(CURDATE(), INTERVAL ? DAY), credit_days=?, payment_terms=?, updated_by='Sales Team', updated_at=NOW()
            WHERE id = ?`,
           [
             c_pic,
@@ -286,9 +286,9 @@ exports.saveQuote = async (req, res) => {
           `INSERT INTO sales_pr 
                 (doc_no, doc_date, pic_code, customer_code, contact_person, 
                 phone, email, validity_date, credit_days, transaction_type, payment_terms, 
-                created_by, updated_by) 
+                created_by, updated_by, created_at, updated_at) 
                 VALUES (?, CURDATE(), ?, ?, ?, ?, ?, DATE_ADD(CURDATE(), 
-                INTERVAL ? DAY), ?, 'Quotation', ?, 'Sales Team', 'Sales Team')`,
+                INTERVAL ? DAY), ?, 'Quotation', ?, 'Sales Team', 'Sales Team', NOW(), NOW())`,
           [
             doc_no,
             c_pic,
@@ -441,14 +441,14 @@ exports.getHistory = async (req, res) => {
     // ใช้ LEFT JOIN และ GROUP BY เพื่อหาผลรวม (total_amount) ของแต่ละบิลใน Query เดียว
     // ดีกว่าการวนลูป Query ย่อย (N+1) ซึ่งจะทำให้ฐานข้อมูลทำงานหนัก
     const query = `
-            SELECT s.id, s.doc_no, s.contact_person as customer_name, s.created_at, 
+            SELECT s.id, s.doc_no, s.contact_person as customer_name, s.doc_date, s.created_at, 
                    COALESCE(SUM(sub.total_amount), 0) as total_amount,
                    e.pic_name as salesperson
             FROM sales_pr s
             LEFT JOIN employees e ON s.pic_code = e.pic_code
             LEFT JOIN sub_sales_pr sub ON s.id = sub.sales_pr_id
-            GROUP BY s.id, s.doc_no, s.contact_person, s.created_at, e.pic_name
-            ORDER BY s.created_at DESC
+            GROUP BY s.id, s.doc_no, s.contact_person, s.doc_date, s.created_at, e.pic_name
+            ORDER BY s.id DESC
         `;
     const [rows] = await db.query(query);
     res.json(rows);

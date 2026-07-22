@@ -623,7 +623,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     .pdf-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; }
                     .pdf-container, .pdf-container * { box-sizing: border-box; }
                     @page { size: A4; margin: 10mm; }
-                    .html2pdf__page-break { height: 0; page-break-before: always; margin: 0; padding: 0; border: 0; }
+                    .html2pdf__page-break { height: 0; margin: 0; padding: 0; border: 0; }
                 </style>
                 <div class="pdf-wrapper">
       `;
@@ -967,7 +967,7 @@ document.addEventListener("DOMContentLoaded", () => {
             customer_name: customerNameInput.value,
             total_amount: total,
             items: items,
-            ai_prompt: aiPrompt.value,
+            ai_prompt: typeof aiPrompt !== "undefined" && aiPrompt ? aiPrompt.value : "",
             credit_days: fCredit ? fCredit.value : 30,
             payment_terms: fPayment ? fPayment.value : "Cash/Transfer",
             pic_code: fSalesRepForm ? fSalesRepForm.value : null,
@@ -1078,7 +1078,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // Reset the AI screen UI
           items = [];
-          aiPrompt.value = "";
+          if (typeof aiPrompt !== "undefined" && aiPrompt) aiPrompt.value = "";
           customerNameInput.value = "";
           renderItems();
           document
