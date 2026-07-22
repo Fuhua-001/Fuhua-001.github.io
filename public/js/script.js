@@ -511,6 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
         canvas.height = 185 * scale;
         const ctx = canvas.getContext("2d");
         ctx.scale(scale, scale);
+        ctx.save(); // บันทึก state ก่อนวาด ป้องกัน state รั่วไปกระทบ canvas อื่น
 
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, 734, 185);
@@ -567,7 +568,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.stroke();
 
         ctx.font = '12px "Prompt", "Sarabun", sans-serif';
-        ctx.fillStyle = "var(--text-main)";
+        ctx.fillStyle = "#333333"; // แก้: Canvas ไม่รองรับ CSS variable, ใช้ hex แทน
         ctx.fillText(
           "( " +
             (salesperson ||
@@ -584,6 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
           170,
         );
 
+        ctx.restore(); // คืน state กลับหลังวาดเสร็จ
         return (
           '<img src="' +
           canvas.toDataURL("image/png") +
@@ -594,9 +596,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Create a printable element HTML
-      let fBase = items.length > 12 ? "11px" : "13px";
-      let fSmall = items.length > 12 ? "9px" : "10px";
-      let pCell = items.length > 12 ? "4px 6px" : "6px 8px";
+      let fBase = "13px"; // ล็อกขนาด font คงที่ ไม่เปลี่ยนตามจำนวนสินค้า
+      let fSmall = "10px"; // ล็อกขนาด font เล็กคงที่
+      let pCell = "6px 8px"; // ล็อก padding cell คงที่
       let lh = "1.25",
         fH2 = "22px",
         fH2s = "20px",

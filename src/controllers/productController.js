@@ -54,14 +54,20 @@ exports.createProduct = async (req, res) => {
  */
 exports.updateProduct = async (req, res) => {
   try {
+    const { id } = req.params;
     const { code, name, unit, selling_price, purchase_price, status } =
       req.body;
-      
+
+    // Validate required params
+    if (!id) {
+      return res.status(400).json({ error: "Product ID is required." });
+    }
+
     if (!code || !name) {
       return res.status(400).json({ error: "Product code and name are required." });
     }
-    
-    await db.query(
+
+    const [result] = await db.query(
       "UPDATE products SET code=?, name=?, unit=?, selling_price=?, purchase_price=?, status=? WHERE id=?",
       [
         code,
@@ -70,9 +76,15 @@ exports.updateProduct = async (req, res) => {
         selling_price,
         purchase_price,
         status || "Active",
-        req.params.id,
+        id,
       ],
     );
+
+    // ตรวจสอบว่า UPDATE กระทบ row จริง
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Product not found." });
+    }
+
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: "Failed", details: err.message });
