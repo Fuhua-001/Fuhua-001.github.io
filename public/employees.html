@@ -29,11 +29,13 @@
           <a href="dashboard.html" class="menu-item"
             ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
           >
-          <a href="ai-assistant.html" class="menu-item"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a>
+          <a href="ai-assistant.html" class="menu-item"
+            ><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a
+          >
           <a href="index.html" class="menu-item"
             ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
           >
-          
+
           <a href="customers.html" class="menu-item"
             ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
           >
@@ -41,7 +43,7 @@
             ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
           >
           <a href="employees.html" class="menu-item active"
-            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC) 👔</h1>
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
           >
           <a href="history.html" class="menu-item"
             ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
@@ -56,15 +58,21 @@
             ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
           >
         </nav>
-        <div class="user-profile" style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
+        <div
+          class="user-profile"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 0.75rem">
             <div class="avatar"><i class="fa-solid fa-user"></i></div>
             <div class="user-info">
               <span class="user-name" id="sidebar-username">Sales Team</span>
               <span class="user-role">Enterprise</span>
             </div>
           </div>
-          
         </div>
       </aside>
 
@@ -96,12 +104,16 @@
                       border-bottom: 2px solid var(--border);
                     "
                   >
-                    <th style="width: 50px; text-align: center;">
-                      <input type="checkbox" id="selectAllEmployees" onchange="toggleSelectAllEmployees(this)">
+                    <th style="width: 50px; text-align: center">
+                      <input
+                        type="checkbox"
+                        id="selectAllEmployees"
+                        onchange="toggleSelectAllEmployees(this)"
+                      />
                     </th>
-                    <th style="min-width: 150px;">รหัสพนักงาน (PIC)</th>
-                    <th style="min-width: 250px;">ชื่อพนักงาน (TH)</th>
-                    <th style="min-width: 250px;">ชื่อพนักงาน (EN)</th>
+                    <th style="min-width: 150px">รหัสพนักงาน (PIC)</th>
+                    <th style="min-width: 250px">ชื่อพนักงาน (TH)</th>
+                    <th style="min-width: 250px">ชื่อพนักงาน (EN)</th>
                     <th style="">เบอร์ติดต่อ</th>
                     <th style="">แผนก</th>
                     <th style="">คีย์เวิร์ด</th>
@@ -119,59 +131,140 @@
             </div>
           </section>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%;">
-            <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="prevEmployeesPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
-              <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">หน้า 1</span>
-              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextEmployeesPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding-top: 1rem;
+              width: 100%;
+            "
+          >
+            <div
+              id="pagination-info"
+              style="color: var(--text-muted); font-size: 0.9rem"
+            >
+              แสดง 0-0 จาก 0 รายการ
             </div>
-            <button class="btn btn-secondary" id="btn-bulk-delete-employees" style="background-color: var(--accent-danger) !important; color: white !important; display: none; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onclick="deleteSelectedEmployees()">
-                <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span id="delete-count-employees">0</span>)
+            <div style="display: flex; gap: 0.5rem; align-items: center">
+              <button
+                class="btn btn-secondary"
+                style="padding: 0.5rem 1rem"
+                onclick="prevEmployeesPage()"
+              >
+                <i class="fa-solid fa-chevron-left"></i> ก่อนหน้า
+              </button>
+              <span
+                id="page-number"
+                style="font-weight: 500; min-width: 60px; text-align: center"
+                >หน้า 1</span
+              >
+              <button
+                class="btn btn-secondary"
+                style="padding: 0.5rem 1rem"
+                onclick="nextEmployeesPage()"
+              >
+                ถัดไป <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <button
+              class="btn btn-secondary"
+              id="btn-bulk-delete-employees"
+              style="
+                background-color: var(--accent-danger) !important;
+                color: white !important;
+                display: none;
+                box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4);
+                animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+              "
+              onclick="deleteSelectedEmployees()"
+            >
+              <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span
+                id="delete-count-employees"
+                >0</span
+              >)
             </button>
           </div>
-
         </div>
       </main>
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div 
-      id="delete-confirm-modal" 
+    <div
+      id="delete-confirm-modal"
       style="
-        display: none; 
-        position: fixed; 
-        top: 0; left: 0; width: 100%; height: 100%; 
-        background: rgba(0,0,0,0.5); 
-        z-index: 10000; 
-        justify-content: center; 
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        justify-content: center;
         align-items: center;
         animation: fadeIn 0.2s ease-out;
       "
     >
-      <div style="
-        background: white; 
-        padding: 2rem; 
-        border-radius: 12px; 
-        width: 90%; 
-        max-width: 400px; 
-        text-align: center;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      ">
-        <div style="font-size: 3rem; color: var(--accent-danger); margin-bottom: 1rem;">
+      <div
+        style="
+          background: white;
+          padding: 2rem;
+          border-radius: 12px;
+          width: 90%;
+          max-width: 400px;
+          text-align: center;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+          animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        "
+      >
+        <div
+          style="
+            font-size: 3rem;
+            color: var(--accent-danger);
+            margin-bottom: 1rem;
+          "
+        >
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
-        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">ยืนยันการลบข้อมูล</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก <span id="delete-confirm-count" style="font-weight: bold; color: var(--accent-danger);">0</span> รายการ? การกระทำนี้ไม่สามารถกู้คืนได้</p>
-        <div style="display: flex; gap: 1rem; justify-content: center;">
-          <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">ยกเลิก</button>
-          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: var(--accent-danger) !important; color: white !important; border: none;">ยืนยันการลบ</button>
+        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem">
+          ยืนยันการลบข้อมูล
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem">
+          คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก
+          <span
+            id="delete-confirm-count"
+            style="font-weight: bold; color: var(--accent-danger)"
+            >0</span
+          >
+          รายการ? การกระทำนี้ไม่สามารถกู้คืนได้
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center">
+          <button
+            class="btn btn-secondary"
+            onclick="
+              document.getElementById('delete-confirm-modal').style.display =
+                'none'
+            "
+            style="flex: 1"
+          >
+            ยกเลิก
+          </button>
+          <button
+            class="btn btn-primary"
+            id="btn-confirm-delete-action"
+            style="
+              flex: 1;
+              background-color: var(--accent-danger) !important;
+              color: white !important;
+              border: none;
+            "
+          >
+            ยืนยันการลบ
+          </button>
         </div>
       </div>
     </div>
-
-
 
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
@@ -219,7 +312,7 @@
             border-bottom: 1px solid var(--border);
           "
         >
-          <h2 id="emp-modal-title" style="margin: 0;">
+          <h2 id="emp-modal-title" style="margin: 0">
             <i class="fa-solid fa-user-tie"></i> เพิ่มพนักงานใหม่
           </h2>
           <button
@@ -256,99 +349,204 @@
               overflow-y: auto;
             "
           >
-          <input type="hidden" id="emp-id" />
+            <input type="hidden" id="emp-id" />
 
-          <div
-            class="input-group"
-            style="display: flex; flex-direction: column; gap: 0.5rem"
-          >
-            <label style="font-weight: 500; font-size: 0.95rem"
-              >รหัสพนักงาน (PIC Code) *</label
+            <div
+              class="input-group"
+              style="display: flex; flex-direction: column; gap: 0.5rem"
             >
-            <input
-              type="text"
-              id="emp-code"
-              class="input-field"
-              required
-              style="
-                padding: 0.75rem;
-                border: 1px solid var(--border);
-                border-radius: 8px;
-                width: 100%;
-                font-family: inherit;
-              "
-            />
-          </div>
+              <label style="font-weight: 500; font-size: 0.95rem"
+                >รหัสพนักงาน (PIC Code) *</label
+              >
+              <input
+                type="text"
+                id="emp-code"
+                class="input-field"
+                required
+                style="
+                  padding: 0.75rem;
+                  border: 1px solid var(--border);
+                  border-radius: 8px;
+                  width: 100%;
+                  font-family: inherit;
+                "
+              />
+            </div>
 
-          <div style="display: flex; gap: 1rem;">
-            <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-              <label style="font-weight: 500; font-size: 0.95rem">ชื่อ (TH) *</label>
-              <input type="text" id="emp-fname-th" class="input-field" required pattern="^[ก-๙\s]+$" title="กรุณากรอกภาษาไทยเท่านั้น" oninput="this.value = this.value.replace(/[^ก-๙\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+            <div style="display: flex; gap: 1rem">
+              <div
+                class="input-group"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5rem;
+                  flex: 1;
+                "
+              >
+                <label style="font-weight: 500; font-size: 0.95rem"
+                  >ชื่อ (TH) *</label
+                >
+                <input
+                  type="text"
+                  id="emp-fname-th"
+                  class="input-field"
+                  required
+                  pattern="^[ก-๙\s]+$"
+                  title="กรุณากรอกภาษาไทยเท่านั้น"
+                  oninput="this.value = this.value.replace(/[^ก-๙\s]/g, '')"
+                  style="
+                    padding: 0.75rem;
+                    border: 1px solid var(--border);
+                    border-radius: 8px;
+                    width: 100%;
+                    font-family: inherit;
+                  "
+                />
+              </div>
+              <div
+                class="input-group"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5rem;
+                  flex: 1;
+                "
+              >
+                <label style="font-weight: 500; font-size: 0.95rem"
+                  >นามสกุล (TH) *</label
+                >
+                <input
+                  type="text"
+                  id="emp-lname-th"
+                  class="input-field"
+                  required
+                  pattern="^[ก-๙\s]+$"
+                  title="กรุณากรอกภาษาไทยเท่านั้น"
+                  oninput="this.value = this.value.replace(/[^ก-๙\s]/g, '')"
+                  style="
+                    padding: 0.75rem;
+                    border: 1px solid var(--border);
+                    border-radius: 8px;
+                    width: 100%;
+                    font-family: inherit;
+                  "
+                />
+              </div>
             </div>
-            <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-              <label style="font-weight: 500; font-size: 0.95rem">นามสกุล (TH) *</label>
-              <input type="text" id="emp-lname-th" class="input-field" required pattern="^[ก-๙\s]+$" title="กรุณากรอกภาษาไทยเท่านั้น" oninput="this.value = this.value.replace(/[^ก-๙\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
-            </div>
-          </div>
 
-          <div style="display: flex; gap: 1rem;">
-            <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-              <label style="font-weight: 500; font-size: 0.95rem">ชื่อ (EN) *</label>
-              <input type="text" id="emp-fname-en" class="input-field" required pattern="^[A-Za-z\s]+$" title="กรุณากรอกภาษาอังกฤษเท่านั้น" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
+            <div style="display: flex; gap: 1rem">
+              <div
+                class="input-group"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5rem;
+                  flex: 1;
+                "
+              >
+                <label style="font-weight: 500; font-size: 0.95rem"
+                  >ชื่อ (EN) *</label
+                >
+                <input
+                  type="text"
+                  id="emp-fname-en"
+                  class="input-field"
+                  required
+                  pattern="^[A-Za-z\s]+$"
+                  title="กรุณากรอกภาษาอังกฤษเท่านั้น"
+                  oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"
+                  style="
+                    padding: 0.75rem;
+                    border: 1px solid var(--border);
+                    border-radius: 8px;
+                    width: 100%;
+                    font-family: inherit;
+                  "
+                />
+              </div>
+              <div
+                class="input-group"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5rem;
+                  flex: 1;
+                "
+              >
+                <label style="font-weight: 500; font-size: 0.95rem"
+                  >นามสกุล (EN) *</label
+                >
+                <input
+                  type="text"
+                  id="emp-lname-en"
+                  class="input-field"
+                  required
+                  pattern="^[A-Za-z\s]+$"
+                  title="กรุณากรอกภาษาอังกฤษเท่านั้น"
+                  oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"
+                  style="
+                    padding: 0.75rem;
+                    border: 1px solid var(--border);
+                    border-radius: 8px;
+                    width: 100%;
+                    font-family: inherit;
+                  "
+                />
+              </div>
             </div>
-            <div class="input-group" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1;">
-              <label style="font-weight: 500; font-size: 0.95rem">นามสกุล (EN) *</label>
-              <input type="text" id="emp-lname-en" class="input-field" required pattern="^[A-Za-z\s]+$" title="กรุณากรอกภาษาอังกฤษเท่านั้น" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; width: 100%; font-family: inherit;" />
-            </div>
-          </div>
 
-          <div
-            class="input-group"
-            style="display: flex; flex-direction: column; gap: 0.5rem"
-          >
-            <label style="font-weight: 500; font-size: 0.95rem"
-              >เบอร์ติดต่อ</label
+            <div
+              class="input-group"
+              style="display: flex; flex-direction: column; gap: 0.5rem"
             >
-            <input
-              type="text"
-              id="emp-phone"
-              class="input-field"
-              maxlength="10"
-              minlength="10"
-              pattern="^0[0-9]{9}$"
-              title="กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (10 หลัก เริ่มต้นด้วย 0)"
-              oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.length > 0 && this.value[0] !== '0') this.value = '0' + this.value;"
-              style="
-                padding: 0.75rem;
-                border: 1px solid var(--border);
-                border-radius: 8px;
-                width: 100%;
-                font-family: inherit;
-              "
-            />
-          </div>
+              <label style="font-weight: 500; font-size: 0.95rem"
+                >เบอร์ติดต่อ</label
+              >
+              <input
+                type="text"
+                id="emp-phone"
+                class="input-field"
+                maxlength="10"
+                minlength="10"
+                pattern="^0[0-9]{9}$"
+                title="กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (10 หลัก เริ่มต้นด้วย 0)"
+                oninput="
+                  this.value = this.value.replace(/[^0-9]/g, '');
+                  if (this.value.length > 0 && this.value[0] !== '0')
+                    this.value = '0' + this.value;
+                "
+                style="
+                  padding: 0.75rem;
+                  border: 1px solid var(--border);
+                  border-radius: 8px;
+                  width: 100%;
+                  font-family: inherit;
+                "
+              />
+            </div>
 
-          <div
-            class="input-group"
-            style="display: flex; flex-direction: column; gap: 0.5rem"
-          >
-            <label style="font-weight: 500; font-size: 0.95rem"
-              >แผนก (Department)</label
+            <div
+              class="input-group"
+              style="display: flex; flex-direction: column; gap: 0.5rem"
             >
-            <input
-              type="text"
-              id="emp-dept"
-              class="input-field"
-              style="
-                padding: 0.75rem;
-                border: 1px solid var(--border);
-                border-radius: 8px;
-                width: 100%;
-                font-family: inherit;
-              "
-            />
+              <label style="font-weight: 500; font-size: 0.95rem"
+                >แผนก (Department)</label
+              >
+              <input
+                type="text"
+                id="emp-dept"
+                class="input-field"
+                style="
+                  padding: 0.75rem;
+                  border: 1px solid var(--border);
+                  border-radius: 8px;
+                  width: 100%;
+                  font-family: inherit;
+                "
+              />
+            </div>
           </div>
-          </div> <!-- End of scrollable area -->
+          <!-- End of scrollable area -->
 
           <div
             style="
@@ -389,6 +587,7 @@
           </div>
         </form>
       </div>
+    </div>
     <script>
       const showToast = (message, isError = false) => {
         const toast = document.getElementById("toast");
@@ -413,7 +612,8 @@
         try {
           const res = await fetch("/api/employees");
           allEmployeesData = await res.json();
-          const maxPage = Math.ceil(allEmployeesData.length / employeesPerPage) || 1;
+          const maxPage =
+            Math.ceil(allEmployeesData.length / employeesPerPage) || 1;
           if (currentEmployeesPage > maxPage) currentEmployeesPage = maxPage;
           renderEmployees();
         } catch (err) {
@@ -425,12 +625,13 @@
       const renderEmployees = () => {
         const tbody = document.getElementById("employees-tbody");
         tbody.innerHTML = "";
-        
+
         if (allEmployeesData.length === 0) {
           tbody.innerHTML =
             '<tr><td colspan="7" style="text-align: center;">ไม่พบข้อมูลพนักงาน</td></tr>';
-          document.getElementById('pagination-info').innerText = 'แสดง 0-0 จาก 0 รายการ';
-          document.getElementById('page-number').innerText = 'หน้า 1';
+          document.getElementById("pagination-info").innerText =
+            "แสดง 0-0 จาก 0 รายการ";
+          document.getElementById("page-number").innerText = "หน้า 1";
           return;
         }
 
@@ -455,12 +656,14 @@
                       </tr>
                   `;
         });
-        
-        document.getElementById('pagination-info').innerText = `แสดง ${start + 1}-${end} จาก ${allEmployeesData.length} รายการ`;
-        document.getElementById('page-number').innerText = `หน้า ${currentEmployeesPage}`;
-        
-        const selectAll = document.getElementById('selectAllEmployees');
-        if(selectAll) selectAll.checked = false;
+
+        document.getElementById("pagination-info").innerText =
+          `แสดง ${start + 1}-${end} จาก ${allEmployeesData.length} รายการ`;
+        document.getElementById("page-number").innerText =
+          `หน้า ${currentEmployeesPage}`;
+
+        const selectAll = document.getElementById("selectAllEmployees");
+        if (selectAll) selectAll.checked = false;
         toggleEmployeeDeleteBtn();
       };
 
@@ -479,19 +682,21 @@
       };
 
       window.toggleSelectAllEmployees = (source) => {
-        const checkboxes = document.querySelectorAll('.employee-checkbox');
-        checkboxes.forEach(cb => cb.checked = source.checked);
+        const checkboxes = document.querySelectorAll(".employee-checkbox");
+        checkboxes.forEach((cb) => (cb.checked = source.checked));
         toggleEmployeeDeleteBtn();
       };
 
       window.toggleEmployeeDeleteBtn = () => {
-        const checkboxes = document.querySelectorAll('.employee-checkbox:checked');
-        const btn = document.getElementById('btn-bulk-delete-employees');
-        const countSpan = document.getElementById('delete-count-employees');
-        if(btn) {
+        const checkboxes = document.querySelectorAll(
+          ".employee-checkbox:checked",
+        );
+        const btn = document.getElementById("btn-bulk-delete-employees");
+        const countSpan = document.getElementById("delete-count-employees");
+        if (btn) {
           if (checkboxes.length > 0) {
             btn.style.display = "inline-flex";
-            if(countSpan) countSpan.innerText = checkboxes.length;
+            if (countSpan) countSpan.innerText = checkboxes.length;
           } else {
             btn.style.display = "none";
           }
@@ -499,94 +704,126 @@
       };
 
       window.deleteSelectedEmployees = async () => {
-        const checkboxes = document.querySelectorAll('.employee-checkbox:checked');
+        const checkboxes = document.querySelectorAll(
+          ".employee-checkbox:checked",
+        );
         if (checkboxes.length === 0) return;
-        
-        document.getElementById('delete-confirm-count').innerText = checkboxes.length;
-        document.getElementById('delete-confirm-modal').style.display = 'flex';
-        
-        document.getElementById('btn-confirm-delete-action').onclick = async () => {
-            document.getElementById('delete-confirm-modal').style.display = 'none';
+
+        document.getElementById("delete-confirm-count").innerText =
+          checkboxes.length;
+        document.getElementById("delete-confirm-modal").style.display = "flex";
+
+        document.getElementById("btn-confirm-delete-action").onclick =
+          async () => {
+            document.getElementById("delete-confirm-modal").style.display =
+              "none";
             let successCount = 0;
-            const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
+            const userQuery =
+              "?user=" +
+              encodeURIComponent(
+                sessionStorage.getItem("currentUser") || "Unknown",
+              );
             for (const cb of checkboxes) {
-                try {
-                    const res = await fetch("/api/employees/" + cb.value + userQuery, { method: "DELETE" });
-                    if (res.ok) successCount++;
-                } catch(e) {}
+              try {
+                const res = await fetch(
+                  "/api/employees/" + cb.value + userQuery,
+                  { method: "DELETE" },
+                );
+                if (res.ok) successCount++;
+              } catch (e) {}
             }
             if (successCount > 0) {
-                showToast(`ลบข้อมูลสำเร็จ ${successCount} รายการ`, "success");
+              showToast(`ลบข้อมูลสำเร็จ ${successCount} รายการ`, "success");
             }
-            const selectAll = document.getElementById('selectAllEmployees');
-            if(selectAll) selectAll.checked = false;
+            const selectAll = document.getElementById("selectAllEmployees");
+            if (selectAll) selectAll.checked = false;
             toggleEmployeeDeleteBtn();
             fetchEmployees();
+          };
+      };
 
-        // Auto-fill from AI Assistant
-        const draftEmployeeData = sessionStorage.getItem('draftEmployeeData');
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchEmployees();
+
+        // Auto-fill from AI Assistant (draftEmployeeData)
+        const draftEmployeeData = sessionStorage.getItem("draftEmployeeData");
         if (draftEmployeeData) {
-            try {
-                const data = JSON.parse(draftEmployeeData);
-                sessionStorage.removeItem('draftEmployeeData');
-                
-                document.getElementById('emp-id').value = "";
-                if(document.getElementById('emp-code')) document.getElementById('emp-code').value = data.pic_code || "";
-                
-                if (data.pic_name) {
-                   const parts = data.pic_name.trim().split(/s+/);
-                   if(document.getElementById('emp-fname-th')) document.getElementById('emp-fname-th').value = parts[0] || "";
-                   if(document.getElementById('emp-lname-th')) document.getElementById('emp-lname-th').value = parts.slice(1).join(" ") || "";
-                }
-                
-                if (data.pic_name_eng) {
-                   const parts = data.pic_name_eng.trim().split(/s+/);
-                   if(document.getElementById('emp-fname-en')) document.getElementById('emp-fname-en').value = parts[0] || "";
-                   if(document.getElementById('emp-lname-en')) document.getElementById('emp-lname-en').value = parts.slice(1).join(" ") || "";
-                }
-                
-                if(document.getElementById('emp-phone')) document.getElementById('emp-phone').value = data.contact_number || "";
-                if(document.getElementById('emp-dept')) document.getElementById('emp-dept').value = data.department || "";
-                
-                
-                // Auto-save after a short delay for visual feedback
-                setTimeout(() => {
-                    const form = document.getElementById('emp-form');
-                    if(form) form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-                }, 800);
-
-                document.getElementById('emp-modal-title').innerHTML = '<i class="fa-solid fa-user-plus"></i> เพิ่มพนักงาน (จาก AI)';
-                document.getElementById('emp-modal').classList.remove('hidden');
-            } catch(e) { console.error(e); }
+          try {
+            const data = JSON.parse(draftEmployeeData);
+            sessionStorage.removeItem("draftEmployeeData");
+            document.getElementById("emp-id").value = "";
+            if (document.getElementById("emp-code"))
+              document.getElementById("emp-code").value = data.pic_code || "";
+            if (data.pic_name) {
+              const parts = data.pic_name.trim().split(/\s+/);
+              if (document.getElementById("emp-fname-th"))
+                document.getElementById("emp-fname-th").value = parts[0] || "";
+              if (document.getElementById("emp-lname-th"))
+                document.getElementById("emp-lname-th").value =
+                  parts.slice(1).join(" ") || "";
+            }
+            if (data.pic_name_eng) {
+              const parts = data.pic_name_eng.trim().split(/\s+/);
+              if (document.getElementById("emp-fname-en"))
+                document.getElementById("emp-fname-en").value = parts[0] || "";
+              if (document.getElementById("emp-lname-en"))
+                document.getElementById("emp-lname-en").value =
+                  parts.slice(1).join(" ") || "";
+            }
+            if (document.getElementById("emp-phone"))
+              document.getElementById("emp-phone").value =
+                data.contact_number || "";
+            if (document.getElementById("emp-dept"))
+              document.getElementById("emp-dept").value = data.department || "";
+            document.getElementById("btn-delete-employee").style.display =
+              "none";
+            document.getElementById("emp-modal-title").innerHTML =
+              '<i class="fa-solid fa-user-plus"></i> เพิ่มพนักงาน (จาก AI)';
+            document.getElementById("emp-modal").classList.remove("hidden");
+            document.getElementById("emp-modal").style.display = "flex";
+            setTimeout(() => {
+              const form = document.getElementById("emp-form");
+              if (form)
+                form.dispatchEvent(
+                  new Event("submit", { cancelable: true, bubbles: true }),
+                );
+            }, 800);
+          } catch (e) {
+            console.error(e);
+          }
         }
 
-
+        // Auto-fill from AI Assistant (aiEmployeeData)
         const aiDataRaw = sessionStorage.getItem("aiEmployeeData");
         if (aiDataRaw) {
           try {
             const data = JSON.parse(aiDataRaw);
             sessionStorage.removeItem("aiEmployeeData");
-            if(data.pic_code) document.getElementById('emp-code').value = data.pic_code;
-            if(data.pic_name) {
-               const parts = data.pic_name.split(' ');
-               document.getElementById('emp-fname-th').value = parts[0] || '';
-               document.getElementById('emp-lname-th').value = parts.slice(1).join(' ') || '';
+            if (data.pic_code)
+              document.getElementById("emp-code").value = data.pic_code;
+            if (data.pic_name) {
+              const parts = data.pic_name.trim().split(/\s+/);
+              document.getElementById("emp-fname-th").value = parts[0] || "";
+              document.getElementById("emp-lname-th").value =
+                parts.slice(1).join(" ") || "";
             }
-            if(data.pic_name_eng) {
-               const parts = data.pic_name_eng.split(' ');
-               document.getElementById('emp-fname-en').value = parts[0] || '';
-               document.getElementById('emp-lname-en').value = parts.slice(1).join(' ') || '';
+            if (data.pic_name_eng) {
+              const parts = data.pic_name_eng.trim().split(/\s+/);
+              document.getElementById("emp-fname-en").value = parts[0] || "";
+              document.getElementById("emp-lname-en").value =
+                parts.slice(1).join(" ") || "";
             }
-            if(data.contact_number) document.getElementById('emp-tel').value = data.contact_number;
+            if (data.contact_number)
+              document.getElementById("emp-phone").value = data.contact_number;
+            document.getElementById("btn-delete-employee").style.display =
+              "none";
+            document.getElementById("emp-modal-title").innerHTML =
+              '<i class="fa-solid fa-user-plus"></i> เพิ่มพนักงาน (จาก AI)';
+            document.getElementById("emp-modal").classList.remove("hidden");
+            document.getElementById("emp-modal").style.display = "flex";
             showToast("โหลดข้อมูลจาก AI สำเร็จ กรุณาตรวจสอบและกดบันทึก");
-          } catch(e) {}
+          } catch (e) {}
         }
-
-        };
-      };
-
-      document.addEventListener("DOMContentLoaded", () => {
-        fetchEmployees();
       });
 
       window.openEmpModal = () => {
@@ -601,7 +838,7 @@
         document.getElementById("emp-lname-en").value = "";
         document.getElementById("emp-modal").style.display = "flex";
         document.getElementById("emp-modal").classList.remove("hidden");
-      }
+      };
 
       function closeEmpModal() {
         document.getElementById("emp-modal").style.display = "none";
@@ -611,16 +848,17 @@
       window.editEmp = (emp) => {
         document.getElementById("emp-modal-title").innerHTML =
           '<i class="fa-solid fa-pen-to-square"></i> แก้ไขพนักงาน';
-        document.getElementById("btn-delete-employee").style.display = "inline-flex";
+        document.getElementById("btn-delete-employee").style.display =
+          "inline-flex";
         document.getElementById("emp-id").value = emp.id;
         document.getElementById("emp-code").value = emp.pic_code;
-        
+
         let fname_th = emp.pic_name || "";
         let lname_th = "";
         if (fname_th.includes(" ")) {
-            const parts = fname_th.split(" ");
-            fname_th = parts[0];
-            lname_th = parts.slice(1).join(" ");
+          const parts = fname_th.split(" ");
+          fname_th = parts[0];
+          lname_th = parts.slice(1).join(" ");
         }
         document.getElementById("emp-fname-th").value = fname_th;
         document.getElementById("emp-lname-th").value = lname_th;
@@ -628,9 +866,9 @@
         let fname_en = emp.pic_name_eng || "";
         let lname_en = "";
         if (fname_en.includes(" ")) {
-            const parts = fname_en.split(" ");
-            fname_en = parts[0];
-            lname_en = parts.slice(1).join(" ");
+          const parts = fname_en.split(" ");
+          fname_en = parts[0];
+          lname_en = parts.slice(1).join(" ");
         }
         document.getElementById("emp-fname-en").value = fname_en;
         document.getElementById("emp-lname-en").value = lname_en;
@@ -646,24 +884,33 @@
         const fname = document.getElementById("emp-fname-th").value;
         const lname = document.getElementById("emp-lname-th").value;
         const name = `${fname} ${lname}`.trim();
-        
-        document.getElementById('delete-confirm-count').innerHTML = `พนักงาน ("${name}")`;
-        document.getElementById('delete-confirm-modal').style.display = 'flex';
-        
-        document.getElementById('btn-confirm-delete-action').onclick = async () => {
-          document.getElementById('delete-confirm-modal').style.display = 'none';
-          try {
-            const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
-            const res = await fetch(`/api/employees/${id}${userQuery}`, { method: "DELETE" });
-            if (res.ok) {
-              showToast("ลบพนักงานเรียบร้อย");
-              closeEmpModal();
-              fetchEmployees();
-            } else throw new Error("Delete failed");
-          } catch (err) {
-            alert("ไม่สามารถลบข้อมูลได้");
-          }
-        };
+
+        document.getElementById("delete-confirm-count").innerHTML =
+          `พนักงาน ("${name}")`;
+        document.getElementById("delete-confirm-modal").style.display = "flex";
+
+        document.getElementById("btn-confirm-delete-action").onclick =
+          async () => {
+            document.getElementById("delete-confirm-modal").style.display =
+              "none";
+            try {
+              const userQuery =
+                "?user=" +
+                encodeURIComponent(
+                  sessionStorage.getItem("currentUser") || "Unknown",
+                );
+              const res = await fetch(`/api/employees/${id}${userQuery}`, {
+                method: "DELETE",
+              });
+              if (res.ok) {
+                showToast("ลบพนักงานเรียบร้อย");
+                closeEmpModal();
+                fetchEmployees();
+              } else throw new Error("Delete failed");
+            } catch (err) {
+              alert("ไม่สามารถลบข้อมูลได้");
+            }
+          };
       };
 
       document
@@ -671,11 +918,11 @@
         .addEventListener("submit", async (e) => {
           e.preventDefault();
           const id = document.getElementById("emp-id").value;
-          
+
           const fname_th = document.getElementById("emp-fname-th").value.trim();
           const lname_th = document.getElementById("emp-lname-th").value.trim();
           const pic_name = `${fname_th} ${lname_th}`.trim();
-          
+
           const fname_en = document.getElementById("emp-fname-en").value.trim();
           const lname_en = document.getElementById("emp-lname-en").value.trim();
           const pic_name_eng = `${fname_en} ${lname_en}`.trim();
@@ -689,8 +936,14 @@
           };
 
           const method = id ? "PUT" : "POST";
-          const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
-          const url = id ? `/api/employees/${id}${userQuery}` : `/api/employees${userQuery}`;
+          const userQuery =
+            "?user=" +
+            encodeURIComponent(
+              sessionStorage.getItem("currentUser") || "Unknown",
+            );
+          const url = id
+            ? `/api/employees/${id}${userQuery}`
+            : `/api/employees${userQuery}`;
 
           try {
             const res = await fetch(url, {
@@ -719,5 +972,3 @@
     </script>
   </body>
 </html>
-
-

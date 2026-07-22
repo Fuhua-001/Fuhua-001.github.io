@@ -30,11 +30,13 @@
           <a href="dashboard.html" class="menu-item"
             ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
           >
-          <a href="ai-assistant.html" class="menu-item"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a>
+          <a href="ai-assistant.html" class="menu-item"
+            ><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a
+          >
           <a href="index.html" class="menu-item"
             ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
           >
-          
+
           <a href="customers.html" class="menu-item active"
             ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
           >
@@ -57,15 +59,21 @@
             ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
           >
         </nav>
-        <div class="user-profile" style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
+        <div
+          class="user-profile"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 0.75rem">
             <div class="avatar"><i class="fa-solid fa-user"></i></div>
             <div class="user-info">
               <span class="user-name" id="sidebar-username">Sales Team</span>
               <span class="user-role">Enterprise</span>
             </div>
           </div>
-          
         </div>
       </aside>
 
@@ -87,11 +95,17 @@
                 <i class="fa-solid fa-users"></i> รายชื่อลูกค้า/ผู้ขายในระบบ
               </h2>
             </div>
-            
+
             <div class="table-controls">
               <div class="search-bar">
                 <i class="fa-solid fa-search"></i>
-                <input type="text" id="search-customers" placeholder="ค้นหาชื่อ, รหัส, อีเมล..." oninput="handleSearchCustomers()" aria-label="ค้นหาลูกค้า">
+                <input
+                  type="text"
+                  id="search-customers"
+                  placeholder="ค้นหาชื่อ, รหัส, อีเมล..."
+                  oninput="handleSearchCustomers()"
+                  aria-label="ค้นหาลูกค้า"
+                />
               </div>
             </div>
 
@@ -106,33 +120,23 @@
                       border-bottom: 2px solid var(--border);
                     "
                   >
-                    <th style="width: 50px; text-align: center;">
-                      <input type="checkbox" id="selectAllCustomers" onchange="toggleSelectAllCustomers(this)">
+                    <th style="width: 50px; text-align: center">
+                      <input
+                        type="checkbox"
+                        id="selectAllCustomers"
+                        onchange="toggleSelectAllCustomers(this)"
+                      />
                     </th>
-                    <th style="white-space: nowrap">
-                      รหัสลูกค้า/ผู้ขาย
-                    </th>
-                    <th style="min-width: 150px">
-                      ชื่อบริษัท/ลูกค้า/ผู้ขาย
-                    </th>
-                    <th style="white-space: nowrap">
-                      กลุ่มลูกค้า/ผู้ขาย
-                    </th>
+                    <th style="white-space: nowrap">รหัสลูกค้า/ผู้ขาย</th>
+                    <th style="min-width: 150px">ชื่อบริษัท/ลูกค้า/ผู้ขาย</th>
+                    <th style="white-space: nowrap">กลุ่มลูกค้า/ผู้ขาย</th>
                     <th style="min-width: 200px">ที่อยู่</th>
-                    <th style="white-space: nowrap">
-                      เลขผู้เสียภาษี
-                    </th>
-                    <th style="white-space: nowrap">
-                      ผู้ติดต่อ
-                    </th>
+                    <th style="white-space: nowrap">เลขผู้เสียภาษี</th>
+                    <th style="white-space: nowrap">ผู้ติดต่อ</th>
                     <th style="">อีเมล</th>
                     <th style="white-space: nowrap">เบอร์โทร</th>
-                    <th style="white-space: nowrap">
-                      เครดิต (วัน)
-                    </th>
-                    <th style="white-space: nowrap">
-                      ผู้ดูแล (PIC)
-                    </th>
+                    <th style="white-space: nowrap">เครดิต (วัน)</th>
+                    <th style="white-space: nowrap">ผู้ดูแล (PIC)</th>
                     <th style="" class="sticky-manage">จัดการ</th>
                   </tr>
                 </thead>
@@ -147,59 +151,140 @@
             </div>
           </section>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%;">
-            <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="prevCustomersPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
-              <span id="page-number" style="font-weight: 500; min-width: 60px; text-align: center;">หน้า 1</span>
-              <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="nextCustomersPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding-top: 1rem;
+              width: 100%;
+            "
+          >
+            <div
+              id="pagination-info"
+              style="color: var(--text-muted); font-size: 0.9rem"
+            >
+              แสดง 0-0 จาก 0 รายการ
             </div>
-            <button class="btn btn-secondary" id="btn-bulk-delete-customers" style="background-color: var(--accent-danger) !important; color: white !important; display: none; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onclick="deleteSelectedCustomers()">
-                <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span id="delete-count-customers">0</span>)
+            <div style="display: flex; gap: 0.5rem; align-items: center">
+              <button
+                class="btn btn-secondary"
+                style="padding: 0.5rem 1rem"
+                onclick="prevCustomersPage()"
+              >
+                <i class="fa-solid fa-chevron-left"></i> ก่อนหน้า
+              </button>
+              <span
+                id="page-number"
+                style="font-weight: 500; min-width: 60px; text-align: center"
+                >หน้า 1</span
+              >
+              <button
+                class="btn btn-secondary"
+                style="padding: 0.5rem 1rem"
+                onclick="nextCustomersPage()"
+              >
+                ถัดไป <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <button
+              class="btn btn-secondary"
+              id="btn-bulk-delete-customers"
+              style="
+                background-color: var(--accent-danger) !important;
+                color: white !important;
+                display: none;
+                box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4);
+                animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+              "
+              onclick="deleteSelectedCustomers()"
+            >
+              <i class="fa-solid fa-trash"></i> ลบข้อมูลที่เลือก (<span
+                id="delete-count-customers"
+                >0</span
+              >)
             </button>
           </div>
-
         </div>
       </main>
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div 
-      id="delete-confirm-modal" 
+    <div
+      id="delete-confirm-modal"
       style="
-        display: none; 
-        position: fixed; 
-        top: 0; left: 0; width: 100%; height: 100%; 
-        background: rgba(0,0,0,0.5); 
-        z-index: 10000; 
-        justify-content: center; 
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        justify-content: center;
         align-items: center;
         animation: fadeIn 0.2s ease-out;
       "
     >
-      <div style="
-        background: white; 
-        padding: 2rem; 
-        border-radius: 12px; 
-        width: 90%; 
-        max-width: 400px; 
-        text-align: center;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      ">
-        <div style="font-size: 3rem; color: var(--accent-danger); margin-bottom: 1rem;">
+      <div
+        style="
+          background: white;
+          padding: 2rem;
+          border-radius: 12px;
+          width: 90%;
+          max-width: 400px;
+          text-align: center;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+          animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        "
+      >
+        <div
+          style="
+            font-size: 3rem;
+            color: var(--accent-danger);
+            margin-bottom: 1rem;
+          "
+        >
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
-        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">ยืนยันการลบข้อมูล</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก <span id="delete-confirm-count" style="font-weight: bold; color: var(--accent-danger);">0</span> รายการ? การกระทำนี้ไม่สามารถกู้คืนได้</p>
-        <div style="display: flex; gap: 1rem; justify-content: center;">
-          <button class="btn btn-secondary" onclick="document.getElementById('delete-confirm-modal').style.display='none'" style="flex: 1;">ยกเลิก</button>
-          <button class="btn btn-primary" id="btn-confirm-delete-action" style="flex: 1; background-color: var(--accent-danger) !important; color: white !important; border: none;">ยืนยันการลบ</button>
+        <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem">
+          ยืนยันการลบข้อมูล
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem">
+          คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลที่เลือก
+          <span
+            id="delete-confirm-count"
+            style="font-weight: bold; color: var(--accent-danger)"
+            >0</span
+          >
+          รายการ? การกระทำนี้ไม่สามารถกู้คืนได้
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center">
+          <button
+            class="btn btn-secondary"
+            onclick="
+              document.getElementById('delete-confirm-modal').style.display =
+                'none'
+            "
+            style="flex: 1"
+          >
+            ยกเลิก
+          </button>
+          <button
+            class="btn btn-primary"
+            id="btn-confirm-delete-action"
+            style="
+              flex: 1;
+              background-color: var(--accent-danger) !important;
+              color: white !important;
+              border: none;
+            "
+          >
+            ยืนยันการลบ
+          </button>
         </div>
       </div>
     </div>
-
-
 
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
@@ -386,7 +471,8 @@
           </button>
         </div>
       </div>
-    </div><!-- /customer-modal -->
+    </div>
+    <!-- /customer-modal -->
 
     <script src="js/script.js?v=4"></script>
     <script>
@@ -398,7 +484,9 @@
       let searchQuery = "";
 
       const handleSearchCustomers = () => {
-        searchQuery = document.getElementById("search-customers").value.toLowerCase();
+        searchQuery = document
+          .getElementById("search-customers")
+          .value.toLowerCase();
         currentCustomersPage = 1;
         renderCustomers();
       };
@@ -408,7 +496,8 @@
         try {
           const res = await fetch("/api/customers");
           allCustomers = await res.json();
-          const maxPage = Math.ceil(allCustomers.length / customersPerPage) || 1;
+          const maxPage =
+            Math.ceil(allCustomers.length / customersPerPage) || 1;
           if (currentCustomersPage > maxPage) currentCustomersPage = maxPage;
           renderCustomers();
         } catch (err) {
@@ -420,27 +509,32 @@
       const renderCustomers = () => {
         const tbody = document.getElementById("customers-tbody");
         tbody.innerHTML = "";
-        
+
         let filteredCustomers = allCustomers;
         if (searchQuery) {
-          filteredCustomers = allCustomers.filter(c => 
-            (c.name && c.name.toLowerCase().includes(searchQuery)) ||
-            (c.code && c.code.toLowerCase().includes(searchQuery)) ||
-            (c.email && c.email.toLowerCase().includes(searchQuery)) ||
-            (c.tax_id && c.tax_id.toLowerCase().includes(searchQuery))
+          filteredCustomers = allCustomers.filter(
+            (c) =>
+              (c.name && c.name.toLowerCase().includes(searchQuery)) ||
+              (c.code && c.code.toLowerCase().includes(searchQuery)) ||
+              (c.email && c.email.toLowerCase().includes(searchQuery)) ||
+              (c.tax_id && c.tax_id.toLowerCase().includes(searchQuery)),
           );
         }
 
         if (filteredCustomers.length === 0) {
           tbody.innerHTML =
             '<tr><td colspan="12" style="text-align: center; padding: 2rem; color: var(--text-muted);">ไม่พบข้อมูลที่ค้นหา</td></tr>';
-          document.getElementById('pagination-info').innerText = 'แสดง 0-0 จาก 0 รายการ';
-          document.getElementById('page-number').innerText = 'หน้า 1';
+          document.getElementById("pagination-info").innerText =
+            "แสดง 0-0 จาก 0 รายการ";
+          document.getElementById("page-number").innerText = "หน้า 1";
           return;
         }
 
         const start = (currentCustomersPage - 1) * customersPerPage;
-        const end = Math.min(start + customersPerPage, filteredCustomers.length);
+        const end = Math.min(
+          start + customersPerPage,
+          filteredCustomers.length,
+        );
         const paginatedData = filteredCustomers.slice(start, end);
 
         paginatedData.forEach((cus, index) => {
@@ -464,12 +558,14 @@
                       </tr>
                   `;
         });
-        
-        document.getElementById('pagination-info').innerText = `แสดง ${start + 1}-${end} จาก ${filteredCustomers.length} รายการ`;
-        document.getElementById('page-number').innerText = `หน้า ${currentCustomersPage}`;
-        
-        const selectAll = document.getElementById('selectAllCustomers');
-        if(selectAll) selectAll.checked = false;
+
+        document.getElementById("pagination-info").innerText =
+          `แสดง ${start + 1}-${end} จาก ${filteredCustomers.length} รายการ`;
+        document.getElementById("page-number").innerText =
+          `หน้า ${currentCustomersPage}`;
+
+        const selectAll = document.getElementById("selectAllCustomers");
+        if (selectAll) selectAll.checked = false;
         toggleCustomerDeleteBtn();
       };
 
@@ -483,33 +579,39 @@
       window.nextCustomersPage = () => {
         let filteredCustomers = allCustomers;
         if (searchQuery) {
-          filteredCustomers = allCustomers.filter(c => 
-            (c.name && c.name.toLowerCase().includes(searchQuery)) ||
-            (c.code && c.code.toLowerCase().includes(searchQuery)) ||
-            (c.email && c.email.toLowerCase().includes(searchQuery)) ||
-            (c.tax_id && c.tax_id.toLowerCase().includes(searchQuery))
+          filteredCustomers = allCustomers.filter(
+            (c) =>
+              (c.name && c.name.toLowerCase().includes(searchQuery)) ||
+              (c.code && c.code.toLowerCase().includes(searchQuery)) ||
+              (c.email && c.email.toLowerCase().includes(searchQuery)) ||
+              (c.tax_id && c.tax_id.toLowerCase().includes(searchQuery)),
           );
         }
-        if (currentCustomersPage * customersPerPage < filteredCustomers.length) {
+        if (
+          currentCustomersPage * customersPerPage <
+          filteredCustomers.length
+        ) {
           currentCustomersPage++;
           renderCustomers();
         }
       };
 
       window.toggleSelectAllCustomers = (source) => {
-        const checkboxes = document.querySelectorAll('.customer-checkbox');
-        checkboxes.forEach(cb => cb.checked = source.checked);
+        const checkboxes = document.querySelectorAll(".customer-checkbox");
+        checkboxes.forEach((cb) => (cb.checked = source.checked));
         toggleCustomerDeleteBtn();
       };
 
       window.toggleCustomerDeleteBtn = () => {
-        const checkboxes = document.querySelectorAll('.customer-checkbox:checked');
-        const btn = document.getElementById('btn-bulk-delete-customers');
-        const countSpan = document.getElementById('delete-count-customers');
-        if(btn) {
+        const checkboxes = document.querySelectorAll(
+          ".customer-checkbox:checked",
+        );
+        const btn = document.getElementById("btn-bulk-delete-customers");
+        const countSpan = document.getElementById("delete-count-customers");
+        if (btn) {
           if (checkboxes.length > 0) {
             btn.style.display = "inline-flex";
-            if(countSpan) countSpan.innerText = checkboxes.length;
+            if (countSpan) countSpan.innerText = checkboxes.length;
           } else {
             btn.style.display = "none";
           }
@@ -517,75 +619,42 @@
       };
 
       window.deleteSelectedCustomers = async () => {
-        const checkboxes = document.querySelectorAll('.customer-checkbox:checked');
+        const checkboxes = document.querySelectorAll(
+          ".customer-checkbox:checked",
+        );
         if (checkboxes.length === 0) return;
-        
-        document.getElementById('delete-confirm-count').innerText = checkboxes.length;
-        document.getElementById('delete-confirm-modal').style.display = 'flex';
-        
-        document.getElementById('btn-confirm-delete-action').onclick = async () => {
-            document.getElementById('delete-confirm-modal').style.display = 'none';
+
+        document.getElementById("delete-confirm-count").innerText =
+          checkboxes.length;
+        document.getElementById("delete-confirm-modal").style.display = "flex";
+
+        document.getElementById("btn-confirm-delete-action").onclick =
+          async () => {
+            document.getElementById("delete-confirm-modal").style.display =
+              "none";
             let successCount = 0;
-            const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
+            const userQuery =
+              "?user=" +
+              encodeURIComponent(
+                sessionStorage.getItem("currentUser") || "Unknown",
+              );
             for (const cb of checkboxes) {
-                try {
-                    const res = await fetch("/api/customers/" + cb.value + userQuery, { method: "DELETE" });
-                    if (res.ok) successCount++;
-                } catch(e) {}
+              try {
+                const res = await fetch(
+                  "/api/customers/" + cb.value + userQuery,
+                  { method: "DELETE" },
+                );
+                if (res.ok) successCount++;
+              } catch (e) {}
             }
             if (successCount > 0) {
-                showToast(`ลบข้อมูลสำเร็จ ${successCount} รายการ`);
+              showToast(`ลบข้อมูลสำเร็จ ${successCount} รายการ`);
             }
-            const selectAll = document.getElementById('selectAllCustomers');
-            if(selectAll) selectAll.checked = false;
+            const selectAll = document.getElementById("selectAllCustomers");
+            if (selectAll) selectAll.checked = false;
             toggleCustomerDeleteBtn();
             fetchCustomers();
-
-        // Auto-fill from AI Assistant
-        const draftCustomerData = sessionStorage.getItem('draftCustomerData');
-        if (draftCustomerData) {
-            try {
-                const data = JSON.parse(draftCustomerData);
-                sessionStorage.removeItem('draftCustomerData');
-                
-                document.getElementById('cus-id').value = "";
-                if(document.getElementById('cus-name')) document.getElementById('cus-name').value = data.name || "";
-                if(document.getElementById('cus-tax-id')) document.getElementById('cus-tax-id').value = data.tax_id || "";
-                if(document.getElementById('cus-contact')) document.getElementById('cus-contact').value = data.contact_person || "";
-                if(document.getElementById('cus-email')) document.getElementById('cus-email').value = data.email || "";
-                if(document.getElementById('cus-phone')) document.getElementById('cus-phone').value = data.phone || "";
-                if(document.getElementById('cus-address')) document.getElementById('cus-address').value = data.address || "";
-                if(document.getElementById('cus-pic')) document.getElementById('cus-pic').value = data.pic_code || "";
-                
-                
-                // Auto-save after a short delay for visual feedback
-                setTimeout(() => {
-                    const form = document.getElementById('customer-form');
-                    if(form) form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-                }, 800);
-
-                document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-user-plus"></i> เพิ่มข้อมูลลูกค้า (จาก AI)';
-                document.getElementById('customer-modal').classList.remove('hidden');
-            } catch(e) { console.error(e); }
-        }
-
-
-        const aiDataRaw = sessionStorage.getItem("aiCustomerData");
-        if (aiDataRaw) {
-          try {
-            const data = JSON.parse(aiDataRaw);
-            sessionStorage.removeItem("aiCustomerData");
-            if(data.name) document.getElementById('cus-name').value = data.name;
-            if(data.contact_person) document.getElementById('cus-contact').value = data.contact_person;
-            if(data.phone) document.getElementById('cus-phone').value = data.phone;
-            if(data.email) document.getElementById('cus-email').value = data.email;
-            if(data.address) document.getElementById('cus-address').value = data.address;
-            if(data.pic_code) document.getElementById('cus-pic').value = data.pic_code;
-            showToast("โหลดข้อมูลจาก AI สำเร็จ กรุณาตรวจสอบและกดบันทึก");
-          } catch(e) {}
-        }
-
-        };
+          };
       };
 
       window.openEditCustomer = (index) => {
@@ -607,7 +676,8 @@
         document.getElementById("cus-industry").value = cus.industry_type || "";
         document.getElementById("cus-remark").value = cus.remark || "";
 
-        document.getElementById("btn-delete-customer").style.display = "inline-flex";
+        document.getElementById("btn-delete-customer").style.display =
+          "inline-flex";
         document.getElementById("modal-title").innerHTML =
           '<i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลลูกค้า';
         document.getElementById("customer-modal").classList.remove("hidden");
@@ -624,28 +694,35 @@
         const name = document.getElementById("cus-name").value;
         if (!id) return;
 
-        document.getElementById('delete-confirm-count').innerHTML = `ลูกค้ารายนี้ ("${name}")`;
-        document.getElementById('delete-confirm-modal').style.display = 'flex';
-        
-        document.getElementById('btn-confirm-delete-action').onclick = async () => {
-          document.getElementById('delete-confirm-modal').style.display = 'none';
-          try {
-            const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
-            const res = await fetch("/api/customers/" + id + userQuery, {
-              method: "DELETE",
-            });
-            if (res.ok) {
-              showToast("ลบข้อมูลลูกค้าเรียบร้อยแล้ว");
-              closeCustomerModal();
-              fetchCustomers();
-            } else {
-              const data = await res.json();
-              showToast("เกิดข้อผิดพลาด: " + data.error, true);
+        document.getElementById("delete-confirm-count").innerHTML =
+          `ลูกค้ารายนี้ ("${name}")`;
+        document.getElementById("delete-confirm-modal").style.display = "flex";
+
+        document.getElementById("btn-confirm-delete-action").onclick =
+          async () => {
+            document.getElementById("delete-confirm-modal").style.display =
+              "none";
+            try {
+              const userQuery =
+                "?user=" +
+                encodeURIComponent(
+                  sessionStorage.getItem("currentUser") || "Unknown",
+                );
+              const res = await fetch("/api/customers/" + id + userQuery, {
+                method: "DELETE",
+              });
+              if (res.ok) {
+                showToast("ลบข้อมูลลูกค้าเรียบร้อยแล้ว");
+                closeCustomerModal();
+                fetchCustomers();
+              } else {
+                const data = await res.json();
+                showToast("เกิดข้อผิดพลาด: " + data.error, true);
+              }
+            } catch (err) {
+              showToast("เกิดข้อผิดพลาดในการลบ", true);
             }
-          } catch (err) {
-            showToast("เกิดข้อผิดพลาดในการลบ", true);
-          }
-        };
+          };
       };
 
       const showToast = (message, isError = false) => {
@@ -664,6 +741,79 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         fetchCustomers();
+
+        // Auto-fill from AI Assistant (draftCustomerData)
+        const draftCustomerData = sessionStorage.getItem("draftCustomerData");
+        if (draftCustomerData) {
+          try {
+            const data = JSON.parse(draftCustomerData);
+            sessionStorage.removeItem("draftCustomerData");
+            document.getElementById("cus-id").value = "";
+            if (document.getElementById("cus-name"))
+              document.getElementById("cus-name").value = data.name || "";
+            if (document.getElementById("cus-tax-id"))
+              document.getElementById("cus-tax-id").value = data.tax_id || "";
+            if (document.getElementById("cus-contact"))
+              document.getElementById("cus-contact").value =
+                data.contact_person || "";
+            if (document.getElementById("cus-email"))
+              document.getElementById("cus-email").value = data.email || "";
+            if (document.getElementById("cus-phone"))
+              document.getElementById("cus-phone").value = data.phone || "";
+            if (document.getElementById("cus-address"))
+              document.getElementById("cus-address").value = data.address || "";
+            if (document.getElementById("cus-pic"))
+              document.getElementById("cus-pic").value = data.pic_code || "";
+            document.getElementById("btn-delete-customer").style.display =
+              "none";
+            document.getElementById("modal-title").innerHTML =
+              '<i class="fa-solid fa-user-plus"></i> เพิ่มข้อมูลลูกค้า (จาก AI)';
+            document
+              .getElementById("customer-modal")
+              .classList.remove("hidden");
+            setTimeout(() => {
+              const form = document.getElementById("customer-form");
+              if (form)
+                form.dispatchEvent(
+                  new Event("submit", { cancelable: true, bubbles: true }),
+                );
+            }, 800);
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
+        // Auto-fill from AI Assistant (aiCustomerData)
+        const aiDataRaw = sessionStorage.getItem("aiCustomerData");
+        if (aiDataRaw) {
+          try {
+            const data = JSON.parse(aiDataRaw);
+            sessionStorage.removeItem("aiCustomerData");
+            if (data.name)
+              document.getElementById("cus-name").value = data.name;
+            if (data.tax_id)
+              document.getElementById("cus-tax-id").value = data.tax_id;
+            if (data.contact_person)
+              document.getElementById("cus-contact").value =
+                data.contact_person;
+            if (data.phone)
+              document.getElementById("cus-phone").value = data.phone;
+            if (data.email)
+              document.getElementById("cus-email").value = data.email;
+            if (data.address)
+              document.getElementById("cus-address").value = data.address;
+            if (data.pic_code)
+              document.getElementById("cus-pic").value = data.pic_code;
+            document.getElementById("btn-delete-customer").style.display =
+              "none";
+            document.getElementById("modal-title").innerHTML =
+              '<i class="fa-solid fa-user-plus"></i> เพิ่มข้อมูลลูกค้า (จาก AI)';
+            document
+              .getElementById("customer-modal")
+              .classList.remove("hidden");
+            showToast("โหลดข้อมูลจาก AI สำเร็จ กรุณาตรวจสอบและกดบันทึก");
+          } catch (e) {}
+        }
 
         const btnOpen = document.getElementById("btn-open-add-customer");
         if (btnOpen) {
@@ -688,7 +838,14 @@
             const cusName = document.getElementById("cus-name").value.trim();
             const id = document.getElementById("cus-id").value;
             // Auto-generate code from name if adding new customer
-            const autoCode = "CUS-" + cusName.replace(/[^a-zA-Z0-9ก-๙]/g, "").substring(0, 8).toUpperCase() + "-" + Date.now().toString().slice(-4);
+            const autoCode =
+              "CUS-" +
+              cusName
+                .replace(/[^a-zA-Z0-9ก-๙]/g, "")
+                .substring(0, 8)
+                .toUpperCase() +
+              "-" +
+              Date.now().toString().slice(-4);
             const payload = {
               name: cusName,
               code: autoCode,
@@ -716,7 +873,11 @@
                 url = "/api/customers/" + id;
                 method = "PUT";
               }
-              const userQuery = "?user=" + encodeURIComponent(sessionStorage.getItem('currentUser') || 'Unknown');
+              const userQuery =
+                "?user=" +
+                encodeURIComponent(
+                  sessionStorage.getItem("currentUser") || "Unknown",
+                );
               url += userQuery;
 
               const res = await fetch(url, {
@@ -744,34 +905,43 @@
         }
       });
       async function autoFillCustomerAI() {
-        const promptInput = document.getElementById('cus-ai-prompt').value.trim();
-        if(!promptInput) return alert('กรุณาพิมพ์ข้อมูลลูกค้าที่ต้องการให้ AI ช่วยแยก');
-        
-        const btn = document.getElementById('btn-cus-ai');
+        const promptInput = document
+          .getElementById("cus-ai-prompt")
+          .value.trim();
+        if (!promptInput)
+          return alert("กรุณาพิมพ์ข้อมูลลูกค้าที่ต้องการให้ AI ช่วยแยก");
+
+        const btn = document.getElementById("btn-cus-ai");
         const oldText = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังแยกข้อมูล...';
+        btn.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin"></i> กำลังแยกข้อมูล...';
         btn.disabled = true;
 
         try {
-          const res = await fetch('/api/ai-customer', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: promptInput })
+          const res = await fetch("/api/ai-customer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: promptInput }),
           });
-          
-          if(!res.ok) throw new Error('API Error');
+
+          if (!res.ok) throw new Error("API Error");
           const data = await res.json();
-          
-          if(data.name) document.getElementById('cus-name').value = data.name;
-          if(data.tax_id) document.getElementById('cus-tax-id').value = data.tax_id;
-          if(data.contact_person) document.getElementById('cus-contact').value = data.contact_person;
-          if(data.phone) document.getElementById('cus-phone').value = data.phone;
-          if(data.email) document.getElementById('cus-email').value = data.email;
-          if(data.address) document.getElementById('cus-address').value = data.address;
-          if(data.pic_code) document.getElementById('cus-pic').value = data.pic_code;
-          
+
+          if (data.name) document.getElementById("cus-name").value = data.name;
+          if (data.tax_id)
+            document.getElementById("cus-tax-id").value = data.tax_id;
+          if (data.contact_person)
+            document.getElementById("cus-contact").value = data.contact_person;
+          if (data.phone)
+            document.getElementById("cus-phone").value = data.phone;
+          if (data.email)
+            document.getElementById("cus-email").value = data.email;
+          if (data.address)
+            document.getElementById("cus-address").value = data.address;
+          if (data.pic_code)
+            document.getElementById("cus-pic").value = data.pic_code;
         } catch (err) {
-          alert('เกิดข้อผิดพลาดในการใช้ AI จัดการข้อมูล: ' + err.message);
+          alert("เกิดข้อผิดพลาดในการใช้ AI จัดการข้อมูล: " + err.message);
         } finally {
           btn.innerHTML = oldText;
           btn.disabled = false;
@@ -780,5 +950,3 @@
     </script>
   </body>
 </html>
-
-

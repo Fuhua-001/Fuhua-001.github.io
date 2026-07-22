@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const quoteForm = document.getElementById("quote-form");
   const customerNameInput = document.getElementById("customer-name");
@@ -8,8 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const toast = document.getElementById("toast");
   const toastMessage = document.getElementById("toast-message");
-
-  
 
   let items = [];
   window.productsList = [];
@@ -29,9 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const custSelect = document.getElementById("customer-name");
         if (custSelect) {
           customers
-            .filter(
-              (c) => c.level_group !== "Vendor",
-            )
+            .filter((c) => c.level_group !== "Vendor")
             .forEach((c) => {
               const opt = document.createElement("option");
               opt.value = c.name;
@@ -66,14 +61,19 @@ document.addEventListener("DOMContentLoaded", () => {
           dl.id = "products-datalist";
           document.body.appendChild(dl);
         }
-        dl.innerHTML = window.productsList.map(p => `<option value="${p.name.replace(/"/g, '&quot;')}"></option>`).join("");
+        dl.innerHTML = window.productsList
+          .map(
+            (p) =>
+              `<option value="${p.name.replace(/"/g, "&quot;")}"></option>`,
+          )
+          .join("");
       }
 
       // Call loadDraft here so that the <option>s exist before setting values
       const urlParamsInit = new URLSearchParams(window.location.search);
       const viewId = urlParamsInit.get("view");
       const editId = urlParamsInit.get("edit");
-      
+
       // Fetch customers and products first
       await fetchDropdownData();
 
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (aiData.items && Array.isArray(aiData.items)) {
             items = aiData.items;
-            if (typeof renderItems === 'function') renderItems();
+            if (typeof renderItems === "function") renderItems();
           }
 
           showToast("AI ร่างใบเสนอราคาสำเร็จ!");
@@ -205,9 +205,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const fEmail = document.getElementById("customer-email");
     if (fPhone) fPhone.value = "";
     if (fEmail) fEmail.value = "";
-    
+
     if (window.customersList && customerName) {
-      const matched = window.customersList.find(c => c.name === customerName);
+      const matched = window.customersList.find((c) => c.name === customerName);
       if (matched) {
         if (fPhone) fPhone.value = matched.phone || "-";
         if (fEmail) fEmail.value = matched.email || "-";
@@ -253,13 +253,13 @@ document.addEventListener("DOMContentLoaded", () => {
     items.forEach((item, index) => {
       const itemTotal = item.quantity * item.unit_price;
       total += itemTotal;
-      const totalCell = document.getElementById('total-' + index);
+      const totalCell = document.getElementById("total-" + index);
       if (totalCell) totalCell.textContent = formatCurrency(itemTotal);
     });
     const vat = total * 0.07;
     const grandTotal = total + vat;
-    const subTotalEl = document.getElementById('sub-total');
-    const vatTotalEl = document.getElementById('vat-total');
+    const subTotalEl = document.getElementById("sub-total");
+    const vatTotalEl = document.getElementById("vat-total");
     if (subTotalEl) subTotalEl.textContent = formatCurrency(total);
     if (vatTotalEl) vatTotalEl.textContent = formatCurrency(vat);
     if (grandTotalEl) grandTotalEl.textContent = formatCurrency(grandTotal);
@@ -269,12 +269,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // (Full) Render items to the table
   const renderItems = () => {
     if (window.tomSelectInstances) {
-      window.tomSelectInstances.forEach(ts => {
-        if (ts && typeof ts.destroy === 'function') ts.destroy();
+      window.tomSelectInstances.forEach((ts) => {
+        if (ts && typeof ts.destroy === "function") ts.destroy();
       });
       window.tomSelectInstances = [];
     }
-    
+
     quoteItemsContainer.innerHTML = "";
     let total = 0;
 
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <select id="${selectId}" required placeholder="-- เลือก/ค้นหาสินค้า --">
                         <option value="">-- เลือก/ค้นหาสินค้า --</option>
                         ${(window.productsList || []).map((p) => `<option value="${p.name}" ${p.name === item.description ? "selected" : ""}>${p.name}</option>`).join("")}
-                        ${item.description && !(window.productsList || []).find(p => p.name === item.description) ? `<option value="${item.description.replace(/"/g, '&quot;')}" selected>${item.description}</option>` : ''}
+                        ${item.description && !(window.productsList || []).find((p) => p.name === item.description) ? `<option value="${item.description.replace(/"/g, "&quot;")}" selected>${item.description}</option>` : ""}
                     </select>
                 </td>
                 <td>
@@ -312,11 +312,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const tsInstance = new TomSelect(`#${selectId}`, {
         create: true,
         sortField: { field: "text", direction: "asc" },
-        onChange: function(value) {
+        onChange: function (value) {
           if (value) {
             window.updateProductSelection(index, value);
           }
-        }
+        },
       });
       window.tomSelectInstances.push(tsInstance);
     });
@@ -373,7 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Generate with AI
-    const previewModal = document.getElementById("preview-modal");
+  const previewModal = document.getElementById("preview-modal");
   const closeModalBtn = document.getElementById("close-modal");
   const cancelPrintBtn = document.getElementById("cancel-print-btn");
   const confirmPdfBtn = document.getElementById("confirm-pdf-btn");
@@ -397,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       if (items.length === 0) {
         alert(
-        "คำเตือน:\n\nคุณยังไม่ได้เพิ่มสินค้าในใบเสนอราคาครับ กรุณาเพิ่มสินค้าอย่างน้อย 1 รายการก่อนเพื่อตรวจสอบอีกครั้ง",
+          "คำเตือน:\n\nคุณยังไม่ได้เพิ่มสินค้าในใบเสนอราคาครับ กรุณาเพิ่มสินค้าอย่างน้อย 1 รายการก่อนเพื่อตรวจสอบอีกครั้ง",
         );
         return;
       }
@@ -477,7 +477,8 @@ document.addEventListener("DOMContentLoaded", () => {
             window.loadedQuoteData.customer_name !== cName
           ) {
             cusInfo.pic_code = matched.pic_code || "";
-            cusInfo.pic_name = matched.pic_name || matched.pic_code || "Sales Team";
+            cusInfo.pic_name =
+              matched.pic_name || matched.pic_code || "Sales Team";
             cusInfo.pic_phone = matched.pic_phone || "";
             cusInfo.credit_days = crDays;
             cusInfo.due_date_str = new Date(
@@ -503,80 +504,107 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Generate locked signature image
-      function generateSignatureCanvas(salesperson, docDate, sigW = '734px') {
-          const canvas = document.createElement('canvas');
-          const scale = 3;
-          canvas.width = 734 * scale;
-          canvas.height = 185 * scale;
-          const ctx = canvas.getContext('2d');
-          ctx.scale(scale, scale);
-          
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, 734, 185);
-          
-          ctx.strokeStyle = '#000000';
-          ctx.lineWidth = 1;
-          
-          function roundRect(x, y, w, h, r) {
-              ctx.beginPath();
-              ctx.moveTo(x + r, y);
-              ctx.lineTo(x + w - r, y);
-              ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-              ctx.lineTo(x + w, y + h - r);
-              ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-              ctx.lineTo(x + r, y + h);
-              ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-              ctx.lineTo(x, y + r);
-              ctx.quadraticCurveTo(x, y, x + r, y);
-              ctx.closePath();
-              ctx.stroke();
-          }
-          
-          roundRect(0, 5, 359, 175, 8);
-          roundRect(374, 5, 359, 175, 8);
-          
-          ctx.textAlign = 'center';
-          
-          ctx.fillStyle = '#000000';
-          ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-      ctx.fillText('ในนาม ลูกค้า / Customer', 179.5, 35);
-          
+      function generateSignatureCanvas(salesperson, docDate, sigW = "734px") {
+        const canvas = document.createElement("canvas");
+        const scale = 3;
+        canvas.width = 734 * scale;
+        canvas.height = 185 * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.scale(scale, scale);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, 734, 185);
+
+        ctx.strokeStyle = "#000000";
+        ctx.lineWidth = 1;
+
+        function roundRect(x, y, w, h, r) {
           ctx.beginPath();
-          ctx.moveTo(79.5, 115);
-          ctx.lineTo(279.5, 115);
+          ctx.moveTo(x + r, y);
+          ctx.lineTo(x + w - r, y);
+          ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+          ctx.lineTo(x + w, y + h - r);
+          ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+          ctx.lineTo(x + r, y + h);
+          ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+          ctx.lineTo(x, y + r);
+          ctx.quadraticCurveTo(x, y, x + r, y);
+          ctx.closePath();
           ctx.stroke();
-          
-          ctx.font = '12px "Prompt", "Sarabun", sans-serif';
-          ctx.fillStyle = '#666666';
-          ctx.fillText('(............................................................)', 179.5, 135);
-          ctx.fillStyle = '#000000';
-      ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 153);
-      ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 170);
-          
-          ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-      ctx.fillText('ในนาม โซลโซไซตี้ (Soul Society)', 553.5, 35);
-          
-          ctx.beginPath();
-          ctx.moveTo(453.5, 115);
-          ctx.lineTo(653.5, 115);
-          ctx.stroke();
-          
-          ctx.font = '12px "Prompt", "Sarabun", sans-serif';
-          ctx.fillStyle = 'var(--text-main)';
-          ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 135);
-          ctx.fillStyle = '#000000';
-      ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
-      ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
-          
-          return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
+        }
+
+        roundRect(0, 5, 359, 175, 8);
+        roundRect(374, 5, 359, 175, 8);
+
+        ctx.textAlign = "center";
+
+        ctx.fillStyle = "#000000";
+        ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
+        ctx.fillText("ในนาม ลูกค้า / Customer", 179.5, 35);
+
+        ctx.beginPath();
+        ctx.moveTo(79.5, 115);
+        ctx.lineTo(279.5, 115);
+        ctx.stroke();
+
+        ctx.font = '12px "Prompt", "Sarabun", sans-serif';
+        ctx.fillStyle = "#666666";
+        ctx.fillText(
+          "(............................................................)",
+          179.5,
+          135,
+        );
+        ctx.fillStyle = "#000000";
+        ctx.fillText("ผู้อนุมัติสั่งซื้อ / Accepted By", 179.5, 153);
+        ctx.fillText("วันที่ / Date: ......../......../........", 179.5, 170);
+
+        ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
+        ctx.fillText("ในนาม โซลโซไซตี้ (Soul Society)", 553.5, 35);
+
+        ctx.beginPath();
+        ctx.moveTo(453.5, 115);
+        ctx.lineTo(653.5, 115);
+        ctx.stroke();
+
+        ctx.font = '12px "Prompt", "Sarabun", sans-serif';
+        ctx.fillStyle = "var(--text-main)";
+        ctx.fillText(
+          "( " +
+            (salesperson ||
+              "............................................................") +
+            " )",
+          553.5,
+          135,
+        );
+        ctx.fillStyle = "#000000";
+        ctx.fillText("ผู้เสนอราคา / Quoted By", 553.5, 153);
+        ctx.fillText(
+          "วันที่ / Date: " + (docDate || "......../......../........"),
+          553.5,
+          170,
+        );
+
+        return (
+          '<img src="' +
+          canvas.toDataURL("image/png") +
+          '" style="width: 100%; max-width: ' +
+          sigW +
+          '; margin-top: 5px;" alt="Locked Signatures" />'
+        );
       }
 
       // Create a printable element HTML
-      let fBase = items.length > 12 ? '11px' : '13px';
-      let fSmall = items.length > 12 ? '9px' : '10px';
-      let pCell = items.length > 12 ? '4px 6px' : '6px 8px';
-      let lh = '1.25', fH2 = '22px', fH2s = '20px', sigW = '734px', padCont = '20px 30px', pBox = '10px 15px', pTotal = '8px 12px';
-      
+      let fBase = items.length > 12 ? "11px" : "13px";
+      let fSmall = items.length > 12 ? "9px" : "10px";
+      let pCell = items.length > 12 ? "4px 6px" : "6px 8px";
+      let lh = "1.25",
+        fH2 = "22px",
+        fH2s = "20px",
+        sigW = "734px",
+        padCont = "20px 30px",
+        pBox = "10px 15px",
+        pTotal = "8px 12px";
+
       let tableHTML = `
                 <style>
                     .pdf-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; }
@@ -614,15 +642,15 @@ document.addEventListener("DOMContentLoaded", () => {
       let globalItemIndex = 1;
 
       chunks.forEach((chunk, chunkIndex) => {
-          const isLastPage = chunkIndex === chunks.length - 1;
-          const pageNum = chunkIndex + 1;
-          const totalPages = chunks.length;
+        const isLastPage = chunkIndex === chunks.length - 1;
+        const pageNum = chunkIndex + 1;
+        const totalPages = chunks.length;
 
-          if (chunkIndex > 0) {
-              tableHTML += `<div class="html2pdf__page-break"></div>`;
-          }
+        if (chunkIndex > 0) {
+          tableHTML += `<div class="html2pdf__page-break"></div>`;
+        }
 
-          tableHTML += `
+        tableHTML += `
                 <div class="pdf-container" style="width: 100%; max-width: 794px; min-height: auto; box-sizing: border-box; display: block; font-family: 'Prompt', 'Sarabun', sans-serif !important; letter-spacing: 0px !important; color: #000; padding: ${padCont}; background: white; font-size: ${fBase}; line-height: ${lh}; margin: 0 auto; text-align: left;">
                     
                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
@@ -661,7 +689,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <td colspan="4" style="padding-bottom: 2px;">
                                         <div style="font-weight:bold; margin-bottom: 1px;">${customerNameInput.value || "ลูกค้าทั่วไป"}</div>
                                         <div style="margin-bottom: 1px;">${cusInfo.address_1 || "-"}</div>
-                                        <div style="margin-bottom: 1px;">${cusInfo.district ? 'อ.'+cusInfo.district : ''} ${cusInfo.province ? 'จ.'+cusInfo.province : ''}</div>
+                                        <div style="margin-bottom: 1px;">${cusInfo.district ? "อ." + cusInfo.district : ""} ${cusInfo.province ? "จ." + cusInfo.province : ""}</div>
                                         ${cusInfo.level_group ? "<div style='margin-bottom: 1px;'>กลุ่มลูกค้าระดับ: " + cusInfo.level_group + "</div>" : ""}
                                     </td>
                                 </tr>
@@ -764,27 +792,27 @@ document.addEventListener("DOMContentLoaded", () => {
                         <tbody style="display: table-row-group;">
           `;
 
-          chunk.forEach((item) => {
-            const rowTotal = item.quantity * item.unit_price;
-            sumTotal += rowTotal;
-            tableHTML += `
+        chunk.forEach((item) => {
+          const rowTotal = item.quantity * item.unit_price;
+          sumTotal += rowTotal;
+          tableHTML += `
                                 <tr style="page-break-inside: avoid; break-inside: avoid;">
                                     <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; vertical-align: top;">${globalItemIndex++}</td>
                                     <td style="padding: ${pCell}; border-right: 1px solid #000; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">${item.description}</td>
                                     <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.quantity.toLocaleString()}</td>
-                                    <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.unit || 'ชิ้น'}</td>
+                                    <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: center; vertical-align: top;">${item.unit || "ชิ้น"}</td>
                                     <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(item.unit_price)}</td>
                                     <td style="padding: ${pCell}; border-right: 1px solid #000; text-align: right; vertical-align: top;">${formatCurrency(rowTotal)}</td>
                                 </tr>
                     `;
-          });
+        });
 
-          // Add minimum empty rows to ensure table auto-height doesn't look too short on the last page
-          if (isLastPage) {
-              const minRows = 5;
-              if (chunk.length < minRows) {
-                for (let i = chunk.length; i < minRows; i++) {
-                  tableHTML += `
+        // Add minimum empty rows to ensure table auto-height doesn't look too short on the last page
+        if (isLastPage) {
+          const minRows = 5;
+          if (chunk.length < minRows) {
+            for (let i = chunk.length; i < minRows; i++) {
+              tableHTML += `
                                     <tr style="page-break-inside: avoid; break-inside: avoid;">
                                         <td style="padding: ${pCell}; border-left: 1px solid #000; border-right: 1px solid #000; height: 32px;"></td>
                                         <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
@@ -794,47 +822,67 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td style="padding: ${pCell}; border-right: 1px solid #000;"></td>
                                     </tr>
                   `;
-                }
-              }
+            }
           }
+        }
 
-          tableHTML += `
+        tableHTML += `
                         </tbody>
                     </table>
           `;
 
-          if (isLastPage) {
-              const bahtText = (amount) => {
-                const number = Math.round(amount * 100) / 100;
-                const numberStr = number.toFixed(2);
-                const parts = numberStr.split('.');
-                const integerPart = parts[0];
-                const fractionalPart = parts[1];
-                const text = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
-                const unit = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'];
-                const convert = (numStr) => {
-                    let result = '';
-                    for (let i = 0; i < numStr.length; i++) {
-                        const n = parseInt(numStr[i]);
-                        const pos = numStr.length - 1 - i;
-                        if (n !== 0) {
-                            if (pos === 1 && n === 1) result += 'สิบ';
-                            else if (pos === 1 && n === 2) result += 'ยี่สิบ';
-                            else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เอ็ด';
-                            else result += text[n] + unit[pos % 6]; 
-                        }
-                    }
-                    return result || 'ศูนย์';
-                };
-                let baht = convert(integerPart) + 'บาท';
-                let satang = parseInt(fractionalPart) === 0 ? 'ถ้วน' : convert(fractionalPart) + 'สตางค์';
-                return '( ' + baht + satang + ' )';
-              };
+        if (isLastPage) {
+          const bahtText = (amount) => {
+            const number = Math.round(amount * 100) / 100;
+            const numberStr = number.toFixed(2);
+            const parts = numberStr.split(".");
+            const integerPart = parts[0];
+            const fractionalPart = parts[1];
+            const text = [
+              "ศูนย์",
+              "หนึ่ง",
+              "สอง",
+              "สาม",
+              "สี่",
+              "ห้า",
+              "หก",
+              "เจ็ด",
+              "แปด",
+              "เก้า",
+            ];
+            const unit = ["", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน"];
+            const convert = (numStr) => {
+              let result = "";
+              for (let i = 0; i < numStr.length; i++) {
+                const n = parseInt(numStr[i]);
+                const pos = numStr.length - 1 - i;
+                if (n !== 0) {
+                  if (pos === 1 && n === 1) result += "สิบ";
+                  else if (pos === 1 && n === 2) result += "ยี่สิบ";
+                  else if (
+                    pos === 0 &&
+                    n === 1 &&
+                    numStr.length > 1 &&
+                    numStr[numStr.length - 2] !== "0"
+                  )
+                    result += "เอ็ด";
+                  else result += text[n] + unit[pos % 6];
+                }
+              }
+              return result || "ศูนย์";
+            };
+            let baht = convert(integerPart) + "บาท";
+            let satang =
+              parseInt(fractionalPart) === 0
+                ? "ถ้วน"
+                : convert(fractionalPart) + "สตางค์";
+            return "( " + baht + satang + " )";
+          };
 
-              const gTotal = sumTotal * 1.07;
-              const vat = sumTotal * 0.07;
+          const gTotal = sumTotal * 1.07;
+          const vat = sumTotal * 0.07;
 
-              tableHTML += `
+          tableHTML += `
                     <div style="margin-top: 0; page-break-inside: auto; break-inside: auto;">
                     <div style="display: flex; border: 1px solid #000; overflow: hidden;">
                         <div style="flex: 1; border-right: 1px solid #000; padding: ${pBox}; font-size: 11px; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
@@ -872,13 +920,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     </div>
               `;
-          }
+        }
 
-          tableHTML += `</div> <!-- End pdf-container -->`;
+        tableHTML += `</div> <!-- End pdf-container -->`;
       });
 
       tableHTML += `</div> <!-- End pdf-wrapper -->`;
-
 
       previewContainer.innerHTML = tableHTML;
       previewModal.classList.remove("hidden");
@@ -911,14 +958,17 @@ document.addEventListener("DOMContentLoaded", () => {
             credit_days: fCredit ? fCredit.value : 30,
             payment_terms: fPayment ? fPayment.value : "Cash/Transfer",
             pic_code: fSalesRepForm ? fSalesRepForm.value : null,
-            id: document.getElementById("quote-form").getAttribute("data-edit-id") || null,
+            id:
+              document
+                .getElementById("quote-form")
+                .getAttribute("data-edit-id") || null,
           };
 
           const response = await fetch("/api/save-quote", {
             method: "POST",
-            headers: { 
+            headers: {
               "Content-Type": "application/json",
-              "Bypass-Tunnel-Reminder": "true"
+              "Bypass-Tunnel-Reminder": "true",
             },
             body: JSON.stringify(payload),
           });
@@ -928,16 +978,18 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             const data = await response.json();
             if (data.doc_no) {
-                const docNoSpan = previewContainer.querySelector('#pdf-doc-no');
-                if (docNoSpan) docNoSpan.innerText = data.doc_no;
-                
-                // Update memory so it persists if they preview again
-                if (!window.loadedQuoteData) window.loadedQuoteData = {};
-                window.loadedQuoteData.doc_no = data.doc_no;
-                
-                if (data.quoteId) {
-                  document.getElementById("quote-form").setAttribute("data-edit-id", data.quoteId);
-                }
+              const docNoSpan = previewContainer.querySelector("#pdf-doc-no");
+              if (docNoSpan) docNoSpan.innerText = data.doc_no;
+
+              // Update memory so it persists if they preview again
+              if (!window.loadedQuoteData) window.loadedQuoteData = {};
+              window.loadedQuoteData.doc_no = data.doc_no;
+
+              if (data.quoteId) {
+                document
+                  .getElementById("quote-form")
+                  .setAttribute("data-edit-id", data.quoteId);
+              }
             }
           }
         } catch (err) {
@@ -950,9 +1002,15 @@ document.addEventListener("DOMContentLoaded", () => {
         margin: [10, 10, 15, 10], // Top, Right, Bottom, Left margins (in mm)
         filename: `quotation-${Date.now()}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 1.5, scrollY: 0, y: 0, useCORS: true, letterRendering: true },
+        html2canvas: {
+          scale: 1.5,
+          scrollY: 0,
+          y: 0,
+          useCORS: true,
+          letterRendering: true,
+        },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+        pagebreak: { mode: ["avoid-all", "css", "legacy"] },
       };
 
       // Critical fix for html2canvas blank/offset bug
@@ -974,9 +1032,11 @@ document.addEventListener("DOMContentLoaded", () => {
       modalBody.style.overflow = "visible";
 
       // 3. Allow DOM to repaint the updated doc_no before capturing
-      await new Promise(r => setTimeout(r, 100));
+      await new Promise((r) => setTimeout(r, 100));
 
-      html2pdf().set(opt).from(previewContainer.querySelector(".pdf-wrapper"))
+      html2pdf()
+        .set(opt)
+        .from(previewContainer.querySelector(".pdf-wrapper"))
         .save()
         .then(() => {
           // Restore styles and scroll
@@ -1027,7 +1087,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  
   const urlParams = new URLSearchParams(window.location.search);
   const isModal = urlParams.get("modal") === "true";
 
@@ -1038,69 +1097,71 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".top-header").style.display = "none";
   }
 
-window.loadQuoteData = (viewId, editId) => {
-  const id = viewId || editId;
-  fetch("/api/quote/" + id)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.quote) {
-        window.loadedQuoteData = data.quote;
-        
-        // Show form section
-        const quotationFormSection = document.getElementById("quotation-form-section");
-        if (quotationFormSection) {
-          quotationFormSection.classList.remove("hidden");
-        }
+  window.loadQuoteData = (viewId, editId) => {
+    const id = viewId || editId;
+    fetch("/api/quote/" + id)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.quote) {
+          window.loadedQuoteData = data.quote;
 
-        // Set customer name
-        const customerNameInput = document.getElementById("customer-name");
-        if (customerNameInput) {
-          customerNameInput.value = data.quote.customer_name || "";
-          if (window.updateCustomerContactFields) {
-            window.updateCustomerContactFields(customerNameInput.value);
+          // Show form section
+          const quotationFormSection = document.getElementById(
+            "quotation-form-section",
+          );
+          if (quotationFormSection) {
+            quotationFormSection.classList.remove("hidden");
+          }
+
+          // Set customer name
+          const customerNameInput = document.getElementById("customer-name");
+          if (customerNameInput) {
+            customerNameInput.value = data.quote.customer_name || "";
+            if (window.updateCustomerContactFields) {
+              window.updateCustomerContactFields(customerNameInput.value);
+            }
+          }
+          // Set credit days and payment terms
+          const fCredit = document.getElementById("form-credit-days");
+          const fPayment = document.getElementById("form-payment-terms");
+          if (fCredit) fCredit.value = data.quote.credit_days || 30;
+          if (fPayment)
+            fPayment.value = data.quote.payment_terms || "Cash/Transfer";
+
+          // Set sales rep from DB
+          const fSalesRep = document.getElementById("form-sales-rep");
+          if (fSalesRep && data.quote.pic_code) {
+            fSalesRep.value = data.quote.pic_code;
+          }
+
+          // Mark form as editing this record
+          if (editId) {
+            const form = document.getElementById("quote-form");
+            if (form) form.setAttribute("data-edit-id", editId);
+          }
+
+          // Load items
+          items = data.items.map((item) => ({
+            description: item.description,
+            quantity: parseFloat(item.quantity),
+            unit_price: parseFloat(item.unit_price),
+          }));
+          renderItems();
+
+          if (editId) {
+            const toastEl = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-message");
+            if (toastMsg)
+              toastMsg.innerText = "โหลดข้อมูลสำหรับแก้ไขเรียบร้อยแล้ว";
+            if (toastEl) {
+              toastEl.classList.remove("hidden");
+              setTimeout(() => toastEl.classList.add("hidden"), 3000);
+            }
           }
         }
-        // Set credit days and payment terms
-        const fCredit = document.getElementById("form-credit-days");
-        const fPayment = document.getElementById("form-payment-terms");
-        if (fCredit) fCredit.value = data.quote.credit_days || 30;
-        if (fPayment) fPayment.value = data.quote.payment_terms || "Cash/Transfer";
-        
-        // Set sales rep from DB
-        const fSalesRep = document.getElementById("form-sales-rep");
-        if (fSalesRep && data.quote.pic_code) {
-          fSalesRep.value = data.quote.pic_code;
-        }
-        
-        // Mark form as editing this record
-        if (editId) {
-          const form = document.getElementById("quote-form");
-          if (form) form.setAttribute("data-edit-id", editId);
-        }
-
-        // Load items
-        items = data.items.map((item) => ({
-          description: item.description,
-          quantity: parseFloat(item.quantity),
-          unit_price: parseFloat(item.unit_price),
-        }));
-        renderItems();
-
-        if (editId) {
-          const toastEl = document.getElementById("toast");
-          const toastMsg = document.getElementById("toast-message");
-          if (toastMsg) toastMsg.innerText = "โหลดข้อมูลสำหรับแก้ไขเรียบร้อยแล้ว";
-          if (toastEl) {
-            toastEl.classList.remove("hidden");
-            setTimeout(() => toastEl.classList.add("hidden"), 3000);
-          }
-        }
-      }
-    })
-    .catch((err) => {
-      console.error("loadQuoteData error:", err);
-    });
-};
-
+      })
+      .catch((err) => {
+        console.error("loadQuoteData error:", err);
+      });
+  };
 });
-

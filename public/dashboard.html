@@ -19,47 +19,136 @@
         window.location.href = "login.html";
     </script>
     <style>
-      .stat-card { 
-        padding: 2rem 1.5rem 1.5rem 1.5rem; 
-        display: flex; 
-        flex-direction: column; 
+      .stat-card {
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
         position: relative;
         overflow: hidden;
       }
       .icon-wrapper {
-        width: 80px; height: 80px; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-bottom: 1.5rem;
       }
-      .stat-icon { font-size: 2.5rem; }
-      .stat-label { color: var(--text-main); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem; }
-      .stat-value { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; margin-bottom: 1.5rem; }
-      .stat-number { font-size: 1.5rem; color: var(--text-main); font-weight: 800; margin-bottom: 1.5rem; display: block; }
-      .card-arrow {
-        position: absolute; bottom: 1.5rem; right: 1.5rem;
-        width: 32px; height: 32px; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        color: white; transition: transform 0.2s; cursor: pointer;
+      .stat-icon {
+        font-size: 2.5rem;
       }
-      .stat-card:hover .card-arrow { transform: translateX(3px); }
+      .stat-label {
+        color: var(--text-main);
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+      }
+      .stat-value {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+      }
+      .stat-number {
+        font-size: 1.5rem;
+        color: var(--text-main);
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+      .card-arrow {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: transform 0.2s;
+        cursor: pointer;
+      }
+      .stat-card:hover .card-arrow {
+        transform: translateX(3px);
+      }
       .card-bottom-line {
-        position: absolute; bottom: 1.5rem; left: 1.5rem; height: 4px; border-radius: 2px; width: 60px;
+        position: absolute;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        height: 4px;
+        border-radius: 2px;
+        width: 60px;
       }
       .quick-btn {
-        display: inline-flex; align-items: center; gap: 0.5rem;
-        padding: 0.6rem 1.2rem; border-radius: 8px; border: none;
-        background: var(--primary); color: #fff; font-weight: 600;
-        font-size: 0.9rem; cursor: pointer; text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        border: none;
+        background: var(--primary);
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        text-decoration: none;
         transition: opacity 0.2s;
       }
-      .quick-btn:hover { opacity: 0.85; }
-      .top-table { width: 100%; border-collapse: collapse; }
-      .top-table th { text-align: left; color: var(--text-muted); font-size: 0.8rem; font-weight: 600; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
-      .top-table td { padding: 0.65rem 0.75rem; font-size: 0.9rem; border-bottom: 1px solid var(--border); color: var(--text-main); }
-      .top-table tr:last-child td { border-bottom: none; }
-      .rank-badge { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 0.7rem; font-weight: 700; text-align: center; line-height: 22px; }
-      .loading-dots::after { content: "..."; animation: dots 1.2s infinite; }
-      @keyframes dots { 0%,100%{content:"."} 33%{content:".."} 66%{content:"..."} }
+      .quick-btn:hover {
+        opacity: 0.85;
+      }
+      .top-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .top-table th {
+        text-align: left;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.5rem 0.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .top-table td {
+        padding: 0.65rem 0.75rem;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-main);
+      }
+      .top-table tr:last-child td {
+        border-bottom: none;
+      }
+      .rank-badge {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-align: center;
+        line-height: 22px;
+      }
+      .loading-dots::after {
+        content: "...";
+        animation: dots 1.2s infinite;
+      }
+      @keyframes dots {
+        0%,
+        100% {
+          content: ".";
+        }
+        33% {
+          content: "..";
+        }
+        66% {
+          content: "...";
+        }
+      }
     </style>
   </head>
   <body>
@@ -72,40 +161,67 @@
         </div>
         <nav class="menu">
           <a href="dashboard.html" class="menu-item active"
-            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a>
-          <a href="ai-assistant.html" class="menu-item"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a>
+            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
+          >
+          <a href="ai-assistant.html" class="menu-item"
+            ><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a
+          >
           <a href="index.html" class="menu-item"
-            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a>
-          
+            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
+          >
+
           <a href="customers.html" class="menu-item"
-            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a>
+            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
+          >
           <a href="products.html" class="menu-item"
-            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a>
+            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
+          >
           <a href="employees.html" class="menu-item"
-            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a>
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
+          >
           <a href="history.html?v=5" class="menu-item"
-            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a>
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
+          >
           <a
             href="#"
             class="menu-item text-danger"
-            onclick="sessionStorage.removeItem('isLoggedIn'); window.location.href = 'login.html';"
-            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a>
+            onclick="
+              sessionStorage.removeItem('isLoggedIn');
+              window.location.href = 'login.html';
+            "
+            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
+          >
         </nav>
-        <div class="user-profile" style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
+        <div
+          class="user-profile"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 0.75rem">
             <div class="avatar"><i class="fa-solid fa-user"></i></div>
             <div class="user-info">
               <span class="user-name" id="sidebar-username">Sales Team</span>
               <span class="user-role">Enterprise</span>
             </div>
           </div>
-          
         </div>
       </aside>
 
       <!-- Main Content -->
       <main class="main-content">
-        <header class="top-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+        <header
+          class="top-header"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+          "
+        >
           <h1>ภาพรวมธุรกิจ (Dashboard) 📊</h1>
           <a href="index.html" class="quick-btn">
             <i class="fa-solid fa-plus"></i> สร้างใบเสนอราคาใหม่
@@ -114,59 +230,134 @@
 
         <div class="content-grid" style="display: block">
           <!-- Stats Cards -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-            
-            <div class="card stat-card" style="border: none; cursor: pointer;" onclick="document.getElementById('sales-chart-section').scrollIntoView({behavior: 'smooth', block: 'center'});">
-              <div class="icon-wrapper" style="background-color: #fee2e2;">
-                <div class="stat-icon" style="color: #ef4444;"><i class="fa-solid fa-coins"></i></div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+              gap: 1.5rem;
+              margin-bottom: 2rem;
+            "
+          >
+            <div
+              class="card stat-card"
+              style="border: none; cursor: pointer"
+              onclick="
+                document
+                  .getElementById('sales-chart-section')
+                  .scrollIntoView({ behavior: 'smooth', block: 'center' })
+              "
+            >
+              <div class="icon-wrapper" style="background-color: #fee2e2">
+                <div class="stat-icon" style="color: #ef4444">
+                  <i class="fa-solid fa-coins"></i>
+                </div>
               </div>
               <h3 class="stat-label">ยอดขายรวม</h3>
               <p class="stat-value">Total Sales (THB)</p>
-              <span class="stat-number" id="stat-sales"><span class="loading-dots">โหลด</span></span>
-              <div class="card-bottom-line" style="background-color: #ef4444;"></div>
-              <div class="card-arrow" style="background-color: #ef4444;"><i class="fa-solid fa-arrow-right"></i></div>
+              <span class="stat-number" id="stat-sales"
+                ><span class="loading-dots">โหลด</span></span
+              >
+              <div
+                class="card-bottom-line"
+                style="background-color: #ef4444"
+              ></div>
+              <div class="card-arrow" style="background-color: #ef4444">
+                <i class="fa-solid fa-arrow-right"></i>
+              </div>
             </div>
 
-            <div class="card stat-card" style="border: none; cursor: pointer;" onclick="window.location.href='history.html';">
-              <div class="icon-wrapper" style="background-color: #e0e7ff;">
-                <div class="stat-icon" style="color: #4f46e5;"><i class="fa-solid fa-file-invoice"></i></div>
+            <div
+              class="card stat-card"
+              style="border: none; cursor: pointer"
+              onclick="window.location.href = 'history.html'"
+            >
+              <div class="icon-wrapper" style="background-color: #e0e7ff">
+                <div class="stat-icon" style="color: #4f46e5">
+                  <i class="fa-solid fa-file-invoice"></i>
+                </div>
               </div>
               <h3 class="stat-label">ใบเสนอราคา</h3>
               <p class="stat-value">Quotations Generated</p>
-              <span class="stat-number" id="stat-quotes"><span class="loading-dots">โหลด</span></span>
-              <div class="card-bottom-line" style="background-color: #4f46e5;"></div>
-              <div class="card-arrow" style="background-color: #4f46e5;"><i class="fa-solid fa-arrow-right"></i></div>
+              <span class="stat-number" id="stat-quotes"
+                ><span class="loading-dots">โหลด</span></span
+              >
+              <div
+                class="card-bottom-line"
+                style="background-color: #4f46e5"
+              ></div>
+              <div class="card-arrow" style="background-color: #4f46e5">
+                <i class="fa-solid fa-arrow-right"></i>
+              </div>
             </div>
 
-            <div class="card stat-card" style="border: none; cursor: pointer;" onclick="window.location.href='customers.html';">
-              <div class="icon-wrapper" style="background-color: #f3e8ff;">
-                <div class="stat-icon" style="color: #9333ea;"><i class="fa-solid fa-users"></i></div>
+            <div
+              class="card stat-card"
+              style="border: none; cursor: pointer"
+              onclick="window.location.href = 'customers.html'"
+            >
+              <div class="icon-wrapper" style="background-color: #f3e8ff">
+                <div class="stat-icon" style="color: #9333ea">
+                  <i class="fa-solid fa-users"></i>
+                </div>
               </div>
               <h3 class="stat-label">ลูกค้าทั้งหมด</h3>
               <p class="stat-value">Total Customers</p>
-              <span class="stat-number" id="stat-customers"><span class="loading-dots">โหลด</span></span>
-              <div class="card-bottom-line" style="background-color: #9333ea;"></div>
-              <div class="card-arrow" style="background-color: #9333ea;"><i class="fa-solid fa-arrow-right"></i></div>
+              <span class="stat-number" id="stat-customers"
+                ><span class="loading-dots">โหลด</span></span
+              >
+              <div
+                class="card-bottom-line"
+                style="background-color: #9333ea"
+              ></div>
+              <div class="card-arrow" style="background-color: #9333ea">
+                <i class="fa-solid fa-arrow-right"></i>
+              </div>
             </div>
 
-            <div class="card stat-card" style="border: none; cursor: pointer;" onclick="window.location.href='products.html';">
-              <div class="icon-wrapper" style="background-color: #dcfce7;">
-                <div class="stat-icon" style="color: #10b981;"><i class="fa-solid fa-box-open"></i></div>
+            <div
+              class="card stat-card"
+              style="border: none; cursor: pointer"
+              onclick="window.location.href = 'products.html'"
+            >
+              <div class="icon-wrapper" style="background-color: #dcfce7">
+                <div class="stat-icon" style="color: #10b981">
+                  <i class="fa-solid fa-box-open"></i>
+                </div>
               </div>
               <h3 class="stat-label">สินค้าคงคลัง</h3>
               <p class="stat-value">Products in Stock</p>
-              <span class="stat-number" id="stat-products"><span class="loading-dots">โหลด</span></span>
-              <div class="card-bottom-line" style="background-color: #10b981;"></div>
-              <div class="card-arrow" style="background-color: #10b981;"><i class="fa-solid fa-arrow-right"></i></div>
+              <span class="stat-number" id="stat-products"
+                ><span class="loading-dots">โหลด</span></span
+              >
+              <div
+                class="card-bottom-line"
+                style="background-color: #10b981"
+              ></div>
+              <div class="card-arrow" style="background-color: #10b981">
+                <i class="fa-solid fa-arrow-right"></i>
+              </div>
             </div>
-
           </div>
 
           <!-- Chart + Top Customers -->
-          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-            <section id="sales-chart-section" class="card" style="padding: 2rem">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 2fr 1fr;
+              gap: 1.5rem;
+              margin-bottom: 2rem;
+            "
+          >
+            <section
+              id="sales-chart-section"
+              class="card"
+              style="padding: 2rem"
+            >
               <h3 style="margin-bottom: 1.5rem; color: var(--text-main)">
-                <i class="fa-solid fa-chart-line" style="color:var(--primary); margin-right:0.5rem;"></i>
+                <i
+                  class="fa-solid fa-chart-line"
+                  style="color: var(--primary); margin-right: 0.5rem"
+                ></i>
                 กราฟแสดงแนวโน้มยอดขาย (Sales Trend)
               </h3>
               <div style="width: 100%; height: 300px">
@@ -176,15 +367,33 @@
 
             <section class="card" style="padding: 2rem">
               <h3 style="margin-bottom: 1.25rem; color: var(--text-main)">
-                <i class="fa-solid fa-trophy" style="color:#f59e0b; margin-right:0.5rem;"></i>
+                <i
+                  class="fa-solid fa-trophy"
+                  style="color: #f59e0b; margin-right: 0.5rem"
+                ></i>
                 ลูกค้าที่มียอดสูงสุด
               </h3>
               <table class="top-table">
                 <thead>
-                  <tr><th>#</th><th>ลูกค้า</th><th style="text-align:right">ยอด (฿)</th></tr>
+                  <tr>
+                    <th>#</th>
+                    <th>ลูกค้า</th>
+                    <th style="text-align: right">ยอด (฿)</th>
+                  </tr>
                 </thead>
                 <tbody id="top-customers-tbody">
-                  <tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:1rem;">กำลังโหลด...</td></tr>
+                  <tr>
+                    <td
+                      colspan="3"
+                      style="
+                        text-align: center;
+                        color: var(--text-muted);
+                        padding: 1rem;
+                      "
+                    >
+                      กำลังโหลด...
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </section>
@@ -192,23 +401,56 @@
 
           <!-- Recent Quotes -->
           <section class="card" style="padding: 2rem">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem;">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1.25rem;
+              "
+            >
               <h3 style="color: var(--text-main)">
-                <i class="fa-solid fa-clock-rotate-left" style="color:var(--secondary); margin-right:0.5rem;"></i>
+                <i
+                  class="fa-solid fa-clock-rotate-left"
+                  style="color: var(--secondary); margin-right: 0.5rem"
+                ></i>
                 ใบเสนอราคาล่าสุด
               </h3>
-              <a href="history.html?v=5" style="font-size:0.85rem; color:var(--primary); text-decoration:none;">ดูทั้งหมด →</a>
+              <a
+                href="history.html?v=5"
+                style="
+                  font-size: 0.85rem;
+                  color: var(--primary);
+                  text-decoration: none;
+                "
+                >ดูทั้งหมด →</a
+              >
             </div>
             <table class="top-table">
               <thead>
-                <tr><th>เลขที่</th><th>ลูกค้า</th><th>วันที่</th><th style="text-align:right">มูลค่า (฿)</th></tr>
+                <tr>
+                  <th>เลขที่</th>
+                  <th>ลูกค้า</th>
+                  <th>วันที่</th>
+                  <th style="text-align: right">มูลค่า (฿)</th>
+                </tr>
               </thead>
               <tbody id="recent-quotes-tbody">
-                <tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1rem;">กำลังโหลด...</td></tr>
+                <tr>
+                  <td
+                    colspan="4"
+                    style="
+                      text-align: center;
+                      color: var(--text-muted);
+                      padding: 1rem;
+                    "
+                  >
+                    กำลังโหลด...
+                  </td>
+                </tr>
               </tbody>
             </table>
           </section>
-
         </div>
       </main>
     </div>
@@ -217,8 +459,9 @@
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
         // Show logged in user
-        const user = sessionStorage.getItem('currentUser');
-        if (user) document.getElementById('sidebar-username').textContent = user;
+        const user = sessionStorage.getItem("currentUser");
+        if (user)
+          document.getElementById("sidebar-username").textContent = user;
 
         const textColor = "var(--text-muted)";
         const gridColor = "var(--border-color)";
@@ -228,21 +471,36 @@
         const salesChart = new Chart(ctx, {
           type: "line",
           data: {
-            labels: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."],
-            datasets: [{
-              label: "ยอดขายรายเดือน (THB)",
-              data: Array(12).fill(0),
-              borderColor: "#6366f1",
-              backgroundColor: "rgba(99, 102, 241, 0.15)",
-              borderWidth: 3,
-              pointBackgroundColor: "#ec4899",
-              pointBorderColor: "#fff",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "#ec4899",
-              pointRadius: 5,
-              fill: true,
-              tension: 0.4,
-            }],
+            labels: [
+              "ม.ค.",
+              "ก.พ.",
+              "มี.ค.",
+              "เม.ย.",
+              "พ.ค.",
+              "มิ.ย.",
+              "ก.ค.",
+              "ส.ค.",
+              "ก.ย.",
+              "ต.ค.",
+              "พ.ย.",
+              "ธ.ค.",
+            ],
+            datasets: [
+              {
+                label: "ยอดขายรายเดือน (THB)",
+                data: Array(12).fill(0),
+                borderColor: "#6366f1",
+                backgroundColor: "rgba(99, 102, 241, 0.15)",
+                borderWidth: 3,
+                pointBackgroundColor: "#ec4899",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "#ec4899",
+                pointRadius: 5,
+                fill: true,
+                tension: 0.4,
+              },
+            ],
           },
           options: {
             responsive: true,
@@ -253,7 +511,7 @@
                 grid: { color: gridColor },
                 ticks: {
                   color: textColor,
-                  callback: (v) => "฿" + v.toLocaleString("th-TH")
+                  callback: (v) => "฿" + v.toLocaleString("th-TH"),
                 },
               },
               x: { grid: { display: false }, ticks: { color: textColor } },
@@ -262,9 +520,13 @@
               legend: { labels: { color: textColor } },
               tooltip: {
                 callbacks: {
-                  label: (ctx) => "฿" + ctx.parsed.y.toLocaleString("th-TH", { minimumFractionDigits: 2 })
-                }
-              }
+                  label: (ctx) =>
+                    "฿" +
+                    ctx.parsed.y.toLocaleString("th-TH", {
+                      minimumFractionDigits: 2,
+                    }),
+                },
+              },
             },
           },
         });
@@ -275,10 +537,16 @@
           const data = await res.json();
 
           document.getElementById("stat-sales").textContent =
-            "฿" + parseFloat(data.total_sales).toLocaleString("th-TH", { minimumFractionDigits: 2 });
-          document.getElementById("stat-quotes").textContent = data.total_quotes + " ใบ";
-          document.getElementById("stat-customers").textContent = data.total_customers + " ราย";
-          document.getElementById("stat-products").textContent = data.total_products + " รายการ";
+            "฿" +
+            parseFloat(data.total_sales).toLocaleString("th-TH", {
+              minimumFractionDigits: 2,
+            });
+          document.getElementById("stat-quotes").textContent =
+            data.total_quotes + " ใบ";
+          document.getElementById("stat-customers").textContent =
+            data.total_customers + " ราย";
+          document.getElementById("stat-products").textContent =
+            data.total_products + " รายการ";
 
           // Update chart with real data AFTER API response
           if (data.monthly_sales && Array.isArray(data.monthly_sales)) {
@@ -288,29 +556,40 @@
 
           // Render top customers
           if (data.top_customers && data.top_customers.length > 0) {
-            document.getElementById("top-customers-tbody").innerHTML = data.top_customers.map((c, i) => `
+            document.getElementById("top-customers-tbody").innerHTML =
+              data.top_customers
+                .map(
+                  (c, i) => `
               <tr>
                 <td><span class="rank-badge">${i + 1}</span></td>
-                <td style="max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${c.customer_name}">${c.customer_name || '-'}</td>
-                <td style="text-align:right; font-weight:600; color:var(--primary)">฿${parseFloat(c.total).toLocaleString("th-TH", {minimumFractionDigits:0})}</td>
-              </tr>`).join('');
+                <td style="max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${c.customer_name}">${c.customer_name || "-"}</td>
+                <td style="text-align:right; font-weight:600; color:var(--primary)">฿${parseFloat(c.total).toLocaleString("th-TH", { minimumFractionDigits: 0 })}</td>
+              </tr>`,
+                )
+                .join("");
           } else {
-            document.getElementById("top-customers-tbody").innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:1rem;">ยังไม่มีข้อมูล</td></tr>';
+            document.getElementById("top-customers-tbody").innerHTML =
+              '<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:1rem;">ยังไม่มีข้อมูล</td></tr>';
           }
 
           // Render recent quotes
           if (data.recent_quotes && data.recent_quotes.length > 0) {
-            document.getElementById("recent-quotes-tbody").innerHTML = data.recent_quotes.map(q => `
+            document.getElementById("recent-quotes-tbody").innerHTML =
+              data.recent_quotes
+                .map(
+                  (q) => `
               <tr>
-                <td><strong>${q.doc_no || '-'}</strong></td>
-                <td>${q.customer_name || '-'}</td>
-                <td style="color:var(--text-muted)">${q.doc_date ? new Date(q.doc_date).toLocaleDateString('th-TH') : '-'}</td>
-                <td style="text-align:right; font-weight:600">฿${parseFloat(q.total_amount || 0).toLocaleString("th-TH", {minimumFractionDigits:2})}</td>
-              </tr>`).join('');
+                <td><strong>${q.doc_no || "-"}</strong></td>
+                <td>${q.customer_name || "-"}</td>
+                <td style="color:var(--text-muted)">${q.doc_date ? new Date(q.doc_date).toLocaleDateString("th-TH") : "-"}</td>
+                <td style="text-align:right; font-weight:600">฿${parseFloat(q.total_amount || 0).toLocaleString("th-TH", { minimumFractionDigits: 2 })}</td>
+              </tr>`,
+                )
+                .join("");
           } else {
-            document.getElementById("recent-quotes-tbody").innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1rem;">ยังไม่มีข้อมูล</td></tr>';
+            document.getElementById("recent-quotes-tbody").innerHTML =
+              '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1rem;">ยังไม่มีข้อมูล</td></tr>';
           }
-
         } catch (err) {
           console.error("Failed to load stats", err);
           document.getElementById("stat-sales").textContent = "โหลดไม่ได้";

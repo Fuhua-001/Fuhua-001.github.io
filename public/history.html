@@ -4,11 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ประวัติเอกสาร - AI Enterprise Quotation Maker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <script>
-      if (!sessionStorage.getItem('isLoggedIn')) window.location.href = 'login.html';
+      if (!sessionStorage.getItem("isLoggedIn"))
+        window.location.href = "login.html";
     </script>
     <style>
       .sticky-th {
@@ -40,14 +47,31 @@
         font-weight: 600;
         letter-spacing: 0.5px;
       }
-      .badge-CREATE { background: #dcfce7; color: #166534; }
-      .badge-UPDATE { background: #dbeafe; color: #1e40af; }
-      .badge-DELETE { background: #fee2e2; color: #991b1b; }
-      .badge-DEFAULT { background: var(--bg-body); color: #475569; }
-      
+      .badge-CREATE {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .badge-UPDATE {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+      .badge-DELETE {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .badge-DEFAULT {
+        background: var(--bg-body);
+        color: #475569;
+      }
+
       @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
       }
       .skeleton-box {
         background: var(--border-color);
@@ -55,19 +79,38 @@
         height: 20px;
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
       }
-      .badge-status-success { background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-      .filter-chip { 
-        display: inline-flex; align-items: center; gap: 8px; 
-        background: #e0e7ff; color: #4f46e5; 
-        padding: 4px 12px; border-radius: 9999px; 
-        font-size: 0.8rem; font-weight: 500; 
+      .badge-status-success {
+        background: #dcfce7;
+        color: #166534;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
       }
-      .filter-chip button { 
-        background: none; border: none; color: #4f46e5; cursor: pointer; 
-        display: flex; align-items: center; padding: 0; 
+      .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #e0e7ff;
+        color: #4f46e5;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 500;
       }
-      .filter-chip button:hover { color: #3730a3; }
-      
+      .filter-chip button {
+        background: none;
+        border: none;
+        color: #4f46e5;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 0;
+      }
+      .filter-chip button:hover {
+        color: #3730a3;
+      }
+
       td {
         vertical-align: middle;
       }
@@ -76,27 +119,57 @@
   <body>
     <div class="app-container">
       <aside class="sidebar">
-        <div class="logo"><i class="fa-solid fa-file-invoice-dollar"></i><span>QuoteAI</span></div>
+        <div class="logo">
+          <i class="fa-solid fa-file-invoice-dollar"></i><span>QuoteAI</span>
+        </div>
         <nav class="menu">
-          <a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a>
-          <a href="ai-assistant.html" class="menu-item"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a>
-          <a href="index.html" class="menu-item"><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a>
-          
-          <a href="customers.html" class="menu-item"><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a>
-          <a href="products.html" class="menu-item"><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a>
-          <a href="employees.html" class="menu-item"><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a>
-          <a href="history.html?v=5" class="menu-item active"><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a>
-          <a href="#" class="menu-item text-danger" onclick="sessionStorage.removeItem('isLoggedIn'); window.location.href = 'login.html';"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a>
+          <a href="dashboard.html" class="menu-item"
+            ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
+          >
+          <a href="ai-assistant.html" class="menu-item"
+            ><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a
+          >
+          <a href="index.html" class="menu-item"
+            ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
+          >
+
+          <a href="customers.html" class="menu-item"
+            ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
+          >
+          <a href="products.html" class="menu-item"
+            ><i class="fa-solid fa-box"></i> ข้อมูลสินค้า & สต๊อก</a
+          >
+          <a href="employees.html" class="menu-item"
+            ><i class="fa-solid fa-user-tie"></i> ข้อมูลพนักงาน (PIC)</a
+          >
+          <a href="history.html?v=5" class="menu-item active"
+            ><i class="fa-solid fa-list"></i> ประวัติเอกสาร</a
+          >
+          <a
+            href="#"
+            class="menu-item text-danger"
+            onclick="
+              sessionStorage.removeItem('isLoggedIn');
+              window.location.href = 'login.html';
+            "
+            ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
+          >
         </nav>
-        <div class="user-profile" style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
+        <div
+          class="user-profile"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 0.75rem">
             <div class="avatar"><i class="fa-solid fa-user"></i></div>
             <div class="user-info">
               <span class="user-name" id="sidebar-username">Sales Team</span>
               <span class="user-role">Enterprise</span>
             </div>
           </div>
-          
         </div>
       </aside>
 
@@ -106,50 +179,179 @@
         </header>
 
         <div class="content-grid">
-          <section class="card form-section" style="display: flex; flex-direction: column; min-height: 0;">
-            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem;">
-              <h2><i class="fa-solid fa-clock-rotate-left"></i> ประวัติเอกสารและการแก้ไข</h2>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-primary" id="tab-btn-quotes" onclick="switchTab('quotes')">ใบเสนอราคา</button>
-                <button class="btn btn-secondary" id="tab-btn-audits" onclick="switchTab('audits')">ประวัติการแก้ไขข้อมูล</button>
+          <section
+            class="card form-section"
+            style="display: flex; flex-direction: column; min-height: 0"
+          >
+            <div
+              class="card-header"
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 0.5rem;
+              "
+            >
+              <h2>
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                ประวัติเอกสารและการแก้ไข
+              </h2>
+              <div style="display: flex; gap: 0.5rem">
+                <button
+                  class="btn btn-primary"
+                  id="tab-btn-quotes"
+                  onclick="switchTab('quotes')"
+                >
+                  ใบเสนอราคา
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  id="tab-btn-audits"
+                  onclick="switchTab('audits')"
+                >
+                  ประวัติการแก้ไขข้อมูล
+                </button>
               </div>
             </div>
-            
+
             <!-- SECTION QUOTES -->
-            <div id="section-quotes" style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
-              
+            <div
+              id="section-quotes"
+              style="
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                min-height: 0;
+              "
+            >
               <!-- Table Controls -->
-              <div class="table-controls" style="margin-top: 1rem; padding: 0 1.5rem;">
+              <div
+                class="table-controls"
+                style="margin-top: 1rem; padding: 0 1.5rem"
+              >
                 <div class="search-bar">
                   <i class="fa-solid fa-search" aria-hidden="true"></i>
-                  <input type="text" id="search-history" placeholder="ค้นหาเลขที่เอกสาร, ลูกค้า, หรือพนักงาน..." oninput="handleSearchHistory()" aria-label="ค้นหาเอกสาร">
+                  <input
+                    type="text"
+                    id="search-history"
+                    placeholder="ค้นหาเลขที่เอกสาร, ลูกค้า, หรือพนักงาน..."
+                    oninput="handleSearchHistory()"
+                    aria-label="ค้นหาเอกสาร"
+                  />
                 </div>
               </div>
 
-              <div class="table-container" style="flex: 1; overflow: auto; margin-top: 0;">
-                <table style="width: 100%; text-align: left; border-collapse: collapse;">
-                  <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
+              <div
+                class="table-container"
+                style="flex: 1; overflow: auto; margin-top: 0"
+              >
+                <table
+                  style="
+                    width: 100%;
+                    text-align: left;
+                    border-collapse: collapse;
+                  "
+                >
+                  <thead
+                    style="
+                      display: table-header-group;
+                      page-break-inside: avoid;
+                      break-inside: avoid;
+                    "
+                  >
                     <tr>
-                      <th class="sticky-th" style="width: 12%; min-width: 120px;">วันที่/เวลา</th>
-                      <th class="sticky-th" style="width: 15%; min-width: 120px;">เลขที่เอกสาร</th>
-                      <th class="sticky-th" style="width: 15%; min-width: 120px;">พนักงานขาย (PIC)</th>
-                      <th class="sticky-th" style="width: 30%; min-width: 250px;">ลูกค้า</th>
-                      <th class="sticky-th" style="width: 10%; min-width: 100px;">ยอดรวม</th>
-                      <th class="sticky-th" style="width: 10%; min-width: 120px;">สถานะ</th>
-                      <th class="sticky-th" style="width: 10%; min-width: 80px;">จัดการ</th>
+                      <th
+                        class="sticky-th"
+                        style="width: 12%; min-width: 120px"
+                      >
+                        วันที่/เวลา
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 15%; min-width: 120px"
+                      >
+                        เลขที่เอกสาร
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 15%; min-width: 120px"
+                      >
+                        พนักงานขาย (PIC)
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 30%; min-width: 250px"
+                      >
+                        ลูกค้า
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 10%; min-width: 100px"
+                      >
+                        ยอดรวม
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 10%; min-width: 120px"
+                      >
+                        สถานะ
+                      </th>
+                      <th class="sticky-th" style="width: 10%; min-width: 80px">
+                        จัดการ
+                      </th>
                     </tr>
                   </thead>
                   <tbody id="history-tbody">
-                    <tr><td colspan="7" style="text-align: center; padding: 2rem">กำลังโหลดข้อมูล...</td></tr>
+                    <tr>
+                      <td colspan="7" style="text-align: center; padding: 2rem">
+                        กำลังโหลดข้อมูล...
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%; border-top: 1px solid var(--border);">
-                <div id="pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
-                <div style="display: flex; gap: 0.5rem; align-items: center;">
-                  <button class="btn btn-secondary" id="btn-prev-history" style="padding: 0.5rem 1rem;" onclick="prevHistoryPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
-                  <span id="page-number" style="font-weight: 500; min-width: 100px; text-align: center;">หน้า 1 จาก 1</span>
-                  <button class="btn btn-secondary" id="btn-next-history" style="padding: 0.5rem 1rem;" onclick="nextHistoryPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding-top: 1rem;
+                  width: 100%;
+                  border-top: 1px solid var(--border);
+                "
+              >
+                <div
+                  id="pagination-info"
+                  style="color: var(--text-muted); font-size: 0.9rem"
+                >
+                  แสดง 0-0 จาก 0 รายการ
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center">
+                  <button
+                    class="btn btn-secondary"
+                    id="btn-prev-history"
+                    style="padding: 0.5rem 1rem"
+                    onclick="prevHistoryPage()"
+                  >
+                    <i class="fa-solid fa-chevron-left"></i> ก่อนหน้า
+                  </button>
+                  <span
+                    id="page-number"
+                    style="
+                      font-weight: 500;
+                      min-width: 100px;
+                      text-align: center;
+                    "
+                    >หน้า 1 จาก 1</span
+                  >
+                  <button
+                    class="btn btn-secondary"
+                    id="btn-next-history"
+                    style="padding: 0.5rem 1rem"
+                    onclick="nextHistoryPage()"
+                  >
+                    ถัดไป <i class="fa-solid fa-chevron-right"></i>
+                  </button>
                 </div>
                 <div></div>
               </div>
@@ -157,68 +359,232 @@
             <!-- END SECTION QUOTES -->
 
             <!-- SECTION AUDITS -->
-            <div id="section-audits" style="display: none; flex: 1; flex-direction: column; min-height: 0;">
+            <div
+              id="section-audits"
+              style="
+                display: none;
+                flex: 1;
+                flex-direction: column;
+                min-height: 0;
+              "
+            >
               <!-- FILTERS -->
-              <div class="table-controls" style="margin: 1rem 1.5rem 0 1.5rem; padding: 1rem; background: var(--bg-main); border: 1px solid var(--border); border-radius: var(--radius-sm); align-items: flex-end;">
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap; flex: 1;">
-                  <div style="flex: 1; min-width: 150px;">
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">การกระทำ</label>
-                    <select id="filter-action" class="form-control" onchange="applyFilters()">
+              <div
+                class="table-controls"
+                style="
+                  margin: 1rem 1.5rem 0 1.5rem;
+                  padding: 1rem;
+                  background: var(--bg-main);
+                  border: 1px solid var(--border);
+                  border-radius: var(--radius-sm);
+                  align-items: flex-end;
+                "
+              >
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; flex: 1">
+                  <div style="flex: 1; min-width: 150px">
+                    <label
+                      style="
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        color: var(--text-main);
+                        display: block;
+                        margin-bottom: 0.25rem;
+                      "
+                      >การกระทำ</label
+                    >
+                    <select
+                      id="filter-action"
+                      class="form-control"
+                      onchange="applyFilters()"
+                    >
                       <option value="">ทั้งหมด (ALL)</option>
                       <option value="CREATE">เพิ่ม (CREATE)</option>
                       <option value="UPDATE">แก้ไข (UPDATE)</option>
                       <option value="DELETE">ลบ (DELETE)</option>
                     </select>
                   </div>
-                  <div style="flex: 1; min-width: 150px;">
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">ระบบที่แก้ไข</label>
-                    <select id="filter-module" class="form-control" onchange="applyFilters()">
+                  <div style="flex: 1; min-width: 150px">
+                    <label
+                      style="
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        color: var(--text-main);
+                        display: block;
+                        margin-bottom: 0.25rem;
+                      "
+                      >ระบบที่แก้ไข</label
+                    >
+                    <select
+                      id="filter-module"
+                      class="form-control"
+                      onchange="applyFilters()"
+                    >
                       <option value="">ทั้งหมด</option>
                       <option value="สินค้า (Products)">สินค้า</option>
                       <option value="ลูกค้า (Customers)">ลูกค้า</option>
                       <option value="พนักงาน (Employees)">พนักงาน</option>
                     </select>
                   </div>
-                  <div style="flex: 1; min-width: 150px;">
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">ตั้งแต่วันที่</label>
-                    <input type="date" id="filter-date-start" class="form-control" onchange="applyFilters()" />
+                  <div style="flex: 1; min-width: 150px">
+                    <label
+                      style="
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        color: var(--text-main);
+                        display: block;
+                        margin-bottom: 0.25rem;
+                      "
+                      >ตั้งแต่วันที่</label
+                    >
+                    <input
+                      type="date"
+                      id="filter-date-start"
+                      class="form-control"
+                      onchange="applyFilters()"
+                    />
                   </div>
-                  <div style="flex: 1; min-width: 150px;">
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.25rem;">ถึงวันที่</label>
-                    <input type="date" id="filter-date-end" class="form-control" onchange="applyFilters()" />
+                  <div style="flex: 1; min-width: 150px">
+                    <label
+                      style="
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        color: var(--text-main);
+                        display: block;
+                        margin-bottom: 0.25rem;
+                      "
+                      >ถึงวันที่</label
+                    >
+                    <input
+                      type="date"
+                      id="filter-date-end"
+                      class="form-control"
+                      onchange="applyFilters()"
+                    />
                   </div>
                 </div>
                 <div>
-                   <button class="btn btn-outline" onclick="clearAuditsFilter()"><i class="fa-solid fa-rotate-right"></i> ล้างตัวกรอง</button>
+                  <button class="btn btn-outline" onclick="clearAuditsFilter()">
+                    <i class="fa-solid fa-rotate-right"></i> ล้างตัวกรอง
+                  </button>
                 </div>
               </div>
-              
+
               <!-- Active Filters -->
-              <div id="active-filters-container" style="display: flex; gap: 0.5rem; margin: 1rem 1.5rem 0 1.5rem; flex-wrap: wrap;"></div>
-              
-              <div class="table-container" style="margin-top: 1rem; flex: 1; overflow: auto;">
-                <table style="width: 100%; text-align: left; border-collapse: collapse;">
-                  <thead style="display: table-header-group; page-break-inside: avoid; break-inside: avoid;">
+              <div
+                id="active-filters-container"
+                style="
+                  display: flex;
+                  gap: 0.5rem;
+                  margin: 1rem 1.5rem 0 1.5rem;
+                  flex-wrap: wrap;
+                "
+              ></div>
+
+              <div
+                class="table-container"
+                style="margin-top: 1rem; flex: 1; overflow: auto"
+              >
+                <table
+                  style="
+                    width: 100%;
+                    text-align: left;
+                    border-collapse: collapse;
+                  "
+                >
+                  <thead
+                    style="
+                      display: table-header-group;
+                      page-break-inside: avoid;
+                      break-inside: avoid;
+                    "
+                  >
                     <tr>
-                      <th class="sticky-th" style="width: 12%; min-width: 120px;">วันที่/เวลา</th>
-                      <th class="sticky-th" style="width: 10%; min-width: 100px;">การกระทำ</th>
-                      <th class="sticky-th" style="width: 15%; min-width: 150px;">ระบบที่แก้ไข</th>
-                      <th class="sticky-th" style="width: 20%; min-width: 200px;">ข้อมูลที่ถูกแก้</th>
-                      <th class="sticky-th" style="width: 35%; min-width: 300px;">รายละเอียด</th>
-                      <th class="sticky-th" style="width: 8%; min-width: 100px;">ผู้ใช้งาน</th>
+                      <th
+                        class="sticky-th"
+                        style="width: 12%; min-width: 120px"
+                      >
+                        วันที่/เวลา
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 10%; min-width: 100px"
+                      >
+                        การกระทำ
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 15%; min-width: 150px"
+                      >
+                        ระบบที่แก้ไข
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 20%; min-width: 200px"
+                      >
+                        ข้อมูลที่ถูกแก้
+                      </th>
+                      <th
+                        class="sticky-th"
+                        style="width: 35%; min-width: 300px"
+                      >
+                        รายละเอียด
+                      </th>
+                      <th class="sticky-th" style="width: 8%; min-width: 100px">
+                        ผู้ใช้งาน
+                      </th>
                     </tr>
                   </thead>
                   <tbody id="audits-tbody">
-                    <tr><td colspan="6" style="text-align: center; padding: 2rem">กำลังโหลดข้อมูล...</td></tr>
+                    <tr>
+                      <td colspan="6" style="text-align: center; padding: 2rem">
+                        กำลังโหลดข้อมูล...
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; width: 100%; border-top: 1px solid var(--border);">
-                <div id="audits-pagination-info" style="color: var(--text-muted); font-size: 0.9rem;">แสดง 0-0 จาก 0 รายการ</div>
-                <div style="display: flex; gap: 0.5rem; align-items: center;">
-                  <button class="btn btn-secondary" id="btn-prev-audits" style="padding: 0.5rem 1rem;" onclick="prevAuditsPage()"><i class="fa-solid fa-chevron-left"></i> ก่อนหน้า</button>
-                  <span id="audits-page-number" style="font-weight: 500; min-width: 100px; text-align: center;">หน้า 1 จาก 1</span>
-                  <button class="btn btn-secondary" id="btn-next-audits" style="padding: 0.5rem 1rem;" onclick="nextAuditsPage()">ถัดไป <i class="fa-solid fa-chevron-right"></i></button>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding-top: 1rem;
+                  width: 100%;
+                  border-top: 1px solid var(--border);
+                "
+              >
+                <div
+                  id="audits-pagination-info"
+                  style="color: var(--text-muted); font-size: 0.9rem"
+                >
+                  แสดง 0-0 จาก 0 รายการ
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center">
+                  <button
+                    class="btn btn-secondary"
+                    id="btn-prev-audits"
+                    style="padding: 0.5rem 1rem"
+                    onclick="prevAuditsPage()"
+                  >
+                    <i class="fa-solid fa-chevron-left"></i> ก่อนหน้า
+                  </button>
+                  <span
+                    id="audits-page-number"
+                    style="
+                      font-weight: 500;
+                      min-width: 100px;
+                      text-align: center;
+                    "
+                    >หน้า 1 จาก 1</span
+                  >
+                  <button
+                    class="btn btn-secondary"
+                    id="btn-next-audits"
+                    style="padding: 0.5rem 1rem"
+                    onclick="nextAuditsPage()"
+                  >
+                    ถัดไป <i class="fa-solid fa-chevron-right"></i>
+                  </button>
                 </div>
                 <div></div>
               </div>
@@ -229,34 +595,121 @@
       </main>
     </div>
 
-    
-    
     <!-- PDF Preview Modal (direct, no iframe) -->
     <div id="pdf-preview-modal" class="modal hidden">
-      <div class="modal-content" style="width: 90%; max-width: 900px; max-height: 92vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; border-radius: 16px;">
-        <div class="modal-header" style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 16px 16px 0 0;">
-          <h3 style="margin: 0;">ตัวอย่างใบเสนอราคา (Preview)</h3>
-          <button class="btn-close" onclick="closePdfModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div
+        class="modal-content"
+        style="
+          width: 90%;
+          max-width: 900px;
+          max-height: 92vh;
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+          overflow: hidden;
+          border-radius: 16px;
+        "
+      >
+        <div
+          class="modal-header"
+          style="
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            border-radius: 16px 16px 0 0;
+          "
+        >
+          <h3 style="margin: 0">ตัวอย่างใบเสนอราคา (Preview)</h3>
+          <button class="btn-close" onclick="closePdfModal()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
-        <div style="flex: 1; overflow-y: auto; background: var(--bg-body); padding: 1.5rem; display: flex; flex-direction: column; align-items: center;">
-          <div id="pdf-preview-content" style="background: white; width: 794px; min-height: 1000px; padding: 40px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);"></div>
+        <div
+          style="
+            flex: 1;
+            overflow-y: auto;
+            background: var(--bg-body);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+        >
+          <div
+            id="pdf-preview-content"
+            style="
+              background: white;
+              width: 794px;
+              min-height: 1000px;
+              padding: 40px;
+              box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            "
+          ></div>
         </div>
-        <div class="modal-footer" style="padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.75rem; background: #fff; border-radius: 0 0 16px 16px;">
-          <button class="btn btn-outline" onclick="closePdfModal()">ยกเลิก</button>
-          <button class="btn btn-primary" id="pdf-download-btn" onclick="downloadPdf()"><i class="fa-solid fa-file-pdf"></i> พิมพ์ PDF</button>
+        <div
+          class="modal-footer"
+          style="
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            background: #fff;
+            border-radius: 0 0 16px 16px;
+          "
+        >
+          <button class="btn btn-outline" onclick="closePdfModal()">
+            ยกเลิก
+          </button>
+          <button
+            class="btn btn-primary"
+            id="pdf-download-btn"
+            onclick="downloadPdf()"
+          >
+            <i class="fa-solid fa-file-pdf"></i> พิมพ์ PDF
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Edit Modal (iframe for editing) -->
     <div id="iframe-modal" class="modal hidden">
-      <div class="modal-content" style="width: 95%; max-width: 1200px; height: 90vh; display: flex; flex-direction: column; padding: 0; overflow: hidden;">
-        <div class="modal-header" style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #fff;">
-          <h3 style="margin: 0;">แก้ไขใบเสนอราคา</h3>
-          <button class="btn-close" onclick="closeIframeModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div
+        class="modal-content"
+        style="
+          width: 95%;
+          max-width: 1200px;
+          height: 90vh;
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+          overflow: hidden;
+        "
+      >
+        <div
+          class="modal-header"
+          style="
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+          "
+        >
+          <h3 style="margin: 0">แก้ไขใบเสนอราคา</h3>
+          <button class="btn-close" onclick="closeIframeModal()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
-        <div style="flex: 1; position: relative;">
-          <iframe id="quote-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+        <div style="flex: 1; position: relative">
+          <iframe
+            id="quote-iframe"
+            style="width: 100%; height: 100%; border: none"
+          ></iframe>
         </div>
       </div>
     </div>
@@ -270,17 +723,21 @@
     <script>
       // --- Tab Switching Logic ---
       window.switchTab = (tab) => {
-        if(tab === 'quotes') {
-          document.getElementById('tab-btn-quotes').className = 'btn btn-primary';
-          document.getElementById('tab-btn-audits').className = 'btn btn-secondary';
-          document.getElementById('section-quotes').style.display = 'flex';
-          document.getElementById('section-audits').style.display = 'none';
+        if (tab === "quotes") {
+          document.getElementById("tab-btn-quotes").className =
+            "btn btn-primary";
+          document.getElementById("tab-btn-audits").className =
+            "btn btn-secondary";
+          document.getElementById("section-quotes").style.display = "flex";
+          document.getElementById("section-audits").style.display = "none";
         } else {
-          document.getElementById('tab-btn-audits').className = 'btn btn-primary';
-          document.getElementById('tab-btn-quotes').className = 'btn btn-secondary';
-          document.getElementById('section-audits').style.display = 'flex';
-          document.getElementById('section-quotes').style.display = 'none';
-          if(allAuditsData.length === 0) fetchAudits();
+          document.getElementById("tab-btn-audits").className =
+            "btn btn-primary";
+          document.getElementById("tab-btn-quotes").className =
+            "btn btn-secondary";
+          document.getElementById("section-audits").style.display = "flex";
+          document.getElementById("section-quotes").style.display = "none";
+          if (allAuditsData.length === 0) fetchAudits();
         }
       };
 
@@ -288,21 +745,26 @@
       let allHistoryData = [];
       let currentHistoryPage = 1;
       const historyPerPage = 20;
-      let historySearchQuery = '';
+      let historySearchQuery = "";
 
       window.handleSearchHistory = () => {
-        historySearchQuery = document.getElementById('search-history').value.toLowerCase();
+        historySearchQuery = document
+          .getElementById("search-history")
+          .value.toLowerCase();
         currentHistoryPage = 1;
         renderHistory();
       };
 
       window.clearHistorySearch = () => {
-        document.getElementById('search-history').value = '';
-        historySearchQuery = '';
+        document.getElementById("search-history").value = "";
+        historySearchQuery = "";
         renderHistory();
       };
 
-      const skeletonHistoryRows = `<tr><td colspan="7" style="padding: 1rem;"><div style="display:flex; gap:1rem; align-items:center;"><div class="skeleton-box" style="width:100px;"></div><div class="skeleton-box" style="width:120px;"></div><div class="skeleton-box" style="flex:1;"></div><div class="skeleton-box" style="width:80px;"></div></div></td></tr>`.repeat(5);
+      const skeletonHistoryRows =
+        `<tr><td colspan="7" style="padding: 1rem;"><div style="display:flex; gap:1rem; align-items:center;"><div class="skeleton-box" style="width:100px;"></div><div class="skeleton-box" style="width:120px;"></div><div class="skeleton-box" style="flex:1;"></div><div class="skeleton-box" style="width:80px;"></div></div></td></tr>`.repeat(
+          5,
+        );
 
       const fetchHistory = async () => {
         const tbody = document.getElementById("history-tbody");
@@ -313,36 +775,45 @@
           currentHistoryPage = 1;
           renderHistory();
         } catch (err) {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--danger);">โหลดข้อมูลล้มเหลว กรุณาลองใหม่อีกครั้ง</td></tr>';
+          tbody.innerHTML =
+            '<tr><td colspan="7" style="text-align: center; color: var(--danger);">โหลดข้อมูลล้มเหลว กรุณาลองใหม่อีกครั้ง</td></tr>';
         }
       };
 
       const renderHistory = () => {
         const tbody = document.getElementById("history-tbody");
         tbody.innerHTML = "";
-        
+
         let filteredData = allHistoryData;
-        if(historySearchQuery) {
-           filteredData = allHistoryData.filter(d => 
-             (d.doc_no && d.doc_no.toLowerCase().includes(historySearchQuery)) ||
-             (d.customer_name && d.customer_name.toLowerCase().includes(historySearchQuery)) ||
-             (d.salesperson && d.salesperson.toLowerCase().includes(historySearchQuery))
-           );
+        if (historySearchQuery) {
+          filteredData = allHistoryData.filter(
+            (d) =>
+              (d.doc_no &&
+                d.doc_no.toLowerCase().includes(historySearchQuery)) ||
+              (d.customer_name &&
+                d.customer_name.toLowerCase().includes(historySearchQuery)) ||
+              (d.salesperson &&
+                d.salesperson.toLowerCase().includes(historySearchQuery)),
+          );
         }
 
-        const totalPages = Math.max(1, Math.ceil(filteredData.length / historyPerPage));
-        
+        const totalPages = Math.max(
+          1,
+          Math.ceil(filteredData.length / historyPerPage),
+        );
+
         if (filteredData.length === 0) {
           tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 4rem 1rem;">
             <div style="font-size: 3rem; color: var(--border); margin-bottom: 1rem;"><i class="fa-solid fa-folder-open"></i></div>
             <h3 style="color: var(--text-main); margin-bottom: 0.5rem; font-weight: 600;">ไม่พบประวัติเอกสาร</h3>
             <p style="color: var(--text-muted); margin-bottom: 1.5rem;">ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหาของคุณ</p>
-            ${historySearchQuery ? '<button class="btn btn-outline" onclick="clearHistorySearch()">ล้างการค้นหา</button>' : ''}
+            ${historySearchQuery ? '<button class="btn btn-outline" onclick="clearHistorySearch()">ล้างการค้นหา</button>' : ""}
           </td></tr>`;
-          document.getElementById('pagination-info').innerText = 'แสดง 0 จาก 0 รายการ';
-          document.getElementById('page-number').innerText = 'หน้า 1 จาก 1';
-          document.getElementById('btn-prev-history').disabled = true;
-          document.getElementById('btn-next-history').disabled = true;
+          document.getElementById("pagination-info").innerText =
+            "แสดง 0 จาก 0 รายการ";
+          document.getElementById("page-number").innerText = "หน้า 1 จาก 1";
+          document.getElementById("btn-prev-history").disabled = true;
+          document.getElementById("btn-next-history").disabled = true;
           return;
         }
 
@@ -352,7 +823,13 @@
 
         paginatedData.forEach((doc) => {
           const dateObj = new Date(doc.doc_date || doc.created_at);
-          const formattedDate = dateObj.toLocaleDateString("th-TH", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+          const formattedDate = dateObj.toLocaleDateString("th-TH", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
           tbody.innerHTML += `
                       <tr>
                           <td style="color: var(--text-muted);">${formattedDate}</td>
@@ -368,20 +845,30 @@
                       </tr>
                   `;
         });
-        
-        document.getElementById('pagination-info').innerText = `แสดง ${start + 1}-${end} จากทั้งหมด ${filteredData.length} รายการ`;
-        document.getElementById('page-number').innerText = `หน้า ${currentHistoryPage} จาก ${totalPages}`;
-        document.getElementById('btn-prev-history').disabled = currentHistoryPage === 1;
-        document.getElementById('btn-next-history').disabled = currentHistoryPage === totalPages;
+
+        document.getElementById("pagination-info").innerText =
+          `แสดง ${start + 1}-${end} จากทั้งหมด ${filteredData.length} รายการ`;
+        document.getElementById("page-number").innerText =
+          `หน้า ${currentHistoryPage} จาก ${totalPages}`;
+        document.getElementById("btn-prev-history").disabled =
+          currentHistoryPage === 1;
+        document.getElementById("btn-next-history").disabled =
+          currentHistoryPage === totalPages;
       };
 
       window.prevHistoryPage = () => {
-        if (currentHistoryPage > 1) { currentHistoryPage--; renderHistory(); }
+        if (currentHistoryPage > 1) {
+          currentHistoryPage--;
+          renderHistory();
+        }
       };
 
       window.nextHistoryPage = () => {
         const totalPages = Math.ceil(allHistoryData.length / historyPerPage);
-        if (currentHistoryPage < totalPages) { currentHistoryPage++; renderHistory(); }
+        if (currentHistoryPage < totalPages) {
+          currentHistoryPage++;
+          renderHistory();
+        }
       };
 
       // --- Audit Logs Logic ---
@@ -390,59 +877,70 @@
       let currentAuditsPage = 1;
       const auditsPerPage = 20;
 
-      const skeletonAuditsRows = `<tr><td colspan="6" style="padding: 1rem;"><div style="display:flex; gap:1rem; align-items:center;"><div class="skeleton-box" style="width:100px;"></div><div class="skeleton-box" style="width:120px;"></div><div class="skeleton-box" style="flex:1;"></div><div class="skeleton-box" style="width:80px;"></div></div></td></tr>`.repeat(5);
+      const skeletonAuditsRows =
+        `<tr><td colspan="6" style="padding: 1rem;"><div style="display:flex; gap:1rem; align-items:center;"><div class="skeleton-box" style="width:100px;"></div><div class="skeleton-box" style="width:120px;"></div><div class="skeleton-box" style="flex:1;"></div><div class="skeleton-box" style="width:80px;"></div></div></td></tr>`.repeat(
+          5,
+        );
 
       window.clearAuditsFilter = () => {
-         document.getElementById('filter-action').value = '';
-         document.getElementById('filter-module').value = '';
-         document.getElementById('filter-date-start').value = '';
-         document.getElementById('filter-date-end').value = '';
-         applyFilters();
+        document.getElementById("filter-action").value = "";
+        document.getElementById("filter-module").value = "";
+        document.getElementById("filter-date-start").value = "";
+        document.getElementById("filter-date-end").value = "";
+        applyFilters();
       };
 
       const fetchAudits = async () => {
-        const tbody = document.getElementById('audits-tbody');
+        const tbody = document.getElementById("audits-tbody");
         tbody.innerHTML = skeletonAuditsRows;
         try {
-          const res = await fetch('/api/audit_logs');
+          const res = await fetch("/api/audit_logs");
           allAuditsData = await res.json();
           applyFilters();
         } catch (err) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--danger);">โหลดข้อมูลล้มเหลว กรุณาลองใหม่อีกครั้ง</td></tr>';
+          tbody.innerHTML =
+            '<tr><td colspan="6" style="text-align: center; color: var(--danger);">โหลดข้อมูลล้มเหลว กรุณาลองใหม่อีกครั้ง</td></tr>';
         }
       };
 
       window.applyFilters = () => {
-        const actionFilter = document.getElementById('filter-action').value;
-        const moduleFilter = document.getElementById('filter-module').value;
-        const startDateFilter = document.getElementById('filter-date-start').value;
-        const endDateFilter = document.getElementById('filter-date-end').value;
+        const actionFilter = document.getElementById("filter-action").value;
+        const moduleFilter = document.getElementById("filter-module").value;
+        const startDateFilter =
+          document.getElementById("filter-date-start").value;
+        const endDateFilter = document.getElementById("filter-date-end").value;
 
         // Render Active Filter Chips
-        const chipsContainer = document.getElementById('active-filters-container');
-        let chipsHtml = '';
-        if(actionFilter) chipsHtml += `<div class="filter-chip">การกระทำ: ${actionFilter} <button aria-label="ลบตัวกรองการกระทำ" onclick="document.getElementById('filter-action').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
-        if(moduleFilter) chipsHtml += `<div class="filter-chip">ระบบ: ${moduleFilter} <button aria-label="ลบตัวกรองระบบ" onclick="document.getElementById('filter-module').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
-        if(startDateFilter) chipsHtml += `<div class="filter-chip">ตั้งแต่: ${startDateFilter} <button aria-label="ลบตัวกรองวันที่" onclick="document.getElementById('filter-date-start').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
-        if(endDateFilter) chipsHtml += `<div class="filter-chip">ถึง: ${endDateFilter} <button aria-label="ลบตัวกรองวันที่" onclick="document.getElementById('filter-date-end').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
+        const chipsContainer = document.getElementById(
+          "active-filters-container",
+        );
+        let chipsHtml = "";
+        if (actionFilter)
+          chipsHtml += `<div class="filter-chip">การกระทำ: ${actionFilter} <button aria-label="ลบตัวกรองการกระทำ" onclick="document.getElementById('filter-action').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
+        if (moduleFilter)
+          chipsHtml += `<div class="filter-chip">ระบบ: ${moduleFilter} <button aria-label="ลบตัวกรองระบบ" onclick="document.getElementById('filter-module').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
+        if (startDateFilter)
+          chipsHtml += `<div class="filter-chip">ตั้งแต่: ${startDateFilter} <button aria-label="ลบตัวกรองวันที่" onclick="document.getElementById('filter-date-start').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
+        if (endDateFilter)
+          chipsHtml += `<div class="filter-chip">ถึง: ${endDateFilter} <button aria-label="ลบตัวกรองวันที่" onclick="document.getElementById('filter-date-end').value=''; applyFilters();"><i class="fa-solid fa-xmark"></i></button></div>`;
         chipsContainer.innerHTML = chipsHtml;
 
-        filteredAuditsData = allAuditsData.filter(log => {
+        filteredAuditsData = allAuditsData.filter((log) => {
           let match = true;
           if (actionFilter && log.action_type !== actionFilter) match = false;
           if (moduleFilter && log.table_name !== moduleFilter) match = false;
-          
+
           if (startDateFilter || endDateFilter) {
-             const logDate = new Date(log.created_at);
-             logDate.setHours(0,0,0,0);
-             if(startDateFilter) {
-                const sDate = new Date(startDateFilter);
-                if(logDate < sDate) match = false;
-             }
-             if(endDateFilter) {
-                const eDate = new Date(endDateFilter);
-                if(logDate > eDate) match = false;
-             }
+            const logDate = new Date(log.created_at);
+            logDate.setHours(0, 0, 0, 0);
+            if (startDateFilter) {
+              const sDate = new Date(startDateFilter);
+              if (logDate < sDate) match = false;
+            }
+            if (endDateFilter) {
+              const eDate = new Date(endDateFilter);
+              if (logDate > eDate) match = false;
+            }
           }
           return match;
         });
@@ -452,10 +950,13 @@
       };
 
       const renderAudits = () => {
-        const tbody = document.getElementById('audits-tbody');
-        tbody.innerHTML = '';
-        const totalPages = Math.max(1, Math.ceil(filteredAuditsData.length / auditsPerPage));
-        
+        const tbody = document.getElementById("audits-tbody");
+        tbody.innerHTML = "";
+        const totalPages = Math.max(
+          1,
+          Math.ceil(filteredAuditsData.length / auditsPerPage),
+        );
+
         if (filteredAuditsData.length === 0) {
           tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 4rem 1rem;">
             <div style="font-size: 3rem; color: var(--border); margin-bottom: 1rem;"><i class="fa-solid fa-folder-open"></i></div>
@@ -463,10 +964,12 @@
             <p style="color: var(--text-muted); margin-bottom: 1.5rem;">ไม่พบรายการที่ตรงกับเงื่อนไขตัวกรองของคุณ</p>
             <button class="btn btn-outline" onclick="clearAuditsFilter()">ล้างตัวกรองทั้งหมด</button>
           </td></tr>`;
-          document.getElementById('audits-pagination-info').innerText = 'แสดง 0 จาก 0 รายการ';
-          document.getElementById('audits-page-number').innerText = 'หน้า 1 จาก 1';
-          document.getElementById('btn-prev-audits').disabled = true;
-          document.getElementById('btn-next-audits').disabled = true;
+          document.getElementById("audits-pagination-info").innerText =
+            "แสดง 0 จาก 0 รายการ";
+          document.getElementById("audits-page-number").innerText =
+            "หน้า 1 จาก 1";
+          document.getElementById("btn-prev-audits").disabled = true;
+          document.getElementById("btn-next-audits").disabled = true;
           return;
         }
 
@@ -476,58 +979,110 @@
 
         paginatedData.forEach((log) => {
           const dateObj = new Date(log.created_at);
-          const formattedDate = dateObj.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
-          
+          const formattedDate = dateObj.toLocaleDateString("th-TH", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
           let actionBadgeClass = `badge-${log.action_type}`;
-          if(!['CREATE', 'UPDATE', 'DELETE'].includes(log.action_type)) actionBadgeClass = 'badge-DEFAULT';
+          if (!["CREATE", "UPDATE", "DELETE"].includes(log.action_type))
+            actionBadgeClass = "badge-DEFAULT";
           const actionBadge = `<span class="badge-action ${actionBadgeClass}" aria-label="การกระทำ: ${log.action_type}">${log.action_type}</span>`;
-          
-          let detailsHtml = '';
-          const rawDetails = log.record_details || '';
-          
+
+          let detailsHtml = "";
+          const rawDetails = log.record_details || "";
+
           const keyMap = {
-            name: 'ชื่อ', code: 'รหัส', selling_price: 'ราคาขาย', purchase_price: 'ราคาทุน',
-            contact_person: 'ผู้ติดต่อ', phone: 'เบอร์โทร', email: 'อีเมล', address_1: 'ที่อยู่',
-            tax_id: 'เลขผู้เสียภาษี', pic_name: 'ชื่อพนักงาน', pic_code: 'รหัสพนักงาน',
-            department: 'แผนก', contact_number: 'เบอร์ติดต่อ', status: 'สถานะ', stock_qty: 'จำนวนสต๊อก'
+            name: "ชื่อ",
+            code: "รหัส",
+            selling_price: "ราคาขาย",
+            purchase_price: "ราคาทุน",
+            contact_person: "ผู้ติดต่อ",
+            phone: "เบอร์โทร",
+            email: "อีเมล",
+            address_1: "ที่อยู่",
+            tax_id: "เลขผู้เสียภาษี",
+            pic_name: "ชื่อพนักงาน",
+            pic_code: "รหัสพนักงาน",
+            department: "แผนก",
+            contact_number: "เบอร์ติดต่อ",
+            status: "สถานะ",
+            stock_qty: "จำนวนสต๊อก",
           };
           const tKey = (k) => keyMap[k] || k;
-          
-          if (log.action_type === 'UPDATE' && rawDetails.includes('Before:') && rawDetails.includes('| After:')) {
+
+          if (
+            log.action_type === "UPDATE" &&
+            rawDetails.includes("Before:") &&
+            rawDetails.includes("| After:")
+          ) {
             try {
-              const parts = rawDetails.split(' | After: ');
-              const beforeStr = parts[0].replace('Before: ', '').trim();
+              const parts = rawDetails.split(" | After: ");
+              const beforeStr = parts[0].replace("Before: ", "").trim();
               const afterStr = parts[1].trim();
               const before = JSON.parse(beforeStr);
               const after = JSON.parse(afterStr);
-              
+
               let changes = [];
-              const ignoredKeys = ['id', 'created_at', 'updated_at', 'created_by', 'updated_by'];
-              for(let key in after) {
-                if(before[key] !== after[key] && !ignoredKeys.includes(key)) {
-                  let bVal = before[key] === null || before[key] === '' ? '-' : before[key];
-                  let aVal = after[key] === null || after[key] === '' ? '-' : after[key];
-                  changes.push(`<div class="badge-detail" title="${tKey(key)}: ${bVal} -> ${aVal}"><strong style="color:var(--text-main); margin-right:4px;">${tKey(key)}:</strong> <span style="color:var(--text-muted);text-decoration:line-through;max-width:80px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${bVal}</span> <i class="fa-solid fa-arrow-right" style="font-size:0.75rem;margin:0 6px;color:var(--text-muted)"></i> <span style="color:var(--primary);font-weight:600;max-width:120px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${aVal}</span></div>`);
+              const ignoredKeys = [
+                "id",
+                "created_at",
+                "updated_at",
+                "created_by",
+                "updated_by",
+              ];
+              for (let key in after) {
+                if (before[key] !== after[key] && !ignoredKeys.includes(key)) {
+                  let bVal =
+                    before[key] === null || before[key] === ""
+                      ? "-"
+                      : before[key];
+                  let aVal =
+                    after[key] === null || after[key] === "" ? "-" : after[key];
+                  changes.push(
+                    `<div class="badge-detail" title="${tKey(key)}: ${bVal} -> ${aVal}"><strong style="color:var(--text-main); margin-right:4px;">${tKey(key)}:</strong> <span style="color:var(--text-muted);text-decoration:line-through;max-width:80px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${bVal}</span> <i class="fa-solid fa-arrow-right" style="font-size:0.75rem;margin:0 6px;color:var(--text-muted)"></i> <span style="color:var(--primary);font-weight:600;max-width:120px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${aVal}</span></div>`,
+                  );
                 }
               }
-              detailsHtml = changes.length > 0 ? changes.join('') : '<span style="color:var(--text-muted)">ไม่มีการเปลี่ยนแปลงข้อมูลสำคัญ</span>';
-            } catch(e) {
+              detailsHtml =
+                changes.length > 0
+                  ? changes.join("")
+                  : '<span style="color:var(--text-muted)">ไม่มีการเปลี่ยนแปลงข้อมูลสำคัญ</span>';
+            } catch (e) {
               detailsHtml = rawDetails;
             }
           } else {
-             try {
-                const parsed = JSON.parse(rawDetails);
-                let changes = [];
-                const ignoredKeys = ['id', 'created_at', 'updated_at', 'created_by', 'updated_by'];
-                for(let key in parsed) {
-                   if (!ignoredKeys.includes(key) && parsed[key] !== null && parsed[key] !== '') {
-                      changes.push(`<div class="badge-detail" title="${tKey(key)}: ${parsed[key]}"><strong style="color:var(--text-main); margin-right:4px;">${tKey(key)}:</strong> <span style="color:var(--text-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${parsed[key]}</span></div>`);
-                   }
+            try {
+              const parsed = JSON.parse(rawDetails);
+              let changes = [];
+              const ignoredKeys = [
+                "id",
+                "created_at",
+                "updated_at",
+                "created_by",
+                "updated_by",
+              ];
+              for (let key in parsed) {
+                if (
+                  !ignoredKeys.includes(key) &&
+                  parsed[key] !== null &&
+                  parsed[key] !== ""
+                ) {
+                  changes.push(
+                    `<div class="badge-detail" title="${tKey(key)}: ${parsed[key]}"><strong style="color:var(--text-main); margin-right:4px;">${tKey(key)}:</strong> <span style="color:var(--text-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom;">${parsed[key]}</span></div>`,
+                  );
                 }
-                detailsHtml = changes.length > 0 ? changes.join('') : '<span style="color:var(--text-muted)">ไม่มีรายละเอียดเพิ่มเติม</span>';
-             } catch(e) {
-                detailsHtml = rawDetails;
-             }
+              }
+              detailsHtml =
+                changes.length > 0
+                  ? changes.join("")
+                  : '<span style="color:var(--text-muted)">ไม่มีรายละเอียดเพิ่มเติม</span>';
+            } catch (e) {
+              detailsHtml = rawDetails;
+            }
           }
 
           tbody.innerHTML += `
@@ -546,48 +1101,52 @@
           `;
         });
 
-        document.getElementById('audits-pagination-info').innerText = `แสดง ${start + 1}-${end} จากทั้งหมด ${filteredAuditsData.length} รายการ`;
-        document.getElementById('audits-page-number').innerText = `หน้า ${currentAuditsPage} จาก ${totalPages}`;
-        
-        document.getElementById('btn-prev-audits').disabled = currentAuditsPage === 1;
-        document.getElementById('btn-next-audits').disabled = currentAuditsPage === totalPages;
+        document.getElementById("audits-pagination-info").innerText =
+          `แสดง ${start + 1}-${end} จากทั้งหมด ${filteredAuditsData.length} รายการ`;
+        document.getElementById("audits-page-number").innerText =
+          `หน้า ${currentAuditsPage} จาก ${totalPages}`;
+
+        document.getElementById("btn-prev-audits").disabled =
+          currentAuditsPage === 1;
+        document.getElementById("btn-next-audits").disabled =
+          currentAuditsPage === totalPages;
       };
 
       window.prevAuditsPage = () => {
-        if (currentAuditsPage > 1) { currentAuditsPage--; renderAudits(); }
+        if (currentAuditsPage > 1) {
+          currentAuditsPage--;
+          renderAudits();
+        }
       };
 
       window.nextAuditsPage = () => {
         const totalPages = Math.ceil(filteredAuditsData.length / auditsPerPage);
-        if (currentAuditsPage < totalPages) { currentAuditsPage++; renderAudits(); }
+        if (currentAuditsPage < totalPages) {
+          currentAuditsPage++;
+          renderAudits();
+        }
       };
 
-      
-      
-      
-      
-      
-      
-
-      
       const openIframeModal = async (id, action) => {
-        if (action === 'view') {
+        if (action === "view") {
           // Direct PDF preview - no iframe needed
-          const pdfModal = document.getElementById('pdf-preview-modal');
-          const pdfContent = document.getElementById('pdf-preview-content');
-          pdfContent.innerHTML = '<div style="text-align:center;padding:3rem;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p>กำลังโหลดข้อมูล...</p></div>';
-          pdfModal.classList.remove('hidden');
+          const pdfModal = document.getElementById("pdf-preview-modal");
+          const pdfContent = document.getElementById("pdf-preview-content");
+          pdfContent.innerHTML =
+            '<div style="text-align:center;padding:3rem;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p>กำลังโหลดข้อมูล...</p></div>';
+          pdfModal.classList.remove("hidden");
 
           try {
             const [quoteRes, custRes] = await Promise.all([
               fetch(`/api/quote/${id}`),
-              fetch('/api/customers')
+              fetch("/api/customers"),
             ]);
             const quoteData = await quoteRes.json();
             const allCustomers = await custRes.json();
 
             if (!quoteData.quote) {
-              pdfContent.innerHTML = '<p style="color:red;text-align:center">ไม่พบข้อมูล</p>';
+              pdfContent.innerHTML =
+                '<p style="color:red;text-align:center">ไม่พบข้อมูล</p>';
               return;
             }
 
@@ -595,115 +1154,181 @@
             const items = quoteData.items;
 
             // Find customer details
-            const cust = allCustomers.find(c => c.name === q.customer_name || c.contact_person === q.customer_name) || {};
+            const cust =
+              allCustomers.find(
+                (c) =>
+                  c.name === q.customer_name ||
+                  c.contact_person === q.customer_name,
+              ) || {};
 
             const docDate = q.doc_date ? new Date(q.doc_date) : new Date();
-            const docDateStr = docDate.toLocaleDateString('en-GB');
+            const docDateStr = docDate.toLocaleDateString("en-GB");
             const crDays = q.credit_days || 30;
-            const validDate = q.validity_date ? new Date(q.validity_date).toLocaleDateString('en-GB') : new Date(docDate.getTime() + crDays * 86400000).toLocaleDateString('en-GB');
+            const validDate = q.validity_date
+              ? new Date(q.validity_date).toLocaleDateString("en-GB")
+              : new Date(
+                  docDate.getTime() + crDays * 86400000,
+                ).toLocaleDateString("en-GB");
 
             let subtotal = 0;
-            items.forEach(it => subtotal += parseFloat(it.quantity) * parseFloat(it.unit_price));
+            items.forEach(
+              (it) =>
+                (subtotal +=
+                  parseFloat(it.quantity) * parseFloat(it.unit_price)),
+            );
             const vat = subtotal * 0.07;
             const grandTotal = subtotal + vat;
-            const fmt = n => new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(n);
+            const fmt = (n) =>
+              new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+              }).format(n);
             const bahtText = (amount) => {
-                const number = Math.round(amount * 100) / 100;
-                const numberStr = number.toFixed(2);
-                const parts = numberStr.split('.');
-                const integerPart = parts[0];
-                const fractionalPart = parts[1];
-                const text = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
-                const unit = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'];
-                const convert = (numStr) => {
-                    let result = '';
-                    for (let i = 0; i < numStr.length; i++) {
-                        const n = parseInt(numStr[i]);
-                        const pos = numStr.length - 1 - i;
-                        if (n !== 0) {
-                            if (pos === 1 && n === 1) result += 'สิบ';
-                            else if (pos === 1 && n === 2) result += 'ยี่สิบ';
-                            else if (pos === 0 && n === 1 && numStr.length > 1 && numStr[numStr.length-2] !== '0') result += 'เอ็ด';
-                            else result += text[n] + unit[pos % 6];
-                        }
-                    }
-                    return result || 'ศูนย์';
-                };
-                let baht = convert(integerPart) + 'บาท';
-                let satang = parseInt(fractionalPart) === 0 ? 'ถ้วน' : convert(fractionalPart) + 'สตางค์';
-                return '( ' + baht + satang + ' )';
+              const number = Math.round(amount * 100) / 100;
+              const numberStr = number.toFixed(2);
+              const parts = numberStr.split(".");
+              const integerPart = parts[0];
+              const fractionalPart = parts[1];
+              const text = [
+                "ศูนย์",
+                "หนึ่ง",
+                "สอง",
+                "สาม",
+                "สี่",
+                "ห้า",
+                "หก",
+                "เจ็ด",
+                "แปด",
+                "เก้า",
+              ];
+              const unit = ["", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน"];
+              const convert = (numStr) => {
+                let result = "";
+                for (let i = 0; i < numStr.length; i++) {
+                  const n = parseInt(numStr[i]);
+                  const pos = numStr.length - 1 - i;
+                  if (n !== 0) {
+                    if (pos === 1 && n === 1) result += "สิบ";
+                    else if (pos === 1 && n === 2) result += "ยี่สิบ";
+                    else if (
+                      pos === 0 &&
+                      n === 1 &&
+                      numStr.length > 1 &&
+                      numStr[numStr.length - 2] !== "0"
+                    )
+                      result += "เอ็ด";
+                    else result += text[n] + unit[pos % 6];
+                  }
+                }
+                return result || "ศูนย์";
+              };
+              let baht = convert(integerPart) + "บาท";
+              let satang =
+                parseInt(fractionalPart) === 0
+                  ? "ถ้วน"
+                  : convert(fractionalPart) + "สตางค์";
+              return "( " + baht + satang + " )";
             };
 
             // Generate locked signature image
-            function generateSignatureCanvas(salesperson, docDate, sigW = '734px') {
-                const canvas = document.createElement('canvas');
-                const scale = 3;
-                canvas.width = 734 * scale;
-                canvas.height = 185 * scale;
-                const ctx = canvas.getContext('2d');
-                ctx.scale(scale, scale);
-                
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(0, 0, 734, 185);
-                
-                ctx.strokeStyle = '#000000';
-                ctx.lineWidth = 1;
-                
-                function roundRect(x, y, w, h, r) {
-                    ctx.beginPath();
-                    ctx.moveTo(x + r, y);
-                    ctx.lineTo(x + w - r, y);
-                    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-                    ctx.lineTo(x + w, y + h - r);
-                    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-                    ctx.lineTo(x + r, y + h);
-                    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-                    ctx.lineTo(x, y + r);
-                    ctx.quadraticCurveTo(x, y, x + r, y);
-                    ctx.closePath();
-                    ctx.stroke();
-                }
-                
-                roundRect(0, 5, 359, 175, 8);
-                roundRect(374, 5, 359, 175, 8);
-                
-                ctx.textAlign = 'center';
-                
-                ctx.fillStyle = '#000000';
-                ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-                ctx.fillText('ในนาม ลูกค้า / Customer', 179.5, 35);
-                
+            function generateSignatureCanvas(
+              salesperson,
+              docDate,
+              sigW = "734px",
+            ) {
+              const canvas = document.createElement("canvas");
+              const scale = 3;
+              canvas.width = 734 * scale;
+              canvas.height = 185 * scale;
+              const ctx = canvas.getContext("2d");
+              ctx.scale(scale, scale);
+
+              ctx.fillStyle = "#ffffff";
+              ctx.fillRect(0, 0, 734, 185);
+
+              ctx.strokeStyle = "#000000";
+              ctx.lineWidth = 1;
+
+              function roundRect(x, y, w, h, r) {
                 ctx.beginPath();
-                ctx.moveTo(79.5, 115);
-                ctx.lineTo(279.5, 115);
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h - r);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                ctx.lineTo(x + r, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
                 ctx.stroke();
-                
-                ctx.font = '12px "Prompt", "Sarabun", sans-serif';
-                ctx.fillStyle = '#666666';
-                ctx.fillText('(............................................................)', 179.5, 135);
-                ctx.fillStyle = '#000000';
-                ctx.fillText('ผู้อนุมัติสั่งซื้อ / Accepted By', 179.5, 153);
-                ctx.fillText('วันที่ / Date: ......../......../........', 179.5, 170);
-                
-                ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-                ctx.fillText('ในนาม โซลโซไซตี้ (Soul Society)', 553.5, 35);
-                
-                ctx.beginPath();
-                ctx.moveTo(453.5, 115);
-                ctx.lineTo(653.5, 115);
-                ctx.stroke();
-                
-                ctx.font = '12px "Prompt", "Sarabun", sans-serif';
-                ctx.fillStyle = 'var(--text-main)';
-                ctx.fillText('( ' + (salesperson || '............................................................') + ' )', 553.5, 135);
-                ctx.fillStyle = '#000000';
-                ctx.fillText('ผู้เสนอราคา / Quoted By', 553.5, 153);
-                ctx.fillText('วันที่ / Date: ' + (docDate || '......../......../........'), 553.5, 170);
-                
-                return '<img src="' + canvas.toDataURL('image/png') + '" style="width: 100%; max-width: ' + sigW + '; margin-top: 5px;" alt="Locked Signatures" />';
+              }
+
+              roundRect(0, 5, 359, 175, 8);
+              roundRect(374, 5, 359, 175, 8);
+
+              ctx.textAlign = "center";
+
+              ctx.fillStyle = "#000000";
+              ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
+              ctx.fillText("ในนาม ลูกค้า / Customer", 179.5, 35);
+
+              ctx.beginPath();
+              ctx.moveTo(79.5, 115);
+              ctx.lineTo(279.5, 115);
+              ctx.stroke();
+
+              ctx.font = '12px "Prompt", "Sarabun", sans-serif';
+              ctx.fillStyle = "#666666";
+              ctx.fillText(
+                "(............................................................)",
+                179.5,
+                135,
+              );
+              ctx.fillStyle = "#000000";
+              ctx.fillText("ผู้อนุมัติสั่งซื้อ / Accepted By", 179.5, 153);
+              ctx.fillText(
+                "วันที่ / Date: ......../......../........",
+                179.5,
+                170,
+              );
+
+              ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
+              ctx.fillText("ในนาม โซลโซไซตี้ (Soul Society)", 553.5, 35);
+
+              ctx.beginPath();
+              ctx.moveTo(453.5, 115);
+              ctx.lineTo(653.5, 115);
+              ctx.stroke();
+
+              ctx.font = '12px "Prompt", "Sarabun", sans-serif';
+              ctx.fillStyle = "var(--text-main)";
+              ctx.fillText(
+                "( " +
+                  (salesperson ||
+                    "............................................................") +
+                  " )",
+                553.5,
+                135,
+              );
+              ctx.fillStyle = "#000000";
+              ctx.fillText("ผู้เสนอราคา / Quoted By", 553.5, 153);
+              ctx.fillText(
+                "วันที่ / Date: " + (docDate || "......../......../........"),
+                553.5,
+                170,
+              );
+
+              return (
+                '<img src="' +
+                canvas.toDataURL("image/png") +
+                '" style="width: 100%; max-width: ' +
+                sigW +
+                '; margin-top: 5px;" alt="Locked Signatures" />'
+              );
             }
 
-                        const ITEMS_PER_PAGE_NORMAL = 22;
+            const ITEMS_PER_PAGE_NORMAL = 22;
             const ITEMS_PER_PAGE_LAST = 12;
             const chunks = [];
             let remainingItems = [...items];
@@ -717,22 +1342,33 @@
                   remainingItems = [];
                 } else if (remainingItems.length <= ITEMS_PER_PAGE_NORMAL) {
                   // Prevent empty footer page by ensuring at least 1 item is pushed to the last page
-                  chunks.push(remainingItems.slice(0, remainingItems.length - 1));
-                  remainingItems = remainingItems.slice(remainingItems.length - 1);
+                  chunks.push(
+                    remainingItems.slice(0, remainingItems.length - 1),
+                  );
+                  remainingItems = remainingItems.slice(
+                    remainingItems.length - 1,
+                  );
                 } else {
                   chunks.push(remainingItems.slice(0, ITEMS_PER_PAGE_NORMAL));
                   remainingItems = remainingItems.slice(ITEMS_PER_PAGE_NORMAL);
                 }
               }
             }
-            
-            const isMany = items.length >= 12;
-            const fBase = items.length > 12 ? '11px' : '13px';
-            const fSmall = items.length > 12 ? '9px' : '10px';
-            const pCell = items.length > 12 ? '4px 6px' : '6px 8px';
-            const lh = '1.25', fH2 = '22px', fH2s = '20px', sigW = '734px', padCont = '20px 30px', pBox = '10px 15px', pTotal = '8px 12px';
 
-            let finalHtml = '<div class="pdf-wrapper" style="width: 100%; display: flex; flex-direction: column; align-items: center;">';
+            const isMany = items.length >= 12;
+            const fBase = items.length > 12 ? "11px" : "13px";
+            const fSmall = items.length > 12 ? "9px" : "10px";
+            const pCell = items.length > 12 ? "4px 6px" : "6px 8px";
+            const lh = "1.25",
+              fH2 = "22px",
+              fH2s = "20px",
+              sigW = "734px",
+              padCont = "20px 30px",
+              pBox = "10px 15px",
+              pTotal = "8px 12px";
+
+            let finalHtml =
+              '<div class="pdf-wrapper" style="width: 100%; display: flex; flex-direction: column; align-items: center;">';
             let globalItemIndex = 1;
 
             chunks.forEach((chunk, chunkIndex) => {
@@ -741,7 +1377,8 @@
               const totalPages = chunks.length;
 
               if (chunkIndex > 0) {
-                finalHtml += '<div style="height: 0; page-break-before: always; margin: 0; padding: 0; border: 0;"></div>';
+                finalHtml +=
+                  '<div style="height: 0; page-break-before: always; margin: 0; padding: 0; border: 0;"></div>';
               }
 
               finalHtml += `
@@ -779,25 +1416,25 @@
                             <div style="line-height:1.2;">ลูกค้า</div>
                             <div style="font-size:${fSmall};line-height:1.2;">Customer</div>
                           </td>
-                          <td style="padding-bottom:5px;" colspan="3">${q.customer_code || cust.code || ''}<br><span style="color:transparent;">-</span></td>
+                          <td style="padding-bottom:5px;" colspan="3">${q.customer_code || cust.code || ""}<br><span style="color:transparent;">-</span></td>
                         </tr>
                         <tr>
                           <td colspan="4" style="padding-bottom:15px;">
-                            ${q.customer_name || ''}<br>
-                            ${cust.address_1 || ''}
-                            ${cust.level_group ? '<br>กลุ่มลูกค้าระดับ: '+cust.level_group : ''}
+                            ${q.customer_name || ""}<br>
+                            ${cust.address_1 || ""}
+                            ${cust.level_group ? "<br>กลุ่มลูกค้าระดับ: " + cust.level_group : ""}
                           </td>
                         </tr>
                         <tr>
                           <td style="padding-bottom:5px;">โทร.</td>
-                          <td style="padding-bottom:5px;" colspan="3">${q.phone || cust.phone || '-'}</td>
+                          <td style="padding-bottom:5px;" colspan="3">${q.phone || cust.phone || "-"}</td>
                         </tr>
                         <tr>
                           <td style="padding-bottom:5px;">
                             <div style="line-height:1.2;">เลขประจำตัวผู้เสียภาษี</div>
                             <div style="font-size:${fSmall};line-height:1.2;">Tax ID</div>
                           </td>
-                          <td style="padding-bottom:5px;">${cust.tax_id || '-'}</td>
+                          <td style="padding-bottom:5px;">${cust.tax_id || "-"}</td>
                           <td style="padding-bottom:5px;text-align:right;"></td>
                           <td></td>
                         </tr>
@@ -811,7 +1448,7 @@
                             <div style="line-height:1.2;">เลขที่ใบเสนอราคา</div>
                             <div style="font-size:${fSmall};line-height:1.2;">Quotation No.</div>
                           </td>
-                          <td style="padding-bottom:5px;">${q.doc_no || '(ออกอัตโนมัติ)'}</td>
+                          <td style="padding-bottom:5px;">${q.doc_no || "(ออกอัตโนมัติ)"}</td>
                         </tr>
                         <tr>
                           <td style="padding-bottom:5px;">
@@ -839,7 +1476,7 @@
                             <div style="line-height:1.2;">เงื่อนไขชำระเงิน</div>
                             <div style="font-size:${fSmall};line-height:1.2;">Payment Terms</div>
                           </td>
-                          <td style="padding-bottom:5px;">${q.payment_terms || 'Cash/Transfer'}</td>
+                          <td style="padding-bottom:5px;">${q.payment_terms || "Cash/Transfer"}</td>
                         </tr>
                         <tr>
                           <td style="padding-bottom:5px;">
@@ -847,8 +1484,8 @@
                             <div style="font-size:${fSmall};line-height:1.2;">Salesman</div>
                           </td>
                           <td style="padding-bottom:5px;">
-                            ${q.pic_name || ''}<br>
-                            <span style="font-size:11px;">Tel: ${q.pic_phone || '-'}</span>
+                            ${q.pic_name || ""}<br>
+                            <span style="font-size:11px;">Tel: ${q.pic_phone || "-"}</span>
                           </td>
                         </tr>
                       </table>
@@ -894,9 +1531,9 @@
                   <td style="padding:${pCell};border-left:1px solid #000;border-right:1px solid #000;text-align:center;vertical-align:top">${globalItemIndex++}</td>
                   <td style="padding:${pCell};border-right:1px solid #000;vertical-align:top;word-wrap:break-word;overflow-wrap:break-word;">${it.description}</td>
                   <td style="padding:${pCell};border-right:1px solid #000;text-align:center;vertical-align:top">${parseFloat(it.quantity).toLocaleString()}</td>
-                  <td style="padding:${pCell};border-right:1px solid #000;text-align:center;vertical-align:top">${it.unit || 'ชิ้น'}</td>
+                  <td style="padding:${pCell};border-right:1px solid #000;text-align:center;vertical-align:top">${it.unit || "ชิ้น"}</td>
                   <td style="padding:${pCell};border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(it.unit_price)}</td>
-                  <td style="padding:${pCell};border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(parseFloat(it.quantity)*parseFloat(it.unit_price))}</td>
+                  <td style="padding:${pCell};border-right:1px solid #000;text-align:right;vertical-align:top">${fmt(parseFloat(it.quantity) * parseFloat(it.unit_price))}</td>
                 </tr>`;
               });
 
@@ -923,14 +1560,14 @@
               `;
 
               if (isLastPage) {
-                  finalHtml += `
+                finalHtml += `
                   <!-- Summary Section -->
                   <div style="margin-top: 0; page-break-inside: auto; break-inside: auto;">
                   <div style="display:flex;border:1px solid #000;overflow:hidden;">
                     <div style="flex:1;border-right:1px solid #000;padding:10px;font-size:11px;white-space:normal;word-wrap:break-word;overflow-wrap:break-word;">
                       <strong>หมายเหตุ (Remarks):</strong><br>
                       - การเสนอราคานี้ยืนราคา ${crDays} วัน<br>
-                      ${q.remarks ? '- ' + q.remarks + '<br>' : ''}
+                      ${q.remarks ? "- " + q.remarks + "<br>" : ""}
                       - ชำระเงินเข้าบัญชี: ธนาคารกสิกรไทย เลขที่บัญชี 123-4-56789-0 ชื่อบัญชี บจก. โซลโซไซตี้
                     </div>
                     <div style="width:260px;background:white;display:flex;flex-direction:column;justify-content:center;">
@@ -964,71 +1601,78 @@
                   `;
               }
 
-              finalHtml += '</div> <!-- End pdf-container -->';
+              finalHtml += "</div> <!-- End pdf-container -->";
             });
-            
-            finalHtml += '</div> <!-- End pdf-wrapper -->';
-            
+
+            finalHtml += "</div> <!-- End pdf-wrapper -->";
+
             pdfContent.innerHTML = finalHtml;
-          } catch(err) {
-            pdfContent.innerHTML = '<p style="color:red;text-align:center">เกิดข้อผิดพลาด</p>';
+          } catch (err) {
+            pdfContent.innerHTML =
+              '<p style="color:red;text-align:center">เกิดข้อผิดพลาด</p>';
             console.error(err);
           }
         } else {
           // Edit: use iframe as before
-          const modal = document.getElementById('iframe-modal');
-          const iframe = document.getElementById('quote-iframe');
+          const modal = document.getElementById("iframe-modal");
+          const iframe = document.getElementById("quote-iframe");
           iframe.src = `index.html?edit=${id}&modal=true`;
-          modal.classList.remove('hidden');
+          modal.classList.remove("hidden");
         }
       };
 
       window.closePdfModal = () => {
-        document.getElementById('pdf-preview-modal').classList.add('hidden');
+        document.getElementById("pdf-preview-modal").classList.add("hidden");
       };
 
       window.downloadPdf = () => {
-        const content = document.getElementById('pdf-preview-content');
+        const content = document.getElementById("pdf-preview-content");
         if (!content) return;
-        const win = window.open('', '_blank');
-        win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;font-family:'Prompt','Sarabun',sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact;} @media print { @page { margin: 0; size: A4 portrait; } body { margin: 0; padding: 0; } }</style><link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"></head><body>${content.innerHTML}</body></html>`);
+        const win = window.open("", "_blank");
+        win.document.write(
+          `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;font-family:'Prompt','Sarabun',sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact;} @media print { @page { margin: 0; size: A4 portrait; } body { margin: 0; padding: 0; } }</style><link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"></head><body>${content.innerHTML}</body></html>`,
+        );
         win.document.close();
         win.focus();
-        setTimeout(() => { win.print(); }, 500);
+        setTimeout(() => {
+          win.print();
+        }, 500);
       };
 
       window.closeIframeModal = () => {
-        const modal = document.getElementById('iframe-modal');
-        modal.classList.add('hidden');
-        document.getElementById('quote-iframe').src = '';
+        const modal = document.getElementById("iframe-modal");
+        modal.classList.add("hidden");
+        document.getElementById("quote-iframe").src = "";
       };
 
       // Listen for messages from edit iframe
-      window.addEventListener('message', (event) => {
-        if (event.data === 'close_iframe' || event.data === 'quote_saved') {
+      window.addEventListener("message", (event) => {
+        if (event.data === "close_iframe" || event.data === "quote_saved") {
           window.closeIframeModal();
-          if (event.data === 'quote_saved') {
+          if (event.data === "quote_saved") {
             fetchHistory();
-            showToast('บันทึกข้อมูลเรียบร้อยแล้ว');
+            showToast("บันทึกข้อมูลเรียบร้อยแล้ว");
           }
         }
       });
 
       const showToast = (msg) => {
-        const t = document.getElementById('toast');
-        const m = document.getElementById('toast-message');
+        const t = document.getElementById("toast");
+        const m = document.getElementById("toast-message");
         if (m) m.innerText = msg;
         if (t) {
-          t.classList.remove('hidden');
-          setTimeout(() => t.classList.add('hidden'), 3000);
+          t.classList.remove("hidden");
+          setTimeout(() => t.classList.add("hidden"), 3000);
         }
       };
 
       window.onload = async () => {
         await fetchHistory();
-        const viewId = new URLSearchParams(window.location.search).get('view');
-        if(viewId) {
-            setTimeout(() => { openIframeModal(viewId, 'view'); }, 300);
+        const viewId = new URLSearchParams(window.location.search).get("view");
+        if (viewId) {
+          setTimeout(() => {
+            openIframeModal(viewId, "view");
+          }, 300);
         }
       };
     </script>

@@ -17,7 +17,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
@@ -43,11 +46,13 @@
           <a href="dashboard.html" class="menu-item"
             ><i class="fa-solid fa-chart-pie"></i> แดชบอร์ด</a
           >
-          <a href="ai-assistant.html" class="menu-item"><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a>
+          <a href="ai-assistant.html" class="menu-item"
+            ><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI</a
+          >
           <a href="index.html" class="menu-item active"
             ><i class="fa-solid fa-plus"></i> สร้างใบเสนอราคา</a
           >
-          
+
           <a href="customers.html" class="menu-item"
             ><i class="fa-solid fa-users"></i> ข้อมูลลูกค้า</a
           >
@@ -70,15 +75,21 @@
             ><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a
           >
         </nav>
-        <div class="user-profile" style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
+        <div
+          class="user-profile"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 0.75rem">
             <div class="avatar"><i class="fa-solid fa-user"></i></div>
             <div class="user-info">
               <span class="user-name" id="sidebar-username">Sales Team</span>
               <span class="user-role">Enterprise</span>
             </div>
           </div>
-          
         </div>
       </aside>
 
@@ -94,26 +105,71 @@
 
         <div class="content-grid">
           <!-- AI Prompt Section -->
-          
 
           <!-- Quotation Form Section -->
           <section
             class="card form-section"
             id="quotation-form-section"
-            style="border: none; position: relative; overflow: hidden; padding-top: 2rem;"
+            style="
+              border: none;
+              position: relative;
+              overflow: hidden;
+              padding-top: 2rem;
+            "
           >
-            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px dashed var(--border-color); padding-bottom: 1.5rem;">
-              <div class="icon-wrapper" style="background-color: #f3e8ff; margin-bottom: 0;">
-                <div class="stat-icon" style="color: #9333ea; font-size: 2rem;"><i class="fa-solid fa-file-invoice"></i></div>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 2rem;
+                border-bottom: 2px dashed var(--border-color);
+                padding-bottom: 1.5rem;
+              "
+            >
+              <div
+                class="icon-wrapper"
+                style="background-color: #f3e8ff; margin-bottom: 0"
+              >
+                <div class="stat-icon" style="color: #9333ea; font-size: 2rem">
+                  <i class="fa-solid fa-file-invoice"></i>
+                </div>
               </div>
               <div>
-                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0;">แบบฟอร์มใบเสนอราคา</h2>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem;">Quotation Entry Form</p>
+                <h2
+                  style="
+                    font-size: 1.5rem;
+                    font-weight: 800;
+                    color: var(--text-main);
+                    margin: 0;
+                  "
+                >
+                  แบบฟอร์มใบเสนอราคา
+                </h2>
+                <p
+                  style="
+                    color: var(--text-muted);
+                    font-size: 0.95rem;
+                    margin-top: 0.2rem;
+                  "
+                >
+                  Quotation Entry Form
+                </p>
               </div>
             </div>
-            
-            <div class="card-bottom-line" style="background-color: #9333ea; bottom: 0; left: 0; width: 100%; height: 6px; border-radius: 0;"></div>
-            
+
+            <div
+              class="card-bottom-line"
+              style="
+                background-color: #9333ea;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 6px;
+                border-radius: 0;
+              "
+            ></div>
+
             <form id="quote-form">
               <div
                 style="
@@ -208,12 +264,45 @@
                 "
               >
                 <div class="form-group" style="margin-bottom: 0">
-                  <label style="font-weight: 600; color: #334155"><i class="fa-solid fa-phone"></i> เบอร์โทรศัพท์ (Phone):</label>
-                  <input type="text" id="customer-phone" disabled placeholder="เบอร์โทรศัพท์ลูกค้า..." style="background: var(--border-color); color: var(--text-muted); cursor: not-allowed; border: 1px solid #cbd5e1; padding: 0.75rem; border-radius: 6px; width: 100%;" />
+                  <label style="font-weight: 600; color: #334155"
+                    ><i class="fa-solid fa-phone"></i> เบอร์โทรศัพท์
+                    (Phone):</label
+                  >
+                  <input
+                    type="text"
+                    id="customer-phone"
+                    disabled
+                    placeholder="เบอร์โทรศัพท์ลูกค้า..."
+                    style="
+                      background: var(--border-color);
+                      color: var(--text-muted);
+                      cursor: not-allowed;
+                      border: 1px solid #cbd5e1;
+                      padding: 0.75rem;
+                      border-radius: 6px;
+                      width: 100%;
+                    "
+                  />
                 </div>
                 <div class="form-group" style="margin-bottom: 0">
-                  <label style="font-weight: 600; color: #334155"><i class="fa-solid fa-envelope"></i> อีเมล (Email):</label>
-                  <input type="text" id="customer-email" disabled placeholder="อีเมลลูกค้า..." style="background: var(--border-color); color: var(--text-muted); cursor: not-allowed; border: 1px solid #cbd5e1; padding: 0.75rem; border-radius: 6px; width: 100%;" />
+                  <label style="font-weight: 600; color: #334155"
+                    ><i class="fa-solid fa-envelope"></i> อีเมล (Email):</label
+                  >
+                  <input
+                    type="text"
+                    id="customer-email"
+                    disabled
+                    placeholder="อีเมลลูกค้า..."
+                    style="
+                      background: var(--border-color);
+                      color: var(--text-muted);
+                      cursor: not-allowed;
+                      border: 1px solid #cbd5e1;
+                      padding: 0.75rem;
+                      border-radius: 6px;
+                      width: 100%;
+                    "
+                  />
                 </div>
               </div>
               <div
@@ -303,7 +392,7 @@
                 <div
                   style="
                     background: var(--bg-body);
-                    
+
                     border-bottom: 1px solid var(--border-color);
                   "
                 >
@@ -316,7 +405,10 @@
                   <thead style="background: var(--bg-card)">
                     <tr>
                       <th
-                        style="color: #475569; border-bottom: 2px solid var(--border-color)"
+                        style="
+                          color: #475569;
+                          border-bottom: 2px solid var(--border-color);
+                        "
                       >
                         รายละเอียดสินค้า
                       </th>
@@ -362,7 +454,6 @@
                 </table>
                 <div
                   style="
-                    
                     background: var(--bg-card);
                     border-top: 1px solid var(--border-color);
                   "
@@ -453,7 +544,13 @@
                 </div>
               </div>
 
-              <div style="margin-top: 3rem; display: flex; justify-content: flex-end;">
+              <div
+                style="
+                  margin-top: 3rem;
+                  display: flex;
+                  justify-content: flex-end;
+                "
+              >
                 <button
                   type="submit"
                   class="btn btn-primary"
@@ -464,11 +561,16 @@
                     font-size: 1.1rem;
                     padding: 1rem 2rem;
                     border-radius: 30px;
-                    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+                    background: linear-gradient(
+                      135deg,
+                      #9333ea 0%,
+                      #7e22ce 100%
+                    );
                     box-shadow: 0 10px 25px -5px rgba(147, 51, 234, 0.4);
                   "
                 >
-                  <i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i> ตรวจสอบเอกสาร (Preview)
+                  <i class="fa-solid fa-eye" style="margin-right: 0.5rem"></i>
+                  ตรวจสอบเอกสาร (Preview)
                 </button>
               </div>
             </form>
@@ -538,7 +640,7 @@
             margin-bottom: 2rem;
             line-height: 1.6;
             font-size: 1.1rem;
-            
+
             background: #fef3c7;
             border-radius: 8px;
           "
@@ -550,12 +652,7 @@
           onclick="
             document.getElementById('ai-warning-modal').classList.add('hidden')
           "
-          style="
-            width: 100%;
-            justify-content: center;
-            font-size: 1.1rem;
-            
-          "
+          style="width: 100%; justify-content: center; font-size: 1.1rem"
         >
           รับทราบ และดูใบเสนอราคา
         </button>
@@ -565,4 +662,3 @@
     <script src="js/script.js?v=4"></script>
   </body>
 </html>
-

@@ -19,7 +19,11 @@
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        background: linear-gradient(135deg, var(--bg-card) 0%, var(--border-color) 100%);
+        background: linear-gradient(
+          135deg,
+          var(--bg-card) 0%,
+          var(--border-color) 100%
+        );
         margin: 0;
         font-family: "Prompt", "Inter", sans-serif;
       }
@@ -148,7 +152,8 @@
         e.preventDefault();
         const btn = document.querySelector(".btn-login");
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเข้าสู่ระบบ...';
+        btn.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเข้าสู่ระบบ...';
         btn.disabled = true;
 
         const username = document.getElementById("username").value;
@@ -163,4 +168,3 @@
     </script>
   </body>
 </html>
-

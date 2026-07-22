@@ -29,15 +29,20 @@ app.use(express.json());
  * เหตุผล (Why): เพื่อให้มั่นใจว่าเมื่อมีการแก้ไขไฟล์หน้าบ้าน (Frontend) ระบบจะดึงไฟล์เวอร์ชันล่าสุดเสมอระหว่างการพัฒนา
  * // TODO: หากขึ้น production ควรลบการตั้งค่า header เหล่านี้ออก และให้ Browser จัดการเรื่อง Cache ตามปกติเพื่อเพิ่มประสิทธิภาพ
  */
-app.use(express.static(path.join(__dirname, "../public"), {
-  etag: false,
-  maxAge: 0,
-  setHeaders: (res, reqPath) => {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-  }
-}));
+app.use(
+  express.static(path.join(__dirname, "../public"), {
+    etag: false,
+    maxAge: 0,
+    setHeaders: (res, reqPath) => {
+      res.setHeader(
+        "Cache-Control",
+        "no-store, no-cache, must-revalidate, proxy-revalidate",
+      );
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
+    },
+  }),
+);
 
 // --- 4. Routing ---
 
