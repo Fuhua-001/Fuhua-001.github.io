@@ -360,55 +360,6 @@
             <input type="hidden" id="prod-id" />
 
             <div
-              class="ai-product-box"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  rgba(16, 185, 129, 0.1),
-                  rgba(52, 211, 153, 0.1)
-                );
-                padding: 1rem;
-                border-radius: 8px;
-                border: 1px solid rgba(16, 185, 129, 0.2);
-                margin-bottom: 0.5rem;
-              "
-            >
-              <label
-                style="
-                  color: var(--primary);
-                  font-weight: 600;
-                  display: flex;
-                  align-items: center;
-                  gap: 0.5rem;
-                  margin-bottom: 0.5rem;
-                "
-                ><i class="fa-solid fa-wand-magic-sparkles"></i> ผู้ช่วย AI
-                กรอกข้อมูลสินค้า</label
-              >
-              <textarea
-                id="prod-ai-prompt"
-                class="input-field"
-                rows="3"
-                placeholder="พิมพ์สิ่งที่มี เช่น 'ท่อสแตนเลส 304 2 นิ้ว รหัส P001 ราคา 500 บาท มี 10 ชิ้น ต้นทุน 300'"
-              ></textarea>
-              <button
-                type="button"
-                id="btn-prod-ai"
-                class="btn btn-primary"
-                onclick="autoFillProductAI()"
-                style="
-                  width: 100%;
-                  margin-top: 0.5rem;
-                  justify-content: center;
-                  background: var(--accent-success);
-                  border-color: var(--accent-success);
-                "
-              >
-                <i class="fa-solid fa-robot"></i> แยกข้อมูลลงฟอร์ม
-              </button>
-            </div>
-
-            <div
               class="input-group"
               style="display: flex; flex-direction: column; gap: 0.5rem"
             >
@@ -964,45 +915,6 @@
             );
           }
         });
-      async function autoFillProductAI() {
-        const promptInput = document
-          .getElementById("prod-ai-prompt")
-          .value.trim();
-        if (!promptInput)
-          return alert("กรุณาพิมพ์ข้อมูลสินค้าที่ต้องการให้ AI ช่วยแยก");
-
-        const btn = document.getElementById("btn-prod-ai");
-        const oldText = btn.innerHTML;
-        btn.innerHTML =
-          '<i class="fa-solid fa-spinner fa-spin"></i> กำลังแยกข้อมูล...';
-        btn.disabled = true;
-
-        try {
-          const res = await fetch("/api/ai-product", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt: promptInput }),
-          });
-
-          if (!res.ok) throw new Error("API Error");
-          const data = await res.json();
-
-          if (data.code) document.getElementById("prod-code").value = data.code;
-          if (data.name) document.getElementById("prod-name").value = data.name;
-          if (data.barcode && document.getElementById("prod-barcode"))
-            document.getElementById("prod-barcode").value = data.barcode;
-          if (data.unit) document.getElementById("prod-unit").value = data.unit;
-          if (data.cost_price)
-            document.getElementById("prod-cost").value = data.cost_price;
-          if (data.selling_price)
-            document.getElementById("prod-price").value = data.selling_price;
-        } catch (err) {
-          alert("เกิดข้อผิดพลาดในการใช้ AI จัดการข้อมูล: " + err.message);
-        } finally {
-          btn.innerHTML = oldText;
-          btn.disabled = false;
-        }
-      }
     </script>
   </body>
 </html>

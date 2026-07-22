@@ -409,12 +409,8 @@
             <label>ระดับลูกค้า (Level Group) — ยึดตาม Credit</label>
             <select id="cus-level-group" class="input-field">
               <option value="">-- เลือกระดับลูกค้า --</option>
-              <option value="Credit 0">Credit 0 (เงินสด / ไม่มีเครดิต)</option>
-              <option value="Credit 15">Credit 15 (เครดิต 15 วัน)</option>
-              <option value="Credit 30">Credit 30 (เครดิต 30 วัน)</option>
-              <option value="Credit 45">Credit 45 (เครดิต 45 วัน)</option>
-              <option value="Credit 60">Credit 60 (เครดิต 60 วัน)</option>
-              <option value="Credit 90">Credit 90 (เครดิต 90 วัน)</option>
+              <option value="Cash">Cash (เงินสด / ไม่มีเครดิต)</option>
+              <option value="Credit">Credit (มีเครดิต)</option>
               <option value="Vendor">Vendor (ผู้จำหน่าย)</option>
             </select>
           </div>
@@ -835,6 +831,8 @@
           btnOpen.addEventListener("click", () => {
             document.getElementById("customer-form").reset();
             document.getElementById("cus-id").value = "";
+            document.getElementById("cus-credit").value = "30"; // ล็อกค่าตั้งต้น 30 วัน (ผู้ใช้เปลี่ยนเองได้)
+            document.getElementById("cus-level-group").value = "Credit"; // ตั้งต้นระดับลูกค้าเป็น Credit
             document.getElementById("btn-delete-customer").style.display =
               "none";
             document.getElementById("modal-title").innerHTML =

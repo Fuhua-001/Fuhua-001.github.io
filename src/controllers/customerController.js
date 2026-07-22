@@ -43,10 +43,18 @@ exports.createCustomer = async (req, res) => {
       address_1,
       pic_code,
       tax_id,
+      credit_days,
+      level_group,
+      district,
+      province,
+      category,
+      industry_type,
+      remark,
+      type
     } = req.body;
     await db.query(
-      "INSERT INTO customers (name, code, contact_person, phone, email, address_1, pic_code, tax_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-      [name, code, contact_person, phone, email, address_1, pic_code, tax_id],
+      "INSERT INTO customers (name, code, contact_person, phone, email, address_1, pic_code, tax_id, credit_days, level_group, district, province, category, industry_type, remark, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [name, code, contact_person, phone, email, address_1, pic_code, tax_id, credit_days, level_group, district, province, category, industry_type, remark, type],
     );
     res.json({ success: true });
   } catch (err) {
@@ -70,9 +78,17 @@ exports.updateCustomer = async (req, res) => {
       address_1,
       pic_code,
       tax_id,
+      credit_days,
+      level_group,
+      district,
+      province,
+      category,
+      industry_type,
+      remark,
+      type
     } = req.body;
     await db.query(
-      "UPDATE customers SET name=?, code=?, contact_person=?, phone=?, email=?, address_1=?, pic_code=?, tax_id=? WHERE id=?",
+      "UPDATE customers SET name=?, code=?, contact_person=?, phone=?, email=?, address_1=?, pic_code=?, tax_id=?, credit_days=?, level_group=?, district=?, province=?, category=?, industry_type=?, remark=?, type=? WHERE id=?",
       [
         name,
         code,
@@ -82,6 +98,14 @@ exports.updateCustomer = async (req, res) => {
         address_1,
         pic_code,
         tax_id,
+        credit_days,
+        level_group,
+        district,
+        province,
+        category,
+        industry_type,
+        remark,
+        type,
         req.params.id,
       ],
     );
