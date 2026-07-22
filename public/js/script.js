@@ -315,6 +315,17 @@ document.addEventListener("DOMContentLoaded", () => {
         onChange: function (value) {
           if (value) {
             window.updateProductSelection(index, value);
+            // ถ้าเลือกสินค้าในแถวสุดท้าย → เพิ่มแถวใหม่อัตโนมัติ
+            if (index === items.length - 1) {
+              items.push({ description: "", quantity: 1, unit_price: 0 });
+              renderItems();
+              saveDraft();
+              // Focus ไปที่ช่อง qty ของแถวใหม่
+              setTimeout(() => {
+                const newQty = document.getElementById(`qty-${items.length - 1}`);
+                if (newQty) newQty.focus();
+              }, 50);
+            }
           }
         },
       });
