@@ -408,7 +408,6 @@
                       onchange="applyFilters()"
                     >
                       <option value="">ทั้งหมด (ALL)</option>
-                      <option value="CREATE">เพิ่ม (CREATE)</option>
                       <option value="UPDATE">แก้ไข (UPDATE)</option>
                       <option value="DELETE">ลบ (DELETE)</option>
                     </select>
@@ -905,7 +904,9 @@
         tbody.innerHTML = skeletonAuditsRows;
         try {
           const res = await fetch("/api/audit_logs");
-          allAuditsData = await res.json();
+          let data = await res.json();
+          // แสดงเฉพาะ อัพเดต แก้ไข ลบ ตามคำขอของผู้ใช้ (กรองเอา CREATE ออก)
+          allAuditsData = data.filter(log => log.action_type === 'UPDATE' || log.action_type === 'DELETE');
           applyFilters();
         } catch (err) {
           tbody.innerHTML =
@@ -1300,7 +1301,7 @@
             const lh = "1.25",
               fH2 = "22px",
               fH2s = "20px",
-              sigW = "734px",
+              sigW = "100%",
               padCont = "20px 30px",
               pBox = "10px 15px",
               pTotal = "8px 12px";
