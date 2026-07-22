@@ -16,6 +16,12 @@
     <script>
       if (!sessionStorage.getItem("isLoggedIn"))
         window.location.href = "login.html";
+      // แสดงชื่อ user ที่ login เข้ามาใน sidebar
+      document.addEventListener("DOMContentLoaded", () => {
+        const u = sessionStorage.getItem("currentUser");
+        const el = document.getElementById("sidebar-username");
+        if (u && el) el.textContent = u;
+      });
     </script>
     <style>
       .sticky-th {
