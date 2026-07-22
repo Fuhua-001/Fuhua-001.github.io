@@ -515,95 +515,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Generate locked signature image
-      function generateSignatureCanvas(salesperson, docDate, sigW = "734px") {
-        const canvas = document.createElement("canvas");
-        const scale = 3;
-        canvas.width = 734 * scale;
-        canvas.height = 185 * scale;
-        const ctx = canvas.getContext("2d");
-        ctx.scale(scale, scale);
-        ctx.save(); // บันทึก state ก่อนวาด ป้องกัน state รั่วไปกระทบ canvas อื่น
-
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, 734, 185);
-
-        ctx.strokeStyle = "#000000";
-        ctx.lineWidth = 1;
-
-        function roundRect(x, y, w, h, r) {
-          ctx.beginPath();
-          ctx.moveTo(x + r, y);
-          ctx.lineTo(x + w - r, y);
-          ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-          ctx.lineTo(x + w, y + h - r);
-          ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-          ctx.lineTo(x + r, y + h);
-          ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-          ctx.lineTo(x, y + r);
-          ctx.quadraticCurveTo(x, y, x + r, y);
-          ctx.closePath();
-          ctx.stroke();
-        }
-
-        roundRect(0, 5, 359, 175, 8);
-        roundRect(374, 5, 359, 175, 8);
-
-        ctx.textAlign = "center";
-
-        ctx.fillStyle = "#000000";
-        ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-        ctx.fillText("ในนาม ลูกค้า / Customer", 179.5, 35);
-
-        ctx.beginPath();
-        ctx.moveTo(79.5, 115);
-        ctx.lineTo(279.5, 115);
-        ctx.stroke();
-
-        ctx.font = '12px "Prompt", "Sarabun", sans-serif';
-        ctx.fillStyle = "#666666";
-        ctx.fillText(
-          "(............................................................)",
-          179.5,
-          135,
-        );
-        ctx.fillStyle = "#000000";
-        ctx.fillText("ผู้อนุมัติสั่งซื้อ / Accepted By", 179.5, 153);
-        ctx.fillText("วันที่ / Date: ......../......../........", 179.5, 170);
-
-        ctx.font = 'bold 13px "Prompt", "Sarabun", sans-serif';
-        ctx.fillText("ในนาม โซลโซไซตี้ (Soul Society)", 553.5, 35);
-
-        ctx.beginPath();
-        ctx.moveTo(453.5, 115);
-        ctx.lineTo(653.5, 115);
-        ctx.stroke();
-
-        ctx.font = '12px "Prompt", "Sarabun", sans-serif';
-        ctx.fillStyle = "#333333"; // แก้: Canvas ไม่รองรับ CSS variable, ใช้ hex แทน
-        ctx.fillText(
-          "( " +
-            (salesperson ||
-              "............................................................") +
-            " )",
-          553.5,
-          135,
-        );
-        ctx.fillStyle = "#000000";
-        ctx.fillText("ผู้เสนอราคา / Quoted By", 553.5, 153);
-        ctx.fillText(
-          "วันที่ / Date: " + (docDate || "......../......../........"),
-          553.5,
-          170,
-        );
-
-        ctx.restore(); // คืน state กลับหลังวาดเสร็จ
-        return (
-          '<img src="' +
-          canvas.toDataURL("image/png") +
-          '" style="width: 100%; max-width: ' +
-          sigW +
-          '; margin-top: 5px;" alt="Locked Signatures" />'
-        );
+      // Generate signature HTML instead of Canvas to fix Thai floating vowels (สระลอย)
+      function generateSignatureHTML(salesperson, docDate, sigW = "100%") {
+        return `
+        <div style="display: flex; justify-content: space-between; width: ${sigW}; margin-top: 5px; page-break-inside: avoid; break-inside: avoid; font-family: 'Prompt', 'Sarabun', sans-serif;">
+          <!-- Customer Signature Box -->
+          <div style="width: 49%; border: 1px solid #000; border-radius: 8px; padding: 15px; box-sizing: border-box; text-align: center;">
+            <div style="font-weight: bold; font-size: 13px; margin-bottom: 50px;">ในนาม ลูกค้า / Customer</div>
+            <div style="border-bottom: 1px solid #000; width: 80%; margin: 0 auto 10px auto;"></div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 5px;">(............................................................)</div>
+            <div style="font-size: 12px; color: #000; margin-bottom: 5px;">ผู้อนุมัติสั่งซื้อ / Accepted By</div>
+            <div style="font-size: 12px; color: #000;">วันที่ / Date: ......../......../........</div>
+          </div>
+          
+          <!-- Company Signature Box -->
+          <div style="width: 49%; border: 1px solid #000; border-radius: 8px; padding: 15px; box-sizing: border-box; text-align: center;">
+            <div style="font-weight: bold; font-size: 13px; margin-bottom: 50px;">ในนาม โซลโซไซตี้ (Soul Society)</div>
+            <div style="border-bottom: 1px solid #000; width: 80%; margin: 0 auto 10px auto;"></div>
+            <div style="font-size: 12px; color: #333; margin-bottom: 5px;">( ${salesperson || "............................................................"} )</div>
+            <div style="font-size: 12px; color: #000; margin-bottom: 5px;">ผู้เสนอราคา / Quoted By</div>
+            <div style="font-size: 12px; color: #000;">วันที่ / Date: ${docDate || "......../......../........"}</div>
+          </div>
+        </div>
+        `;
       }
 
       // Create a printable element HTML
@@ -666,25 +600,25 @@ document.addEventListener("DOMContentLoaded", () => {
         tableHTML += `
                 <div class="pdf-container" style="width: 100%; max-width: 794px; min-height: auto; box-sizing: border-box; display: block; font-family: 'Prompt', 'Sarabun', sans-serif !important; letter-spacing: 0px !important; color: #000; padding: ${padCont}; background: white; font-size: ${fBase}; line-height: ${lh}; margin: 0 auto; text-align: left;">
                     
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                        <div style="flex: 1; display: flex; align-items: flex-start;">
-                            <img src="assets/logo.jpg" alt="Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                        <div style="flex:1;display:flex;align-items:flex-start;">
+                            <img src="assets/logo.jpg" alt="Company Logo" style="width: 100px; max-height: 80px; object-fit: contain;">
                         </div>
-                        <div style="flex: 2; text-align: center;">
-                            <h2 style="margin: 0; font-size: ${fH2}; font-weight: bold; color: var(--text-main);">บริษัท โซลโซไซตี้ จำกัด</h2>
-                            <p style="margin: 0; font-weight: 500; font-size: 13px;">Soul Society Co., Ltd.</p>
-                            <p style="margin: 0; font-size: ${fBase};">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
-                            <p style="margin: 0; font-size: ${fBase};">Tel: 02-789-5541 | Email: Stainless.Steel@gmail.com</p>
+                        <div style="flex:2;text-align:center;">
+                            <h2 style="margin:0;font-size:${fH2};font-weight:bold;">บริษัท โซลโซไซตี้ จำกัด</h2>
+                            <p style="margin:2px 0;">Soul Society Co., Ltd.</p>
+                            <p style="margin:2px 0;">15/5 ถนนพุทธรักษา ต.บางเมือง อ.เมือง จ.สมุทรปราการ 10270</p>
+                            <p style="margin:2px 0;">Tel: 02-789-5541 | Email: Stainless.Steel@gmail.com</p>
                         </div>
-                        <div style="flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: flex-start;">
-                            <h2 style="margin: 0; font-size: ${fH2s}; font-weight: bold; color: var(--primary-color);">ใบเสนอราคา</h2>
-                            <p style="margin: 0; font-size: 13px; font-weight: 500;">Quotation</p>
-                            <p style="margin: 0; font-size: 11px;">หน้า ${pageNum}/${totalPages}</p>
-                            <p style="margin: 0;">เลขประจำตัวผู้เสียภาษี 6611611200003 สำนักงานใหญ่</p>
+                        <div style="flex:1;text-align:right;">
+                            <h2 style="margin:0;font-size:${fH2s};font-weight:bold;color:var(--primary-color);">ใบเสนอราคา</h2>
+                            <p style="margin:0;font-size:13px;font-weight:500;">Quotation</p>
+                            <p style="margin:0;font-size:11px;">หน้า ${pageNum}/${totalPages}</p>
                         </div>
                     </div>
                     
-                    <div style="text-align: left; margin-bottom: 5px;">
+                    <div style="text-align:left;margin-bottom:10px;">
+                        <p style="margin:0;">เลขประจำตัวผู้เสียภาษี / Tax ID 6611611200003 สำนักงานใหญ่</p>
                     </div>
 
                     <div style="display: flex; border: 1px solid #000; border-radius: 8px; margin-bottom: 2px; overflow: hidden;">
@@ -928,9 +862,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <span>${formatCurrency(gTotal)}</span>
                         </div>
                     </div>
-
-                    ${generateSignatureCanvas(cusInfo.salesperson, cusInfo.doc_date_str, sigW)}
-
+                        <!-- Footer Signatures -->
+                    ${generateSignatureHTML(cusInfo.salesperson, cusInfo.doc_date_str, sigW)}
                     </div>
               `;
         }
